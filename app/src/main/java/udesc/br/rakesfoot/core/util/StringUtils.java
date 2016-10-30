@@ -1,5 +1,7 @@
 package udesc.br.rakesfoot.core.util;
 
+import java.util.List;
+
 /**
  * Miscellaneous utils methods for Strings.
  *
@@ -87,6 +89,25 @@ public final class StringUtils {
      */
     public final static String toBeanFormat(String text) {
         return text.replaceAll("_", ".");
+    }
+
+    public static String join(CharSequence delimiter, Iterable<? extends CharSequence> elements) {
+        java.util.Objects.requireNonNull(delimiter);
+        java.util.Objects.requireNonNull(elements);
+
+        boolean       first         = true;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(CharSequence cs: elements) {
+            if(first) {
+                first = false;
+            } else {
+                stringBuilder.append(delimiter);
+            }
+            stringBuilder.append(cs);
+        }
+
+        return stringBuilder.toString();
     }
 
 }

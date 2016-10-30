@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Samuel Felício Adriano
  */
-public class Relationships<Entity extends udesc.br.rakesfoot.core.model.Entity> {
+public class Relationships {
 
     private List<ModelToDataBaseRelation> relations = new java.util.ArrayList<>();
 
@@ -47,6 +47,18 @@ public class Relationships<Entity extends udesc.br.rakesfoot.core.model.Entity> 
 
         for(ModelToDataBaseRelation relation : relations) {
             if(relation.isKey()) {
+                columns.add(relation.getColumnName());
+            }
+        }
+
+        return columns;
+    }
+
+    public List<String> getAllNonKeyColumnsNames() {
+        List<String> columns = new ArrayList<>();
+
+        for(ModelToDataBaseRelation relation : relations) {
+            if(!relation.isKey()) {
                 columns.add(relation.getColumnName());
             }
         }
@@ -130,6 +142,19 @@ public class Relationships<Entity extends udesc.br.rakesfoot.core.model.Entity> 
         }
 
         return types;
+    }
+
+
+    public List<String> getAllNonKeyModelNames() {
+        List<String> names = new ArrayList<>();
+
+        for(ModelToDataBaseRelation relation : relations) {
+            if(!relation.isKey()) {
+                names.add(relation.getModelName());
+            }
+        }
+
+        return names;
     }
 
 }

@@ -27,4 +27,8 @@ public interface Persistible<Entity extends udesc.br.rakesfoot.core.model.Entity
 
     public Entity getNewEntity();
 
+    public void onCreate();
+
+    public void onUpgrade();
+
 }
