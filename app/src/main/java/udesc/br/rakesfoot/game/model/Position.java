@@ -1,7 +1,7 @@
 package udesc.br.rakesfoot.game.model;
 
 /**
- * Postions enumeration types
+ * Positions enumeration types
  *
  * @author Samuel Felício Adriano <felicio.samuel@gmail.com>
  * @since  29/10/2016
