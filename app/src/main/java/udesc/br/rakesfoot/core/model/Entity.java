@@ -62,5 +62,4 @@ public abstract class Entity implements java.io.Serializable, Cloneable {
         return clone;
     }
 
-
 }

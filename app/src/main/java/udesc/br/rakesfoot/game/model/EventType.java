@@ -19,7 +19,22 @@ public enum EventType {
         this.description = description;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getDescription() {
         return description;
     }
+
+    public static EventType getEventType(int id) {
+        for(EventType eventType : EventType.values()) {
+            if(eventType.getId() == id) {
+                return eventType;
+            }
+        }
+
+        return null;
+    }
+
 }

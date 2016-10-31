@@ -2,6 +2,10 @@ package udesc.br.rakesfoot.game.model;
 
 import udesc.br.rakesfoot.core.model.Color;
 import udesc.br.rakesfoot.core.model.Entity;
+import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
+
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.DOUBLE_NUMERIC;
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
 
 /**
  * Team entity
@@ -11,9 +15,15 @@ import udesc.br.rakesfoot.core.model.Entity;
  */
 public class Team extends Entity {
 
-    private int    id,
-                   chemestry, //Entrosamento
-                   motivation;
+    @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
+    private int    id;
+
+    @DataBaseInfo(columnName = "chemestry", dataType = DOUBLE_NUMERIC)
+    private int    chemestry; //Entrosamento
+
+    @DataBaseInfo(columnName = "motivation", dataType = DOUBLE_NUMERIC)
+    private int    motivation;
+
     private String name,
                    initials;
     private Color mainColor,
