@@ -1,15 +1,17 @@
 package udesc.br.rakesfoot.game.model;
 
+import android.support.annotation.Nullable;
+
 /**
  * Created by felic on 30/10/2016.
  */
 public enum EventType {
 
-     GOAL       (1, "Goal")
-    ,ASSISTANCE (2, "Assistance")
-    ,CLEAN_SHEET(3, "Clean Sheet")
-    ,YELLOW_CARD(4, "Yellow Card")
-    ,RED_CARD   (4, "Red Card");
+     GOAL       (1, "Gol")
+    ,ASSISTANCE (2, "Assistência")
+    ,INJURY     (3, "Lesão")
+    ,YELLOW_CARD(4, "Cartão Amarelo")
+    ,RED_CARD   (5, "Cartão Vermelho");
 
     private int    id;
     private String description;
@@ -27,6 +29,7 @@ public enum EventType {
         return description;
     }
 
+    @Nullable
     public static EventType getEventType(int id) {
         for(EventType eventType : EventType.values()) {
             if(eventType.getId() == id) {
