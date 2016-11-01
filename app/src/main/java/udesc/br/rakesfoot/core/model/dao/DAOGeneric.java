@@ -25,7 +25,7 @@ import java.util.List;
  * @author Samuel Felício Adriano
  * @param <DAOEntity>
  */
-public class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model.Entity> implements Persistible<DAOEntity> {
+public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model.Entity> implements Persistible<DAOEntity> {
 
 
     protected SQLiteConnection connection;

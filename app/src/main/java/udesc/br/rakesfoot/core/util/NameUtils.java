@@ -22,7 +22,7 @@ public class NameUtils {
                                 lastNames  = null;
 
 
-    public List<String> getFirstNames(Context context) {
+    public static List<String> getFirstNames(Context context) {
         if(firstNames == null) {
             AssetManager assetManager = context.getResources().getAssets();
             try {
@@ -43,7 +43,7 @@ public class NameUtils {
         return firstNames;
     }
 
-    public List<String> getLastNames(Context context) {
+    public static List<String> getLastNames(Context context) {
         if(lastNames == null) {
             AssetManager assetManager = context.getResources().getAssets();
             try {
@@ -64,13 +64,13 @@ public class NameUtils {
         return lastNames;
     }
 
-    public String generateRandomFirstName(Context context) {
+    public static String generateRandomFirstName(Context context) {
         List<String> names = getFirstNames(context);
 
         return names.get(IntRandomUtils.getNextIntFromZeroToInterval(names.size()));
     }
 
-    public String generateRandomLastName(Context context) {
+    public static String generateRandomLastName(Context context) {
         List<String> names = getLastNames(context);
 
         return names.get(IntRandomUtils.getNextIntFromZeroToInterval(names.size()));
