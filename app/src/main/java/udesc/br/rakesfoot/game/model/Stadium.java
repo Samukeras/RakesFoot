@@ -1,9 +1,11 @@
 package udesc.br.rakesfoot.game.model;
 
+import udesc.br.rakesfoot.core.model.Entity;
+
 /**
  * Created by felic on 29/10/2016.
  */
-public class Stadium {
+public class Stadium extends Entity {
 
     private int    id,
                    maxCapacity;

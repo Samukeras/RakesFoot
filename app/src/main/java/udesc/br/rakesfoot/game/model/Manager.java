@@ -1,5 +1,6 @@
 package udesc.br.rakesfoot.game.model;
 
+import udesc.br.rakesfoot.core.model.Entity;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
 
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
@@ -8,7 +9,7 @@ import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STR
 /**
  * Created by felic on 29/10/2016.
  */
-public class Manager {
+public class Manager extends Entity {
 
     @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
     private int id;
