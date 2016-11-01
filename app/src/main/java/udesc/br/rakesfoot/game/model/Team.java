@@ -29,6 +29,8 @@ public class Team extends Entity {
     private Color mainColor,
                    secondaryColor;
 
+    private Stadium stadium;
+
     public int getId() {
         return id;
     }
@@ -85,4 +87,11 @@ public class Team extends Entity {
         this.secondaryColor = secondaryColor;
     }
 
+    public Stadium getStadium() {
+        return stadium;
+    }
+
+    public void setStadium(Stadium stadium) {
+        this.stadium = stadium;
+    }
 }
