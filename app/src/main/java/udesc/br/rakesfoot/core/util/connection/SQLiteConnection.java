@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 public class SQLiteConnection implements Connection<SQLiteDatabase> {
 
     protected static final String DATABASE_NAME   = "Rakesfoot.db";
-    public    static final int    INITIAL_VERSION = 0,
-                                  CURRENT_VERSION = 1;
 
     private static SQLiteConnection instance = null;
 
@@ -64,6 +62,7 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
     public void onUpgrade() {
 
     }
+
 
     public static SQLiteConnection getInstance(Context context, int version) {
         if(instance == null || context != instance.getContext()) {

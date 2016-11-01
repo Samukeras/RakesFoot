@@ -17,7 +17,7 @@ public enum BudgetType {
     PRIZE_1ST               (12, BudgetClass.INCOME),
     PRIZE_2ND               (13, BudgetClass.INCOME),
     PRIZE_3RD               (14, BudgetClass.INCOME),
-    COALSCORER              (15, BudgetClass.INCOME),
+    STRIKER                 (15, BudgetClass.INCOME),
     PLAYER_SALE             (16, BudgetClass.INCOME);
 
     private final int id;
