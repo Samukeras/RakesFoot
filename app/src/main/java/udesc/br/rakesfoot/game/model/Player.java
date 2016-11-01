@@ -15,5 +15,51 @@ public class Player {
     private String   name;
     private Position position;
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getOverral() {
+        return overral;
+    }
+
+    public void setOverral(int overral) {
+        this.overral = overral;
+    }
+
+    public int getPhysical() {
+        return physical;
+    }
+
+    public void setPhysical(int physical) {
+        this.physical = physical;
+    }
+
+    public int getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(int motivation) {
+        this.motivation = motivation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 }
