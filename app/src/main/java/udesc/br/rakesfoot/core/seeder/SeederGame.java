@@ -16,10 +16,12 @@ public class SeederGame implements Seeder {
 
     @Override
     public void seed(Connection connection) {
-        Persistible season = new SqliteDaoSeason(connection.getContext(), Connection.INITIAL_VERSION),
-                    player = new SqliteDaoPlayer(connection.getContext(), Connection.INITIAL_VERSION);
+        SqliteDaoSeason sqliteDaoSeason = new SqliteDaoSeason(connection.getContext(), Connection.INITIAL_VERSION);
+//        Persistible season = new SqliteDaoSeason(connection.getContext(), Connection.INITIAL_VERSION),
+//                    player = new SqliteDaoPlayer(connection.getContext(), Connection.INITIAL_VERSION);
 
-        season.onCreate();
-        player.onCreate();
+        sqliteDaoSeason.onCreate();
+//        season.onCreate();
+//        player.onCreate();
     }
 }

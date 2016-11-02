@@ -1,8 +1,11 @@
 package udesc.br.rakesfoot.game.model;
 
+import udesc.br.rakesfoot.core.persistence.annotation.Table;
+
 /**
  * Created by felic on 30/10/2016.
  */
+@Table(name = "match")
 public class Match {
 
     private int i;

@@ -11,7 +11,9 @@ import udesc.br.rakesfoot.core.util.BeanUtils;
 import udesc.br.rakesfoot.core.util.StringUtils;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.core.util.connection.SQLiteConnection;
+import udesc.br.rakesfoot.game.model.Season;
 
+import java.lang.annotation.Annotation;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,8 +27,12 @@ import java.util.List;
  * @author Samuel Felício Adriano
  * @param <DAOEntity>
  */
+@SuppressWarnings("Since15")
 public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model.Entity> implements Persistible<DAOEntity> {
 
+    protected static final String DAO_PATH    = "udesc.br.rakesfoot.game.model.dao.sqlite.",
+                                  ENTITY_PATH = "udesc.br.rakesfoot.game.model.",
+                                  PREFIX      = "SqliteDao";
 
     protected SQLiteConnection connection;
     protected DAOEntity        entity;
@@ -44,13 +50,17 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     @TargetApi(Build.VERSION_CODES.N)
     protected void setRelations() {
         for(java.lang.reflect.Field field : entity.getClass().getDeclaredFields()) {
-            for(DataBaseInfo dbInfo : field.getDeclaredAnnotationsByType(DataBaseInfo.class)) {
-                this.relationships.addRelation(dbInfo.key(),
-                        dbInfo.sequential(),
-                        dbInfo.columnName(),
-                        StringUtils.toBeanFormat(dbInfo.columnName()),
-                        dbInfo.dataType().getSqlite(),
-                        dbInfo.dataType().getType());
+            for(Annotation annotation: field.getAnnotations()) {
+                if(annotation instanceof DataBaseInfo) {
+                    DataBaseInfo dbInfo = (DataBaseInfo) annotation;
+
+                    this.relationships.addRelation(dbInfo.key(),
+                            dbInfo.sequential(),
+                            dbInfo.columnName(),
+                            StringUtils.toBeanFormat(dbInfo.columnName()),
+                            dbInfo.dataType().getSqlite(),
+                            dbInfo.dataType().getType());
+                }
             }
         }
     }
@@ -189,10 +199,19 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
     @Override
     public DAOEntity getNewEntity() {
-        return udesc.br.rakesfoot.core.util.ClassUtils.getNewPOJO(this.entity.getClass());
+        String className  = this.getClass().getName();
+        className         = className.substring(DAO_PATH.length() + PREFIX.length());
+        try {
+            Class claz = Class.forName(ENTITY_PATH + className);
+            return udesc.br.rakesfoot.core.util.ClassUtils.getNewPOJO(claz);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void onCreate() {
+        connection.getConnection().execSQL("DROP TABLE IF EXISTS " + this.getTableNameComplete() + ";");
         StringBuilder sql = new StringBuilder("CREATE TABLE ");
         sql.append(this.getTableNameComplete())
            .append(" (");
@@ -203,26 +222,30 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
         }
 
         sql.append(StringUtils.join(", ", columns));
+        sql.append(", ");
+        sql.append(getScriptPk());
+
+        String scriptFks = this.getScriptFks();
+        if(scriptFks != null && !scriptFks.isEmpty()) {
+            sql.append(", ");
+            sql.append(scriptFks);
+        }
+
+        sql.append(");");
 
         connection.getConnection().execSQL(sql.toString());
-        createPks();
-        createFks();
     }
 
-    private void createPks() {
-        StringBuilder sql = new StringBuilder("ALTER TABLE ");
-        sql.append(getTableNameComplete())
-           .append("ADD CONSTRAINT PK_")
-           .append(this.getTableName())
-           .append(" PRIMARY KEY (")
-           .append(StringUtils.join(",", relationships.getAllKeyColumnsNames()))
+    private String getScriptPk() {
+        StringBuilder sql = new StringBuilder("PRIMARY KEY (");
+        sql.append(StringUtils.join(",", relationships.getAllKeyColumnsNames()))
            .append(")");
 
-        connection.getConnection().execSQL(sql.toString());
+        return sql.toString();
     }
 
-    private void createFks() {
-
+    private String getScriptFks() {
+        return null;
     }
 
     public void onUpgrade() {
