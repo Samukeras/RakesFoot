@@ -5,4 +5,8 @@ package udesc.br.rakesfoot.game.rules;
  */
 
 public class Match {
+
+    public static double HOST_TEAM_BONUS_RATE = 1.1;
+
+
 }

@@ -1,5 +1,7 @@
 package udesc.br.rakesfoot.game.model;
 
+import java.util.ArrayList;
+
 import udesc.br.rakesfoot.core.model.Color;
 import udesc.br.rakesfoot.core.model.Entity;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
@@ -30,6 +32,8 @@ public class Team extends Entity {
                    secondaryColor;
 
     private Stadium stadium;
+
+    private ArrayList<Player> players;
 
     public int getId() {
         return id;
@@ -93,5 +97,17 @@ public class Team extends Entity {
 
     public void setStadium(Stadium stadium) {
         this.stadium = stadium;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
 }

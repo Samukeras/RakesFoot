@@ -15,6 +15,8 @@ public class Match {
 
     private int audience;
 
+    private int round; // rodada
+
     public int getI() {
         return i;
     }
@@ -53,5 +55,13 @@ public class Match {
 
     public void setAudience(int audience) {
         this.audience = audience;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 }
