@@ -14,4 +14,8 @@ public class SqliteDaoSeason extends DAOGeneric<Season> {
         super(context, version);
     }
 
+//    @Override
+//    public Season getNewEntity() {
+//        return new Season();
+//    }
 }

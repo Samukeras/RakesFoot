@@ -43,7 +43,7 @@ public abstract class Entity implements java.io.Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return JSonUtils.toJson(this);
+        return "";
     }
 
     /**

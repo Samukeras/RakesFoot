@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(DataBaseContainer.class)
+//@Repeatable(DataBaseContainer.class)
 
 /**
  * Class that indicates the relationships between the entity and the database

@@ -1,10 +1,12 @@
 package udesc.br.rakesfoot.game.model;
 
 import udesc.br.rakesfoot.core.model.Entity;
+import udesc.br.rakesfoot.core.persistence.annotation.Table;
 
 /**
  * Created by felic on 29/10/2016.
  */
+@Table(name = "stadium")
 public class Stadium extends Entity {
 
     private int    id,
