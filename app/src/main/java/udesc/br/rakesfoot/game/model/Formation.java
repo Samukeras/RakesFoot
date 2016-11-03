@@ -14,6 +14,10 @@ public class Formation {
 
     private ArrayList<Player> substitutes;
 
+    public ArrayList<Player> getFirstTeamPlayers() {
+        return firstTeamPlayers;
+    }
+
     public boolean addFirstTeamPlayer(Player player) {
         if (isPositionLimitReached(player.getPosition()) || isPlayerLimitReached()) {
             return false;
@@ -24,6 +28,10 @@ public class Formation {
 
     public boolean removeFirstTeamPlayer(Player player) {
         return firstTeamPlayers.remove(player);
+    }
+
+    public ArrayList<Player> getSubstitutes() {
+        return substitutes;
     }
 
     public boolean addSubstitute(Player player) {

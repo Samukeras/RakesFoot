@@ -38,4 +38,13 @@ public class IntRandomUtils {
         return value + getNextIntFromZeroToInterval(maxValue - value);
     }
 
+    /**
+     * Returns a value between 0.00 and 100.00
+     *
+     * @return double
+     */
+    public static double getNetxPercentage() {
+        return getNextIntFromZeroToInterval(10000) / 100.0;
+    }
+
 }

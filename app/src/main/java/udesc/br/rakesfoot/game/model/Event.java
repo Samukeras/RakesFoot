@@ -25,6 +25,9 @@ public class Event extends Entity{
     @DataBaseInfo(columnName = "player_id", dataType = INT_INTEGER)
     private Player player;
 
+    @DataBaseInfo(columnName = "team_id", dataType = INT_INTEGER)
+    private Team team;
+
     @DataBaseInfo(columnName = "type", dataType = INT_INTEGER)
     private EventType type;
 
@@ -59,6 +62,14 @@ public class Event extends Entity{
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public EventType getType() {

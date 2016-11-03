@@ -1,5 +1,7 @@
 package udesc.br.rakesfoot.game.model;
 
+import java.util.List;
+
 import udesc.br.rakesfoot.core.persistence.annotation.Table;
 
 /**
@@ -19,6 +21,8 @@ public class Match {
     private int audience;
 
     private int round; // rodada
+
+    private List<Event> events;
 
     public int getI() {
         return i;
@@ -66,5 +70,44 @@ public class Match {
 
     public void setRound(int round) {
         this.round = round;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public boolean addEvent(Event event) {
+        return events.add(event);
+    }
+
+    public int getEventCount(EventType type) {
+        int count = 0;
+        for (Event event : events) {
+            if (event.getType() == type) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getEventCount(EventType type, Player player) {
+        int count = 0;
+        for (Event event : events) {
+            if (event.getType() == type && player.getId() == event.getPlayer().getId()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getEventCount(EventType type, Team team) {
+        int count = 0;
+        for (Event event : events) {
+
+            if (event.getType() == type && team.getId() == event.getTeam().getId()) {
+                count++;
+            }
+        }
+        return count;
     }
 }
