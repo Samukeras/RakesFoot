@@ -13,6 +13,9 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoChampionship;
 public class SeederChampionship extends EntitySeeder {
 
     Season season;
+    Championship serieA,
+                 serieB;
+
 
     public SeederChampionship(Connection connection, Season season) {
         super(connection);
@@ -29,11 +32,25 @@ public class SeederChampionship extends EntitySeeder {
         Persistible persistible = getDao();
         persistible.onCreate();
 
-        Championship championship = new Championship();
-        championship.setName("Brasileirão Série A");
-        championship.setSeason(season);
+        serieA = new Championship();
+        serieA.setName("Brasileirão Série A");
+        serieA.setSeason(season);
 
-        persistible.insert(championship);
+        persistible.insert(serieA);
+
+        serieB = new Championship();
+        serieB.setName("Brasileirão Série B");
+        serieB.setSeason(season);
+
+        persistible.insert(serieB);
+    }
+
+    public Championship getSerieA() {
+        return serieA;
+    }
+
+    public Championship getSerieB() {
+        return serieB;
     }
 
 }

@@ -25,7 +25,10 @@ public class SeederGame implements Seeder {
 
     @Override
     public void seed(Connection connection) {
-        SeederSeason ss = new SeederSeason(connection);
+        SeederSeason       ss  = new SeederSeason(connection);
+        SeederChampionship sc  = new SeederChampionship(connection, ss.getSeason());
+        SeederStadium      sst = new SeederStadium(connection);
+        SeederTeam         st  = new SeederTeam(connection);
 //        List<Persistible> seeds = new ArrayList<>();
 //        seeds.add(new SqliteDaoSeason(connection.getContext(), Connection.INITIAL_VERSION));
 //        seeds.add(new SqliteDaoChampionship(connection.getContext(), Connection.INITIAL_VERSION));

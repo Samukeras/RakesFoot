@@ -11,6 +11,8 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoSeason;
 
 public class SeederSeason extends EntitySeeder {
 
+    protected Season season;
+
     public SeederSeason(Connection connection) {
         super(connection);
     }
@@ -25,10 +27,14 @@ public class SeederSeason extends EntitySeeder {
         Persistible persistible = getDao();
         persistible.onCreate();
 
-        Season season = new Season();
-        season.setYear(2016);
+        this.season = new Season();
+        this.season.setYear(2016);
 
         boolean sucesso = persistible.insert(season);
+    }
+
+    public Season getSeason() {
+        return this.season;
     }
 
 }
