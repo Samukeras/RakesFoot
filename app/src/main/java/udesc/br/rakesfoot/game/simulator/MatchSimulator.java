@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import udesc.br.rakesfoot.core.util.IntRandomUtils;
+import udesc.br.rakesfoot.game.model.Event;
 import udesc.br.rakesfoot.game.model.EventType;
 import udesc.br.rakesfoot.game.model.Match;
 import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
-import udesc.br.rakesfoot.game.rules.Event;
 
 import static udesc.br.rakesfoot.game.rules.Match.*;
+import static udesc.br.rakesfoot.game.rules.Team.getAttackOverral;
+import static udesc.br.rakesfoot.game.rules.Team.getDefenseOverral;
 
 /**
  * Created by Ricardo on 02/11/2016.
@@ -45,17 +47,32 @@ public class MatchSimulator implements Simulator {
         }
     }
 
+    private void updateVariables() {
+        Team winner, looser;
+
+        int goalsHost  = currentMath.getEventCount(EventType.GOAL, currentMath.getHost());
+        int goalsGuest = currentMath.getEventCount(EventType.GOAL, currentMath.getGuest());
+        if (goalsHost > goalsGuest) {
+            winner = currentMath.getHost();
+            looser = currentMath.getGuest();
+        }
+    }
+
     private void runMatches() {
         for (Match match : matches) {
             currentMath = match;
             runEvents();
+
+            if (currentMinute == END_TIME) {
+                updateVariables();
+            }
         }
     }
 
     private void runEvents() {
         double chance = IntRandomUtils.getNetxPercentage();
 
-        for (Map.Entry<EventType, Double> entry : Event.getEventsForSimulator().entrySet()) {
+        for (Map.Entry<EventType, Double> entry : udesc.br.rakesfoot.game.rules.Event.getEventsForSimulator().entrySet()) {
             if (chance <= entry.getValue()) {
                 executeEvent(entry.getKey());
                 break;
@@ -67,31 +84,48 @@ public class MatchSimulator implements Simulator {
     private void executeEvent(EventType event) {
         switch (event) {
             case ASSISTANCE:
-                executeAssistance();
+                tryGoal();
                 break;
-            case INJURY:
-                executeInjury();
-                break;
-            case YELLOW_CARD:
-                executeYellowCard();
-                break;
-            case RED_CARD:
-                executeRedCard();
-                break;
+            default:
+                registerEvent(event, getRandonPlayer());
         }
     }
 
-    private void executeRedCard() {
+    private void tryGoal() {
+        Team attacker = getTeamForRound();
 
+        double bonus = isHost(attacker) ? udesc.br.rakesfoot.game.rules.Match.HOST_TEAM_BONUS_RATE : 1;
+
+        int attackerOverral = (int) (getAttackOverral(getPlayersForRound(attacker)) * bonus);
+        int defenderOverral = getDefenseOverral(getPlayersForRound(getTeamAdversary(attacker)));
+
+        int attackChance = IntRandomUtils.getNextIntFromZeroToInterval(attackerOverral + defenderOverral);
+
+        if (attackChance > defenderOverral) {
+            registerEvent(EventType.GOAL, getRandonPlayer());
+        }
     }
 
-    private void executeYellowCard() {
+    private void registerEvent(EventType type, Player player) {
+        Event event = new Event();
+        event.setMatch(currentMath);
+        event.setMinute(currentMinute);
+        event.setPlayer(player);
+        event.setTeam(player.getTeam());
+        event.setType(type);
+
+        currentMath.addEvent(event);
     }
 
-    private void executeInjury() {
+    private boolean isHost(Team team) {
+        return team.getId() == currentMath.getHost().getId();
     }
 
-    private void executeAssistance() {
+    private Team getTeamAdversary(Team team) {
+        if (team.getId() == currentMath.getHost().getId()) {
+            return currentMath.getGuest();
+        }
+        return currentMath.getHost();
     }
 
     private Team getTeamForRound() {
