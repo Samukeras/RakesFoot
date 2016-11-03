@@ -14,7 +14,8 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
 public class SeederTeam extends EntitySeeder {
 
-    private static String[] teams = {
+    private Team[] teams               = new Team[40];
+    private static String[] teamsNames = {
              "Palmeiras"
             ,"Flamengo"
             ,"Santos"
@@ -74,13 +75,24 @@ public class SeederTeam extends EntitySeeder {
         for(int i = 0; i < teams.length; i++) {
             Team team = new Team();
             team.setId(i);
-            team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
-            team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
-            team.setName(teams[i]);
+            if(i < 20) {
+                team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
+                team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
+            } else {
+                team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
+                team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
+            }
+            team.setName(teamsNames[i]);
             team.setMainColor(Color.getRandomColor());
             team.setSecondaryColor(Color.getRandomColor());
             team.getStadium().setId(i);
+
+            teams[i] = team;
         }
+    }
+
+    public Team[] getTeams() {
+        return teams;
     }
 
 }

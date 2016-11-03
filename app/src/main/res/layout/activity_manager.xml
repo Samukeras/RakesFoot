@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_manager"
     android:layout_width="match_parent"
@@ -16,15 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/textView" />
-
-    <Button
-        android:text="Jogar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="66dp"
-        android:id="@+id/button" />
 
     <TextView
         android:text="Nome"
@@ -44,4 +36,41 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
         android:id="@+id/textName" />
+
+    <TextView
+        android:text="Time sorteado:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="51dp"
+        android:id="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_alignStart="@+id/button"
+        android:id="@+id/textTime" />
+
+    <QuickContactBadge
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@color/colorPrimary"
+        android:layout_below="@+id/textView4"
+        android:layout_alignStart="@+id/textName"
+        android:layout_marginTop="27dp"
+        android:id="@+id/quickContactBadge"
+        android:layout_toStartOf="@+id/textView2"
+        android:layout_alignEnd="@+id/textName" />
+
+    <Button
+        android:text="Jogar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
