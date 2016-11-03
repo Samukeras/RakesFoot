@@ -25,18 +25,19 @@ public class SeederGame implements Seeder {
 
     @Override
     public void seed(Connection connection) {
-        List<Persistible> seeds = new ArrayList<>();
-        seeds.add(new SqliteDaoSeason(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoChampionship(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoEvent(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoManager(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoMatch(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoPlayer(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoStadium(connection.getContext(), Connection.INITIAL_VERSION));
-        seeds.add(new SqliteDaoTeam(connection.getContext(), Connection.INITIAL_VERSION));
-
-        for(Persistible seed : seeds) {
-            seed.onCreate();
-        }
+        SeederSeason ss = new SeederSeason(connection);
+//        List<Persistible> seeds = new ArrayList<>();
+//        seeds.add(new SqliteDaoSeason(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoChampionship(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoEvent(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoManager(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoMatch(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoPlayer(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoStadium(connection.getContext(), Connection.INITIAL_VERSION));
+//        seeds.add(new SqliteDaoTeam(connection.getContext(), Connection.INITIAL_VERSION));
+//
+//        for(Persistible seed : seeds) {
+//            seed.onCreate();
+//        }
     }
 }

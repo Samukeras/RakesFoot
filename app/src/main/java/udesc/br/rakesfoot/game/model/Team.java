@@ -9,6 +9,7 @@ import udesc.br.rakesfoot.core.persistence.annotation.Table;
 
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.DOUBLE_NUMERIC;
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STRING_VARCHAR;
 
 /**
  * Team entity
@@ -28,10 +29,17 @@ public class Team extends Entity {
     @DataBaseInfo(columnName = "motivation", dataType = DOUBLE_NUMERIC)
     private int    motivation;
 
-    private String name,
-                   initials;
-    private Color mainColor,
-                   secondaryColor;
+    @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
+    private String name;
+
+    @DataBaseInfo(columnName = "initials", dataType = STRING_VARCHAR)
+    private String initials;
+
+    @DataBaseInfo(columnName = "mainColor", dataType = INT_INTEGER)
+    private Color  mainColor;
+
+    @DataBaseInfo(columnName = "secondaryColor", dataType = INT_INTEGER)
+    private Color  secondaryColor;
 
     private Stadium stadium;
 

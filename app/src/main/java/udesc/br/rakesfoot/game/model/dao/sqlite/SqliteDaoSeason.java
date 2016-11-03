@@ -3,6 +3,7 @@ package udesc.br.rakesfoot.game.model.dao.sqlite;
 import android.content.Context;
 
 import udesc.br.rakesfoot.core.model.dao.DAOGeneric;
+import udesc.br.rakesfoot.core.util.StringUtils;
 import udesc.br.rakesfoot.game.model.Season;
 
 /**
@@ -14,8 +15,4 @@ public class SqliteDaoSeason extends DAOGeneric<Season> {
         super(context, version);
     }
 
-//    @Override
-//    public Season getNewEntity() {
-//        return new Season();
-//    }
 }

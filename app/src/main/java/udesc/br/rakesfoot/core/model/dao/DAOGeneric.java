@@ -96,12 +96,21 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
         try {
             StringBuilder sql = new StringBuilder("INSERT INTO ");
-            sql.append(getTableNameComplete())
+            sql.append(getTableNameComplete() + "(")
                .append(StringUtils.join(",", getRelationships().getAllNonSequentialsColumnsNames()))
-               .append(") VALUES (")
-               .append(StringUtils.join(",", getRelationships().getAllNonSequentialsPreparedParameters()))
-               .append(") RETURNING ")
-               .append(StringUtils.join(", ", getRelationships().getAllColumnsNames()));
+               .append(") VALUES (");
+
+            boolean first = true;
+            for(String column : getRelationships().getAllNonSequentialsColumnsNames()) {
+                if(!first) {
+                    sql.append(", ");
+                }
+                sql.append(BeanUtils.callGetter(entity, column));
+            }
+
+            sql.append(");");
+//            sql.append(") RETURNING ")
+//               .append(StringUtils.join(", ", getRelationships().getAllColumnsNames()));
 
             connection.getConnection().execSQL(sql.toString());
             connection.endTransaction();

@@ -15,7 +15,7 @@ import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT
 @Table(name = "season")
 public class Season extends Entity {
 
-    @DataBaseInfo(key = true, columnName = "year", dataType = INT_INTEGER, sequential = true)
+    @DataBaseInfo(key = true, columnName = "year", dataType = INT_INTEGER)
     private int year;
 
     public Season() {

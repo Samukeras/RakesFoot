@@ -3,6 +3,7 @@ package udesc.br.rakesfoot.core.seeder;
 import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.util.NameUtils;
 import udesc.br.rakesfoot.core.util.connection.Connection;
+import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoPlayer;
 
 /**
@@ -10,9 +11,12 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoPlayer;
  */
 public class SeederPlayer extends EntitySeeder {
 
+    private static int NUMBER = 20;
+
+
     public SeederPlayer(Connection connection) {
         super(connection);
-        insertPlayers();
+        insertPlayers(0);
     }
 
     @Override
@@ -20,7 +24,13 @@ public class SeederPlayer extends EntitySeeder {
         return new SqliteDaoPlayer(connection.getContext(), Connection.INITIAL_VERSION);
     }
 
-    public void insertPlayers() {
+    public void insertPlayers(int number) {
+        if(number >= NUMBER) {
+            return;
+        }
+
+        Player player = new Player();
+
         String name = NameUtils.generateRandomFirstName(connection.getContext());
     }
 
