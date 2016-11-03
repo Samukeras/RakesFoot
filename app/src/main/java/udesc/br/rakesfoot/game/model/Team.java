@@ -35,6 +35,8 @@ public class Team extends Entity {
 
     private Stadium stadium;
 
+    private Formation formation;
+
     private ArrayList<Player> players;
 
     public int getId() {
@@ -111,5 +113,13 @@ public class Team extends Entity {
 
     public void removePlayer(Player player) {
         players.remove(player);
+    }
+
+    public Formation getFormation() {
+        return formation;
+    }
+
+    public void setFormation(Formation formation) {
+        this.formation = formation;
     }
 }
