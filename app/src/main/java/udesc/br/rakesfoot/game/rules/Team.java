@@ -11,7 +11,7 @@ import udesc.br.rakesfoot.game.model.Player;
 
 public class Team {
 
-    public final static int MOTIVATION_DECREASE_STEP = 3; // on lose
+    public final static int MOTIVATION_DECREASE_STEP = -3; // on lose
     public final static int MOTIVATION_INCREASE_STEP = 2; //on win
 
     public final static double CHEMESTRY_DECREASE_RATE = 0.03; // each new player
@@ -33,6 +33,7 @@ public class Team {
             playerOverral = player.getOverral() * getAttackInfluence(player.getPosition());
             playerOverral *= Math.sqrt(player.getMotivation()) / 10;
             playerOverral *= Math.sqrt(player.getPhysical()) / 10;
+            playerOverral *= Math.sqrt(player.getTeam().getChemestry()) / 10;
 
             overral += playerOverral;
         }
@@ -45,6 +46,7 @@ public class Team {
             playerOverral = player.getOverral() * getDefenseInfluence(player.getPosition());
             playerOverral *= Math.sqrt(player.getMotivation()) / 10;
             playerOverral *= Math.sqrt(player.getPhysical()) / 10;
+            playerOverral *= Math.sqrt(player.getTeam().getChemestry()) / 10;
 
             overral += playerOverral;
         }

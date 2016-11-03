@@ -12,6 +12,9 @@ import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
 
 import static udesc.br.rakesfoot.game.rules.Match.*;
+import static udesc.br.rakesfoot.game.rules.Team.CHEMESTRY_INCREASE_STEP;
+import static udesc.br.rakesfoot.game.rules.Team.MOTIVATION_DECREASE_STEP;
+import static udesc.br.rakesfoot.game.rules.Team.MOTIVATION_INCREASE_STEP;
 import static udesc.br.rakesfoot.game.rules.Team.getAttackOverral;
 import static udesc.br.rakesfoot.game.rules.Team.getDefenseOverral;
 
@@ -47,14 +50,25 @@ public class MatchSimulator implements Simulator {
         }
     }
 
-    private void updateVariables() {
-        Team winner, looser;
-
+    private void updateEndGameVariables() {
         int goalsHost  = currentMath.getEventCount(EventType.GOAL, currentMath.getHost());
         int goalsGuest = currentMath.getEventCount(EventType.GOAL, currentMath.getGuest());
+
         if (goalsHost > goalsGuest) {
-            winner = currentMath.getHost();
-            looser = currentMath.getGuest();
+            increaseMotivation(currentMath.getHost(),  MOTIVATION_INCREASE_STEP);
+            increaseMotivation(currentMath.getGuest(), MOTIVATION_DECREASE_STEP);
+        } else if (goalsHost > goalsGuest) {
+            increaseMotivation(currentMath.getGuest(), MOTIVATION_INCREASE_STEP);
+            increaseMotivation(currentMath.getHost(),  MOTIVATION_DECREASE_STEP);
+        }
+
+        currentMath.getHost().setChemestry(currentMath.getHost().getChemestry() + CHEMESTRY_INCREASE_STEP);
+        currentMath.getGuest().setChemestry(currentMath.getGuest().getChemestry() + CHEMESTRY_INCREASE_STEP);
+    }
+
+    private void increaseMotivation(Team team, int step) {
+        for (Player player : team.getPlayers()) {
+            player.setMotivation(player.getMotivation() + step);
         }
     }
 
@@ -64,7 +78,7 @@ public class MatchSimulator implements Simulator {
             runEvents();
 
             if (currentMinute == END_TIME) {
-                updateVariables();
+                updateEndGameVariables();
             }
         }
     }
