@@ -22,21 +22,9 @@ import static udesc.br.rakesfoot.game.rules.Team.getDefenseOverral;
  * Created by Ricardo on 02/11/2016.
  */
 
-public class MatchSimulator implements Simulator {
+public class MatchSimulator extends Simulator<Match> {
 
     private int currentMinute = 0;
-
-    private List<Match> matches;
-
-    private List<Player> hostPlayers;
-
-    private List<Player> Players;
-
-    private Match currentMath;
-
-    public void registerMatch(Match match) {
-        matches.add(match);
-    }
 
     @Override
     public void run() {
@@ -45,25 +33,25 @@ public class MatchSimulator implements Simulator {
                 break;
             }
 
-            runMatches();
+            super.run();
             currentMinute++;
         }
     }
 
     private void updateEndGameVariables() {
-        int goalsHost  = currentMath.getEventCount(EventType.GOAL, currentMath.getHost());
-        int goalsGuest = currentMath.getEventCount(EventType.GOAL, currentMath.getGuest());
+        int goalsHost  = getCurrent().getEventCount(EventType.GOAL, getCurrent().getHost());
+        int goalsGuest = getCurrent().getEventCount(EventType.GOAL, getCurrent().getGuest());
 
         if (goalsHost > goalsGuest) {
-            increaseMotivation(currentMath.getHost(),  MOTIVATION_INCREASE_STEP);
-            increaseMotivation(currentMath.getGuest(), MOTIVATION_DECREASE_STEP);
+            increaseMotivation(getCurrent().getHost(),  MOTIVATION_INCREASE_STEP);
+            increaseMotivation(getCurrent().getGuest(), MOTIVATION_DECREASE_STEP);
         } else if (goalsHost > goalsGuest) {
-            increaseMotivation(currentMath.getGuest(), MOTIVATION_INCREASE_STEP);
-            increaseMotivation(currentMath.getHost(),  MOTIVATION_DECREASE_STEP);
+            increaseMotivation(getCurrent().getGuest(), MOTIVATION_INCREASE_STEP);
+            increaseMotivation(getCurrent().getHost(),  MOTIVATION_DECREASE_STEP);
         }
 
-        currentMath.getHost().setChemestry(currentMath.getHost().getChemestry() + CHEMESTRY_INCREASE_STEP);
-        currentMath.getGuest().setChemestry(currentMath.getGuest().getChemestry() + CHEMESTRY_INCREASE_STEP);
+        getCurrent().getHost().setChemestry(getCurrent().getHost().getChemestry() + CHEMESTRY_INCREASE_STEP);
+        getCurrent().getGuest().setChemestry(getCurrent().getGuest().getChemestry() + CHEMESTRY_INCREASE_STEP);
     }
 
     private void increaseMotivation(Team team, int step) {
@@ -72,14 +60,11 @@ public class MatchSimulator implements Simulator {
         }
     }
 
-    private void runMatches() {
-        for (Match match : matches) {
-            currentMath = match;
-            runEvents();
-
-            if (currentMinute == END_TIME) {
-                updateEndGameVariables();
-            }
+    @Override
+    void simulate() {
+        runEvents();
+        if (currentMinute == END_TIME) {
+            updateEndGameVariables();
         }
     }
 
@@ -122,39 +107,40 @@ public class MatchSimulator implements Simulator {
 
     private void registerEvent(EventType type, Player player) {
         Event event = new Event();
-        event.setMatch(currentMath);
+        event.setMatch(getCurrent());
         event.setMinute(currentMinute);
         event.setPlayer(player);
         event.setTeam(player.getTeam());
         event.setType(type);
 
-        currentMath.addEvent(event);
+        getCurrent().addEvent(event);
+        notifyListeners(event);
     }
 
     private boolean isHost(Team team) {
-        return team.getId() == currentMath.getHost().getId();
+        return team.getId() == getCurrent().getHost().getId();
     }
 
     private Team getTeamAdversary(Team team) {
-        if (team.getId() == currentMath.getHost().getId()) {
-            return currentMath.getGuest();
+        if (team.getId() == getCurrent().getHost().getId()) {
+            return getCurrent().getGuest();
         }
-        return currentMath.getHost();
+        return getCurrent().getHost();
     }
 
     private Team getTeamForRound() {
         if (currentMinute % 2 == 0) {
-            return currentMath.getHost();
+            return getCurrent().getHost();
         }
-        return currentMath.getGuest();
+        return getCurrent().getGuest();
     }
 
     private List<Player> getPlayersForRound(Team team) {
         List<Player> players = new ArrayList<>();
 
         for (Player player : team.getFormation().getFirstTeamPlayers()) {
-            if (currentMath.getEventCount(EventType.INJURY, player) == 0) {
-                if (currentMath.getEventCount(EventType.RED_CARD, player) == 0) {
+            if (getCurrent().getEventCount(EventType.INJURY, player) == 0) {
+                if (getCurrent().getEventCount(EventType.RED_CARD, player) == 0) {
                     players.add(player);
                 }
             }
