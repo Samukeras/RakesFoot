@@ -19,6 +19,9 @@ public class Manager extends Entity {
     @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
     private String name;
 
+    @DataBaseInfo(columnName = "team_id", dataType = INT_INTEGER)
+    private Team team;
+
     public int getId() {
         return id;
     }
@@ -35,4 +38,11 @@ public class Manager extends Entity {
         this.name = name;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }

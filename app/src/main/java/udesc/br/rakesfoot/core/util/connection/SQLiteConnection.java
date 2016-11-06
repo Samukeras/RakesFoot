@@ -9,19 +9,32 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class SQLiteConnection implements Connection<SQLiteDatabase> {
 
-    protected static final String DATABASE_NAME   = "Rakesfoot.db";
+    protected static final String DATABASE_NAME = "Rakesfoot.db";
 
     private static SQLiteConnection instance = null;
 
+    private int version;
+
     private SQLiteDatabase database;
-    private Context        context;
 
+    private Context context;
 
-    private SQLiteConnection(Context context, int version) {
+    private SQLiteConnection(Context context) {
         this.context  = context;
+        defineVersion();
         this.database = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
+    }
 
+    private void defineVersion() {
+        version = Connection.INITIAL_VERSION;
+        if (databaseExist(this.context)) {
+            version = Connection.CURRENT_VERSION;
+        }
         this.versionHandler(version);
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public SQLiteDatabase getConnection() {
@@ -63,13 +76,20 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
 
     }
 
-
     public static SQLiteConnection getInstance(Context context, int version) {
         if(instance == null || context != instance.getContext()) {
-            instance = new SQLiteConnection(context, version);
+            instance = new SQLiteConnection(context);
         }
 
         return instance;
+    }
+
+    public static boolean databaseExist(Context context) {
+        return context.getDatabasePath(DATABASE_NAME).exists();
+    }
+
+    public static boolean deleteDataBase(Context context) {
+        return context.deleteDatabase(DATABASE_NAME);
     }
 
 }

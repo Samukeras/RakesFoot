@@ -47,4 +47,13 @@ public class Season extends Entity {
     public boolean addCaChampionship(Championship championship) {
         return championships.add(championship);
     }
+
+    public Championship getChampionship(ChampionshipType type) {
+        for (Championship championship : championships) {
+            if (championship.type() == type) {
+                return championship;
+            }
+        }
+        return null;
+    }
 }

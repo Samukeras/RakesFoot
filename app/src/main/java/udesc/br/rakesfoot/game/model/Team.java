@@ -21,7 +21,7 @@ import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STR
 @Table(name = "team")
 public class Team extends Entity {
 
-    @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
+    @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER)
     private int    id;
 
     @DataBaseInfo(columnName = "chemestry", dataType = DOUBLE_NUMERIC)

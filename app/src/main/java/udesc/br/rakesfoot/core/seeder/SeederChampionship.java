@@ -1,8 +1,10 @@
 package udesc.br.rakesfoot.core.seeder;
 
+import udesc.br.rakesfoot.core.model.Entity;
 import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.game.model.Championship;
+import udesc.br.rakesfoot.game.model.ChampionshipType;
 import udesc.br.rakesfoot.game.model.Season;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoChampionship;
 
@@ -10,47 +12,31 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoChampionship;
  * Created by felic on 03/11/2016.
  */
 
-public class SeederChampionship extends EntitySeeder {
-
-    Season season;
-    Championship serieA,
-                 serieB;
-
-
-    public SeederChampionship(Connection connection, Season season) {
-        super(connection);
-        this.season = season;
-    }
+public class SeederChampionship extends EntitySeeder<Championship, Season> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoChampionship(this.connection.getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoChampionship(getConnection().getContext(), Connection.INITIAL_VERSION);
     }
 
     @Override
-    public void seed(Connection connection) {
-        Persistible persistible = getDao();
-        persistible.onCreate();
+    public void seed(Season parent) {
+        createChampionship(parent, ChampionshipType.DIVISION_1, "Brasileirão Série A");
+        createChampionship(parent, ChampionshipType.DIVISION_2, "Brasileirão Série B");
+    }
 
-        serieA = new Championship();
-        serieA.setName("Brasileirão Série A");
+    private void createChampionship(Season season, ChampionshipType type, String description) {
+        Championship serieA = new Championship();
+        serieA.setName(description);
         serieA.setSeason(season);
 
-        persistible.insert(serieA);
+        getDao().insert(serieA);
 
-        serieB = new Championship();
-        serieB.setName("Brasileirão Série B");
-        serieB.setSeason(season);
-
-        persistible.insert(serieB);
+        handle(serieA);
     }
 
-    public Championship getSerieA() {
-        return serieA;
-    }
+    @Override
+    public void crop(Season parent) {
 
-    public Championship getSerieB() {
-        return serieB;
     }
-
 }

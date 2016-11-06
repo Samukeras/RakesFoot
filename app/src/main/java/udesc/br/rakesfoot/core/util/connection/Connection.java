@@ -19,6 +19,8 @@ public interface Connection<ConnectionType> {
 
     public void close();
 
+    public int getVersion();
+
     public void versionHandler(int version);
 
     public void onCreate();

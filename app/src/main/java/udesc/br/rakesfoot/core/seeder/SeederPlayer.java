@@ -12,58 +12,52 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoPlayer;
 /**
  * Created by felic on 31/10/2016.
  */
-public class SeederPlayer extends EntitySeeder {
-
-    private static int NUMBER = 22;
-    private Team[] teams;
-
-    public SeederPlayer(Connection connection, Team[] teams) {
-        super(connection);
-        this.teams = teams;
-        insertPlayers();
-    }
+public class SeederPlayer extends EntitySeeder<Player, Team> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoPlayer(connection.getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoPlayer(getConnection().getContext(), Connection.INITIAL_VERSION);
     }
 
-    public void insertPlayers() {
-        int numeroTime = 0;
-
-        for(Team team : teams) {
-            for(int i = 0; i < NUMBER; i++) {
-                Player player = new Player();
-                if(numeroTime < 20) {
-                    player.setOverral(IntRandomUtils.getNextIntFromValueToInterval(80, 99));
-                    player.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(80, 99));
-                } else {
-                    player.setOverral(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
-                    player.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
-                }
-                player.setPhysical(100);
-                String name     = NameUtils.generateRandomFirstName(connection.getContext()),
-                       lastName = NameUtils.generateRandomLastName(connection.getContext());
-                player.setName(name + " " + lastName);
-                if(i > 18) {
-                    player.setPosition(Position.FORWARD);
-                } else if(i > 10) {
-                    player.setPosition(Position.MIDFIELDER);
-                } else if(i > 2) {
-                    player.setPosition(Position.DEFENDER);
-                } else {
-                    player.setPosition(Position.GOALKEEPER);
-                }
-                player.setTeam(team);
+    public void insertPlayers(Team team) {
+        for(int i = 0; i < 22; i++) {
+            Player player = new Player();
+            if(team.getId() <= 20) {
+                player.setOverral(IntRandomUtils.getNextIntFromValueToInterval(70, 90));
+                player.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(80, 99));
+            } else {
+                player.setOverral(IntRandomUtils.getNextIntFromValueToInterval(50, 70));
+                player.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
             }
+            player.setPhysical(100);
+            String name     = NameUtils.generateRandomFirstName(getConnection().getContext()),
+                   lastName = NameUtils.generateRandomLastName(getConnection().getContext());
+            player.setName(name + " " + lastName);
+            if(i > 18) {
+                player.setPosition(Position.FORWARD);
+            } else if(i > 10) {
+                player.setPosition(Position.MIDFIELDER);
+            } else if(i > 2) {
+                player.setPosition(Position.DEFENDER);
+            } else {
+                player.setPosition(Position.GOALKEEPER);
+            }
+            player.setTeam(team);
+            team.addPlayer(player);
+
+            getDao().insert(player);
+
+            handle(player);
         }
     }
 
     @Override
-    public void seed(Connection connection) {
-        connection.beginTransaction();
-        Persistible persistible = getDao();
-        persistible.onCreate();
+    public void seed(Team parent) {
+        insertPlayers(parent);
     }
 
+    @Override
+    public void crop(Team parent) {
+
+    }
 }

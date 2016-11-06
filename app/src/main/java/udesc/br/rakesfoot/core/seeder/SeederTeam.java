@@ -5,6 +5,10 @@ import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.util.IntRandomUtils;
 import udesc.br.rakesfoot.core.util.NameUtils;
 import udesc.br.rakesfoot.core.util.connection.Connection;
+import udesc.br.rakesfoot.game.model.ChampionshipType;
+import udesc.br.rakesfoot.game.model.Game;
+import udesc.br.rakesfoot.game.model.Season;
+import udesc.br.rakesfoot.game.model.Stadium;
 import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
@@ -14,7 +18,6 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
 public class SeederTeam extends EntitySeeder {
 
-    private Team[] teams               = new Team[40];
     private static String[] teamsNames = {
              "Palmeiras"
             ,"Flamengo"
@@ -58,41 +61,48 @@ public class SeederTeam extends EntitySeeder {
             ,"Sampaio Corrêa"
     };
 
-    public SeederTeam(Connection connection) {
-        super(connection);
-    }
-
     @Override
     public Persistible getDao() {
-        return new SqliteDaoTeam(this.connection.getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoTeam(getConnection().getContext(), Connection.INITIAL_VERSION);
     }
 
     @Override
-    public void seed(Connection connection) {
-        Persistible persistible = getDao();
-        persistible.onCreate();
+    public void seed(Object parent) {
+        Season season = Game.getInstance().getCurrentSeason();
 
-        for(int i = 0; i < teams.length; i++) {
+        for(int i = 0; i < teamsNames.length; i++) {
             Team team = new Team();
             team.setId(i);
             if(i < 20) {
                 team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
                 team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
+                season.getChampionship(ChampionshipType.DIVISION_1).addTeams(team);
             } else {
                 team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
                 team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
+                season.getChampionship(ChampionshipType.DIVISION_2).addTeams(team);
             }
+
             team.setName(teamsNames[i]);
             team.setMainColor(Color.getRandomColor());
-            team.setSecondaryColor(Color.getRandomColor());
-            team.getStadium().setId(i);
+            team.setStadium(new Stadium());
+            team.getStadium().setId(team.getId());
 
-            teams[i] = team;
+            Color secondary;
+            do {
+                secondary = Color.getRandomColor();
+            } while (secondary.getHexadecimal() != team.getMainColor().getHexadecimal());
+
+            team.setSecondaryColor(secondary);
+
+            getDao().insert(team);
+
+            handle(team);
         }
     }
 
-    public Team[] getTeams() {
-        return teams;
-    }
+    @Override
+    public void crop(Object parent) {
 
+    }
 }
