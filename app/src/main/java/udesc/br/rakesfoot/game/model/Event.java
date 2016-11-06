@@ -16,7 +16,7 @@ public class Event extends Entity{
     @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
     private int   id;
 
-    @DataBaseInfo(columnName = "descricao", dataType = STRING_VARCHAR)
+    @DataBaseInfo(columnName = "description", dataType = STRING_VARCHAR)
     private int   minute;
 
     @DataBaseInfo(columnName = "match_id", dataType = STRING_VARCHAR)

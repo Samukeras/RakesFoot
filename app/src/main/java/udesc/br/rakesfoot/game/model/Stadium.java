@@ -1,7 +1,11 @@
 package udesc.br.rakesfoot.game.model;
 
 import udesc.br.rakesfoot.core.model.Entity;
+import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
 import udesc.br.rakesfoot.core.persistence.annotation.Table;
+
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STRING_VARCHAR;
 
 /**
  * Created by felic on 29/10/2016.
@@ -9,10 +13,14 @@ import udesc.br.rakesfoot.core.persistence.annotation.Table;
 @Table(name = "stadium")
 public class Stadium extends Entity {
 
-    private int    id,
-                   maxCapacity;
-    private String name;
+    @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
+    private int id;
 
+    @DataBaseInfo(columnName = "capacity", dataType = INT_INTEGER)
+    private int maxCapacity;
+
+    @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
+    private String name;
 
     public Stadium() {
         this(0, 0, null);

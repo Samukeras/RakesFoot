@@ -1,6 +1,7 @@
 package udesc.br.rakesfoot.game.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import udesc.br.rakesfoot.core.model.Color;
 import udesc.br.rakesfoot.core.model.Entity;
@@ -24,7 +25,7 @@ public class Team extends Entity {
     private int    id;
 
     @DataBaseInfo(columnName = "chemestry", dataType = DOUBLE_NUMERIC)
-    private int    chemestry; //Entrosamento
+    private int    chemestry;
 
     @DataBaseInfo(columnName = "motivation", dataType = DOUBLE_NUMERIC)
     private int    motivation;
@@ -45,7 +46,7 @@ public class Team extends Entity {
 
     private Formation formation;
 
-    private ArrayList<Player> players;
+    private List<Player> players = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -111,7 +112,7 @@ public class Team extends Entity {
         this.stadium = stadium;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -121,6 +122,8 @@ public class Team extends Entity {
 
     public void removePlayer(Player player) {
         players.remove(player);
+        formation.removeFirstTeamPlayer(player);
+        formation.removeSubstitute(player);
     }
 
     public Formation getFormation() {

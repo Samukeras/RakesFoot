@@ -2,34 +2,44 @@ package udesc.br.rakesfoot.game.model;
 
 import java.util.List;
 
+import udesc.br.rakesfoot.core.model.Entity;
+import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
 import udesc.br.rakesfoot.core.persistence.annotation.Table;
+
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
 
 /**
  * Created by felic on 30/10/2016.
  */
 @Table(name = "match")
-public class Match {
+public class Match extends Entity {
 
-    private int i;
+    @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
+    private int id;
 
+    @DataBaseInfo(columnName = "championship_id", dataType = INT_INTEGER)
     private Championship championship;
 
+    @DataBaseInfo(columnName = "host_id", dataType = INT_INTEGER)
     private Team host;
 
+    @DataBaseInfo(columnName = "guest_id", dataType = INT_INTEGER)
     private Team guest;
 
+    @DataBaseInfo(columnName = "audience", dataType = INT_INTEGER)
     private int audience;
 
+    @DataBaseInfo(columnName = "round", dataType = INT_INTEGER)
     private int round; // rodada
 
     private List<Event> events;
 
-    public int getI() {
-        return i;
+    public int getId() {
+        return id;
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Championship getChampionship() {
