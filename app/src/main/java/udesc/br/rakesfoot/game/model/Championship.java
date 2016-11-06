@@ -1,5 +1,8 @@
 package udesc.br.rakesfoot.game.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import udesc.br.rakesfoot.core.model.Entity;
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.*;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
@@ -20,11 +23,13 @@ public class Championship extends Entity {
     @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
     private String name;
 
-    @DataBaseInfo(key = true, columnName = "season", dataType = INT_INTEGER, sequential = true)
+    @DataBaseInfo(columnName = "season", dataType = INT_INTEGER)
     private Season season;
 
-    private Team[] teams;
+    @DataBaseInfo(columnName = "type", dataType = INT_INTEGER)
+    private ChampionshipType type;
 
+    private List<Team> teams = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -50,12 +55,27 @@ public class Championship extends Entity {
         this.season = season;
     }
 
-    public Team[] getTeams() {
+    public List<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Team[] teams) {
-        this.teams = teams;
+    public boolean addTeams(Team team) {
+        return teams.add(team);
     }
 
+    public int getType() {
+        return type.getValue();
+    }
+
+    public ChampionshipType type() {
+        return type;
+    }
+
+    public void setType(ChampionshipType type) {
+        this.type = type;
+    }
+
+    public void setType(int type) {
+        this.type = ChampionshipType.getChampionshipType(type);
+    }
 }

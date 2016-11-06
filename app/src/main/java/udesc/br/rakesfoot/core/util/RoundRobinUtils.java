@@ -39,13 +39,13 @@ public class RoundRobinUtils {
                 team2--;
             }
 
-            map.put(turnAround(team1, teams), turnAround(team2, teams));
+            map.put(loop(team1, teams), loop(team2, teams));
         }
 
         return map;
     }
 
-    private static int turnAround(int index, int max) {
+    private static int loop(int index, int max) {
         if (index <= 0) {
             return max + index;
         }
