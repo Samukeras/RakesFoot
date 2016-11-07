@@ -11,8 +11,8 @@ import udesc.br.rakesfoot.game.model.Season;
  */
 public class SqliteDaoSeason extends DAOGeneric<Season> {
 
-    public SqliteDaoSeason(Context context, int version) {
-        super(context, version);
+    public SqliteDaoSeason(Context context) {
+        super(context);
     }
 
 }

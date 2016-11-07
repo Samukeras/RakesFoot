@@ -16,7 +16,7 @@ public class SeederPlayer extends EntitySeeder<Player, Team> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoPlayer(getConnection().getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoPlayer(getConnection().getContext());
     }
 
     public void insertPlayers(Team team) {

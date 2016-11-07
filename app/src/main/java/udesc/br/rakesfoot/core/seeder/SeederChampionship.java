@@ -16,7 +16,7 @@ public class SeederChampionship extends EntitySeeder<Championship, Season> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoChampionship(getConnection().getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoChampionship(getConnection().getContext());
     }
 
     @Override

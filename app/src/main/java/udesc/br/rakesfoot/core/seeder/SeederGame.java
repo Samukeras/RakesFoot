@@ -1,7 +1,6 @@
 package udesc.br.rakesfoot.core.seeder;
 
 import udesc.br.rakesfoot.core.persistence.Persistible;
-import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.game.model.Game;
 
 /**
@@ -15,7 +14,21 @@ public class SeederGame extends EntitySeeder<Game, Object> {
     }
 
     public void start() {
-        handle(Game.getInstance());
+        EntitySeeder season       = new SeederSeason();
+        EntitySeeder championship = new SeederChampionship();
+        EntitySeeder team         = new SeederTeam();
+        EntitySeeder stadium      = new SeederStadium();
+        EntitySeeder player       = new SeederPlayer();
+        EntitySeeder match        = new SeederMatch();
+
+        this.addSucessor(season);
+        season.addSucessor(championship);
+        championship.addSucessor(team);
+        championship.addSucessor(match);
+        team.addSucessor(player);
+        team.addSucessor(stadium);
+
+        handleMethod(this, null);
     }
 
     @Override

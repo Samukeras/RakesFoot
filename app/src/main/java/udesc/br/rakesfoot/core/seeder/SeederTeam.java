@@ -63,7 +63,7 @@ public class SeederTeam extends EntitySeeder {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoTeam(getConnection().getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoTeam(getConnection().getContext());
     }
 
     @Override

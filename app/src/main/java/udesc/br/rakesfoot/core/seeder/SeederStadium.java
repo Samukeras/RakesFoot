@@ -14,7 +14,7 @@ public class SeederStadium extends EntitySeeder<Stadium, Team> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoStadium(getConnection().getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoStadium(getConnection().getContext());
     }
 
     @Override

@@ -14,7 +14,7 @@ public class SeederSeason extends EntitySeeder<Season, Game> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoSeason(getConnection().getContext(), Connection.INITIAL_VERSION);
+        return new SqliteDaoSeason(getConnection().getContext());
     }
 
     @Override

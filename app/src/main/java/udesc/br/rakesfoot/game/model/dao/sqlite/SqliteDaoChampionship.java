@@ -10,8 +10,8 @@ import udesc.br.rakesfoot.game.model.Championship;
  */
 public class SqliteDaoChampionship extends DAOGeneric<Championship> {
 
-    public SqliteDaoChampionship(Context context, int version) {
-        super(context, version);
+    public SqliteDaoChampionship(Context context) {
+        super(context);
     }
 
 }

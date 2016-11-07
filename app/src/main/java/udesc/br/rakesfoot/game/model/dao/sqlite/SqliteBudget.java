@@ -11,7 +11,7 @@ import udesc.br.rakesfoot.game.model.Budget;
 
 public class SqliteBudget extends DAOGeneric<Budget> {
 
-    public SqliteBudget(Context context, int version) {
-        super(context, version);
+    public SqliteBudget(Context context) {
+        super(context);
     }
 }

@@ -76,7 +76,7 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
 
     }
 
-    public static SQLiteConnection getInstance(Context context, int version) {
+    public static SQLiteConnection getInstance(Context context) {
         if(instance == null || context != instance.getContext()) {
             instance = new SQLiteConnection(context);
         }

@@ -10,8 +10,8 @@ import udesc.br.rakesfoot.game.model.Manager;
  */
 public class SqliteDaoManager extends DAOGeneric<Manager> {
 
-    public SqliteDaoManager(Context context, int version) {
-        super(context, version);
+    public SqliteDaoManager(Context context) {
+        super(context);
     }
 
 }

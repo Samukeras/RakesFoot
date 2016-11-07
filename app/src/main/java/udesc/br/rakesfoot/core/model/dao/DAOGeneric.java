@@ -39,9 +39,9 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     protected Relationships    relationships;
 
 
-    public DAOGeneric(Context context, int version) {
+    public DAOGeneric(Context context) {
         this.entity   = getNewEntity();
-        connection    = SQLiteConnection.getInstance(context, version);
+        connection    = SQLiteConnection.getInstance(context);
         relationships = new Relationships();
         setRelations();
     }

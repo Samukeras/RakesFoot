@@ -3,7 +3,6 @@ package udesc.br.rakesfoot.core.seeder;
 import java.util.ArrayList;
 import java.util.List;
 
-import udesc.br.rakesfoot.core.model.Entity;
 import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 
@@ -33,16 +32,18 @@ public abstract class EntitySeeder<Seed, Parent> implements Seeder<Parent> {
 
     protected final void handle(Seed parent) {
         for (EntitySeeder seeder : chain) {
-            callMethod((Parent) parent);
+            handleMethod(seeder, (Parent) parent);
         }
     }
 
-    private void callMethod(Parent parent) {
+    protected void handleMethod(Seeder seeder, Parent parent) {
         if (connection.getVersion() == Connection.INITIAL_VERSION) {
-            getDao().onCreate();
-            seed(parent);
+            if (getDao() != null) {
+                getDao().onCreate();
+            }
+            seeder.seed(parent);
         } else {
-            crop(parent);
+            seeder.crop(parent);
         }
     }
 

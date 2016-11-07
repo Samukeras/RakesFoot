@@ -10,7 +10,7 @@ import udesc.br.rakesfoot.game.model.Event;
  */
 public class SqliteDaoEvent extends DAOGeneric<Event> {
 
-    public SqliteDaoEvent(Context context, int version) {
-        super(context, version);
+    public SqliteDaoEvent(Context context) {
+        super(context);
     }
 }

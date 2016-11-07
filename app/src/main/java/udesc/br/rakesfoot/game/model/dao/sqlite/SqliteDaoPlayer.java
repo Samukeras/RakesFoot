@@ -10,8 +10,8 @@ import udesc.br.rakesfoot.game.model.Player;
  */
 public class SqliteDaoPlayer extends DAOGeneric<Player> {
 
-    public SqliteDaoPlayer(Context context, int version) {
-        super(context, version);
+    public SqliteDaoPlayer(Context context) {
+        super(context);
     }
 
 }

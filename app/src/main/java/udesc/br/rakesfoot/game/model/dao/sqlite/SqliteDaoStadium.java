@@ -10,8 +10,8 @@ import udesc.br.rakesfoot.game.model.Stadium;
  */
 public class SqliteDaoStadium extends DAOGeneric<Stadium> {
 
-    public SqliteDaoStadium(Context context, int version) {
-        super(context, version);
+    public SqliteDaoStadium(Context context) {
+        super(context);
     }
 
 }

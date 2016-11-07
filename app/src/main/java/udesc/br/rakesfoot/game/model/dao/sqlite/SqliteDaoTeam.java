@@ -10,8 +10,8 @@ import udesc.br.rakesfoot.game.model.Team;
  */
 public class SqliteDaoTeam extends DAOGeneric<Team> {
 
-    public SqliteDaoTeam(Context context, int version) {
-        super(context, version);
+    public SqliteDaoTeam(Context context) {
+        super(context);
     }
 
 }
