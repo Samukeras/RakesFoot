@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import udesc.br.rakesfoot.core.seeder.SeederGame;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.core.util.connection.SQLiteConnection;
+import udesc.br.rakesfoot.game.model.Game;
 
 public class ManagerActivity extends AppCompatActivity {
 
@@ -20,6 +22,7 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     public void startNewGame(View view) {
+        Game.getInstance().getManager().setName(((TextView) findViewById(R.id.textName)).getText().toString());
         SeederGame seeder = new SeederGame();
         seeder.setConnection(SQLiteConnection.getInstance(getBaseContext()));
         seeder.start();

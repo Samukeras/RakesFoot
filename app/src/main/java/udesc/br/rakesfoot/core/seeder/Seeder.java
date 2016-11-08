@@ -9,5 +9,5 @@ public interface Seeder<ParentModel> {
 
     public void crop(ParentModel parent);
 
-
+    public void beforeSeed();
 }

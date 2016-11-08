@@ -22,7 +22,11 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
     private SQLiteConnection(Context context) {
         this.context  = context;
         defineVersion();
-        this.database = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
+        open();
+    }
+
+    protected void open() {
+        this.database = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_APPEND, null);
     }
 
     private void defineVersion() {
@@ -42,11 +46,15 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
     }
 
     public void beginTransaction() {
-        database.beginTransaction();
+//        database.beginTransaction();
+    }
+
+    public void commit() {
+//        database.setTransactionSuccessful();
     }
 
     public void endTransaction() {
-        database.endTransaction();
+//        database.endTransaction();
     }
 
     public void close() {
@@ -89,7 +97,13 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
     }
 
     public static boolean deleteDataBase(Context context) {
-        return context.deleteDatabase(DATABASE_NAME);
+        getInstance(context).version = INITIAL_VERSION;
+        getInstance(context).close();
+
+        boolean ok = context.deleteDatabase(DATABASE_NAME);
+        getInstance(context).open();
+
+        return ok;
     }
 
 }

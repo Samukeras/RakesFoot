@@ -5,6 +5,7 @@ import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.util.IntRandomUtils;
 import udesc.br.rakesfoot.core.util.NameUtils;
 import udesc.br.rakesfoot.core.util.connection.Connection;
+import udesc.br.rakesfoot.game.model.Championship;
 import udesc.br.rakesfoot.game.model.ChampionshipType;
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Season;
@@ -16,7 +17,7 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
  * Created by felic on 03/11/2016.
  */
 
-public class SeederTeam extends EntitySeeder {
+public class SeederTeam extends EntitySeeder<Team, Championship> {
 
     private static String[] teamsNames = {
              "Palmeiras"
@@ -67,20 +68,28 @@ public class SeederTeam extends EntitySeeder {
     }
 
     @Override
-    public void seed(Object parent) {
+    public void seed(Championship parent) {
         Season season = Game.getInstance().getCurrentSeason();
 
-        for(int i = 0; i < teamsNames.length; i++) {
+        int start = 0,
+              end = 20;
+
+        boolean division_1 = parent.type() == ChampionshipType.DIVISION_1;
+
+        if (!division_1) {
+            start = 20;
+            end   = 40;
+        }
+
+        for(int i = start; i < end; i++) {
             Team team = new Team();
             team.setId(i);
-            if(i < 20) {
+            if(division_1) {
                 team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
                 team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(60, 80));
-                season.getChampionship(ChampionshipType.DIVISION_1).addTeams(team);
             } else {
                 team.setChemestry(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
                 team.setMotivation(IntRandomUtils.getNextIntFromValueToInterval(40, 60));
-                season.getChampionship(ChampionshipType.DIVISION_2).addTeams(team);
             }
 
             team.setName(teamsNames[i]);
@@ -91,10 +100,10 @@ public class SeederTeam extends EntitySeeder {
             Color secondary;
             do {
                 secondary = Color.getRandomColor();
-            } while (secondary.getHexadecimal() != team.getMainColor().getHexadecimal());
-
+            } while (secondary.getHexadecimal() == team.getMainColor().getHexadecimal());
             team.setSecondaryColor(secondary);
 
+            parent.addTeams(team);
             getDao().insert(team);
 
             handle(team);
@@ -102,7 +111,7 @@ public class SeederTeam extends EntitySeeder {
     }
 
     @Override
-    public void crop(Object parent) {
+    public void crop(Championship parent) {
 
     }
 }

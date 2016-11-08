@@ -13,22 +13,11 @@ import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STR
 @Table(name = "manager")
 public class Manager extends Entity {
 
-    @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
-    private int id;
-
     @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
     private String name;
 
     @DataBaseInfo(columnName = "team_id", dataType = INT_INTEGER)
     private Team team;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

@@ -25,6 +25,9 @@ public class Game {
     }
 
     public Manager getManager() {
+        if (manager == null) {
+            manager = new Manager();
+        }
         return manager;
     }
 

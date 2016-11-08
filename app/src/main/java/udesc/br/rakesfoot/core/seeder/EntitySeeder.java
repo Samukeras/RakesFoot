@@ -36,11 +36,16 @@ public abstract class EntitySeeder<Seed, Parent> implements Seeder<Parent> {
         }
     }
 
+    @Override
+    public void beforeSeed() {
+        if (getDao() != null) {
+            getDao().onCreate();
+        }
+    }
+
     protected void handleMethod(Seeder seeder, Parent parent) {
         if (connection.getVersion() == Connection.INITIAL_VERSION) {
-            if (getDao() != null) {
-                getDao().onCreate();
-            }
+            seeder.beforeSeed();
             seeder.seed(parent);
         } else {
             seeder.crop(parent);

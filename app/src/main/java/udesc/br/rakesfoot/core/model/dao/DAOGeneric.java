@@ -104,8 +104,9 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
             for(String column : getRelationships().getAllNonSequentialsColumnsNames()) {
                 if(!first) {
                     sql.append(", ");
+                    first = false;
                 }
-                sql.append(BeanUtils.callGetter(entity, column));
+                sql.append("'" + BeanUtils.callGetter(entity, column) + "'");
             }
 
             sql.append(");");
@@ -113,12 +114,15 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 //               .append(StringUtils.join(", ", getRelationships().getAllColumnsNames()));
 
             connection.getConnection().execSQL(sql.toString());
-            connection.endTransaction();
+            connection.commit();
 
             return true;
         } catch(Exception exception) {
-            return false;
+            exception.printStackTrace();
+        } finally {
+//            connection.endTransaction();
         }
+        return false;
     }
 
     @Override
@@ -138,11 +142,14 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
             }
 
             connection.getConnection().execSQL(query.toString());
-            connection.endTransaction();
+            connection.commit();
 
             return true;
         } catch(Exception exception) {
+            exception.printStackTrace();
             return false;
+        } finally {
+            connection.endTransaction();
         }
     }
 
@@ -173,11 +180,14 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
             }
 
             connection.getConnection().execSQL(query.toString());
-            connection.endTransaction();
+            connection.commit();
 
             return true;
         } catch(Exception exception) {
+            exception.printStackTrace();
             return false;
+        } finally {
+            connection.endTransaction();
         }
     }
 
@@ -242,7 +252,14 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
         sql.append(");");
 
-        connection.getConnection().execSQL(sql.toString());
+        int teste = 0;
+        try {
+            connection.getConnection().execSQL(sql.toString());
+            teste++;
+        } catch (Exception e) {
+            e.printStackTrace();
+            teste++;
+        }
     }
 
     private String getScriptPk() {
