@@ -26,14 +26,15 @@ public class SeederChampionship extends EntitySeeder<Championship, Season> {
     }
 
     private void createChampionship(Season season, ChampionshipType type, String description) {
-        Championship serie = new Championship();
-        serie.setName(description);
-        serie.setType(type);
-        serie.setSeason(season);
+        Championship champ = new Championship();
+        champ.setName(description);
+        champ.setType(type);
+        champ.setSeason(season);
+        season.addCaChampionship(champ);
 
-        getDao().insert(serie);
+        getDao().insert(champ);
 
-        handle(serie);
+        handle(champ);
     }
 
     @Override

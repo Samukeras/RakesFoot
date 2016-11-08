@@ -73,4 +73,12 @@ public class ModelToDataBaseRelation {
         this.type = type;
     }
 
+    public String getCreateExpression() {
+        String result = getColumnName() + " " + getDbType();
+        if (isSequential() && isKey()) {
+            result += " PRIMARY KEY AUTOINCREMENT";
+        }
+        return result;
+    }
+
 }

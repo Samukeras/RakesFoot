@@ -13,9 +13,9 @@ import java.util.Date;
 public enum EntityDataBaseTypeRelation {
 
      DOUBLE_NUMERIC(double.class, "numeric")
-    ,INT_INTEGER   (int.class   , "int")
+    ,INT_INTEGER   (int.class   , "integer")
     ,DATE_DATE     (Date.class  , "date")
-    ,LONG_INT      (long.class  , "int")
+    ,LONG_INT      (long.class  , "integer")
     ,LONG_BIGINT   (long.class  , "bigint")
     ,STRING_VARCHAR(String.class, "varchar");
 

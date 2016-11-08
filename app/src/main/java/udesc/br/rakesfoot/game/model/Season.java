@@ -56,4 +56,9 @@ public class Season extends Entity {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(year);
+    }
 }

@@ -8,23 +8,53 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import udesc.br.rakesfoot.core.model.dao.DAOGeneric;
 import udesc.br.rakesfoot.core.seeder.SeederGame;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.core.util.connection.SQLiteConnection;
 import udesc.br.rakesfoot.game.model.Game;
+import udesc.br.rakesfoot.game.model.Manager;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoManager;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
 public class ManagerActivity extends AppCompatActivity {
+
+    Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
+
+        connection = SQLiteConnection.getInstance(getBaseContext());
+
+        handleVersion();
     }
 
-    public void startNewGame(View view) {
+    private void handleVersion() {
+        if (connection.getVersion() == Connection.INITIAL_VERSION) {
+            ((TextView) findViewById(R.id.textName)).setText("");
+            ((TextView) findViewById(R.id.textTime)).setText("Não definido");
+            ((TextView) findViewById(R.id.btnDelete)).setEnabled(false);
+            ((TextView) findViewById(R.id.textName)).setEnabled(true);
+        } else {
+            DAOGeneric dao = new SqliteDaoManager(getBaseContext());
+            dao.persists(Game.getInstance().getManager());
+
+            dao = new SqliteDaoTeam(getBaseContext());
+            dao.persists(Game.getInstance().getManager().getTeam());
+
+            ((TextView) findViewById(R.id.textName)).setText(Game.getInstance().getManager().getName());
+            ((TextView) findViewById(R.id.textTime)).setText(Game.getInstance().getManager().getTeam().getName());
+            ((TextView) findViewById(R.id.textName)).setEnabled(false);
+            ((TextView) findViewById(R.id.btnDelete)).setEnabled(true);
+        }
+    }
+
+    public void playGame(View view) {
         Game.getInstance().getManager().setName(((TextView) findViewById(R.id.textName)).getText().toString());
         SeederGame seeder = new SeederGame();
-        seeder.setConnection(SQLiteConnection.getInstance(getBaseContext()));
+        seeder.setConnection(connection);
         seeder.start();
 
         startActivity(new Intent(getBaseContext(), TeamActivity.class));
@@ -32,8 +62,6 @@ public class ManagerActivity extends AppCompatActivity {
 
     public void deleteGame(View view) {
         SQLiteConnection.deleteDataBase(getBaseContext());
-        SQLiteConnection.getInstance(getBaseContext()).versionHandler(Connection.INITIAL_VERSION);
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(ManagerActivity.this);
 
         dialog.setTitle("Sucesso");
@@ -43,7 +71,9 @@ public class ManagerActivity extends AppCompatActivity {
 
         dialog.setPositiveButton("Fechar", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {}
+            public void onClick(DialogInterface dialog, int which) {
+                handleVersion();
+            }
         });
 
         dialog.create();

@@ -49,6 +49,9 @@ public class Event extends Entity{
     }
 
     public Match getMatch() {
+        if (match == null) {
+            match = new Match();
+        }
         return match;
     }
 
@@ -57,6 +60,9 @@ public class Event extends Entity{
     }
 
     public Player getPlayer() {
+        if (player == null) {
+            player = new Player();
+        }
         return player;
     }
 
@@ -65,6 +71,9 @@ public class Event extends Entity{
     }
 
     public Team getTeam() {
+        if (team == null) {
+            team = new Team();
+        }
         return team;
     }
 

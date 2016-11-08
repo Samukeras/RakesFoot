@@ -48,6 +48,9 @@ public class Championship extends Entity {
     }
 
     public Season getSeason() {
+        if (this.season == null) {
+            this.season = new Season();
+        }
         return season;
     }
 
@@ -81,5 +84,10 @@ public class Championship extends Entity {
 
     public void setType(int type) {
         this.type = ChampionshipType.getChampionshipType(type);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
     }
 }

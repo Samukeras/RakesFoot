@@ -2,6 +2,7 @@ package udesc.br.rakesfoot.core.util.connection;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -21,20 +22,28 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
 
     private SQLiteConnection(Context context) {
         this.context  = context;
-        defineVersion();
         open();
+        defineVersion();
     }
 
     protected void open() {
         this.database = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_APPEND, null);
     }
 
-    private void defineVersion() {
+    public void defineVersion() {
         version = Connection.INITIAL_VERSION;
-        if (databaseExist(this.context)) {
+        if (databaseExist(this.context) && tableExists("manager")) {
             version = Connection.CURRENT_VERSION;
         }
         this.versionHandler(version);
+    }
+
+    public boolean tableExists(String tableName) {
+        String sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'";
+
+        Cursor cursor = database.rawQuery(String.format(sql, tableName), new String[0]);
+
+        return cursor.moveToFirst();
     }
 
     public int getVersion() {
@@ -97,7 +106,7 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
     }
 
     public static boolean deleteDataBase(Context context) {
-        getInstance(context).version = INITIAL_VERSION;
+        getInstance(context).defineVersion();
         getInstance(context).close();
 
         boolean ok = context.deleteDatabase(DATABASE_NAME);

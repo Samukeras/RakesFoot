@@ -15,7 +15,7 @@ import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT
 @Table(name = "budget")
 public class Budget extends Entity {
 
-    @DataBaseInfo(key = true, columnName = "team_id", dataType = INT_INTEGER, sequential = true)
+    @DataBaseInfo(key = true, columnName = "team_id", dataType = INT_INTEGER)
     private Team team;
 
     @DataBaseInfo(columnName = "start_cash", dataType = DOUBLE_NUMERIC)
@@ -60,5 +60,10 @@ public class Budget extends Entity {
 
     public void addEntry(BudgetEntry entry) {
         this.entries.add(entry);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(team.getId());
     }
 }

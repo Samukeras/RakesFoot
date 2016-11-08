@@ -12,7 +12,7 @@
     tools:context="udesc.br.rakesfoot.ManagerActivity">
 
     <TextView
-        android:text="O Rakesfoot é um jogo em que você assume o comando de um time de futebol. Compra e vende jogadores. Define táticas. Participa de competições de clubes e seleções. É um jogo leve, rápido e divertido."
+        android:text="O Rakesfoot é um jogo em que você assume o comando de um time de futebol. Compra e vende jogadores. Define táticas. Participa de competições de clubes. É um jogo leve, rápido e divertido."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -38,50 +38,42 @@
         android:id="@+id/textName" />
 
     <TextView
-        android:text="Time sorteado:"
+        android:text="Time:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textName"
         android:layout_alignParentStart="true"
         android:layout_marginStart="31dp"
         android:layout_marginTop="51dp"
-        android:id="@+id/textView4" />
+        android:id="@+id/labelTeam" />
 
-    <TextView
+    <Button
+        android:text="Apagar Jogo Salvo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_alignStart="@+id/button"
-        android:id="@+id/textTime" />
-
-    <QuickContactBadge
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@color/colorPrimary"
-        android:layout_below="@+id/textView4"
-        android:layout_alignStart="@+id/textName"
-        android:layout_marginTop="27dp"
-        android:id="@+id/quickContactBadge"
-        android:layout_toStartOf="@+id/textView2"
-        android:layout_alignEnd="@+id/textName" />
+        android:id="@+id/btnDelete"
+        android:onClick="deleteGame"
+        android:layout_alignBaseline="@+id/btnPlay"
+        android:layout_alignBottom="@+id/btnPlay"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginStart="12dp" />
 
     <Button
         android:text="Jogar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_below="@+id/quickContactBadge"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:onClick="startNewGame" />
+        android:id="@+id/btnPlay"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/labelTeam"
+        android:layout_toStartOf="@+id/textView2"
+        android:onClick="playGame" />
 
-    <Button
-        android:text="Apagar Dados"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:id="@+id/button2"
-        android:onClick="deleteGame"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/textTime"
+        android:text="Não definido"
+        android:layout_alignBaseline="@+id/labelTeam"
+        android:layout_alignBottom="@+id/labelTeam"
+        android:layout_toStartOf="@+id/btnDelete" />
 </RelativeLayout>

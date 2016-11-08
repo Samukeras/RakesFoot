@@ -77,12 +77,20 @@ public class Player extends Entity {
         this.name = name;
     }
 
-    public Position getPosition() {
+    public int getPosition() {
+        return position.getValue();
+    }
+
+    public Position position() {
         return position;
     }
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public void setPosition(int position) {
+        this.position = Position.getPosition(position);
     }
 
     public Team getTeam() {
@@ -91,6 +99,11 @@ public class Player extends Entity {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
     }
 
 }

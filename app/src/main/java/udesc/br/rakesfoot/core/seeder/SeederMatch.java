@@ -30,8 +30,8 @@ public class SeederMatch extends EntitySeeder<Match, Championship> {
                 match = new Match();
                 match.setChampionship(parent);
                 match.setRound(round);
-                match.setHost(parent.getTeams().get(map.getKey()));
-                match.setGuest(parent.getTeams().get(map.getValue()));
+                match.setHost(parent.getTeams().get(map.getKey() - 1));
+                match.setGuest(parent.getTeams().get(map.getValue() - 1));
 
                 getDao().insert(match);
 

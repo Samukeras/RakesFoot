@@ -105,6 +105,9 @@ public class Team extends Entity {
     }
 
     public Stadium getStadium() {
+        if (stadium == null) {
+            stadium = new Stadium();
+        }
         return stadium;
     }
 
@@ -127,10 +130,18 @@ public class Team extends Entity {
     }
 
     public Formation getFormation() {
+        if (formation == null) {
+            formation = new Formation();
+        }
         return formation;
     }
 
     public void setFormation(Formation formation) {
         this.formation = formation;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
     }
 }

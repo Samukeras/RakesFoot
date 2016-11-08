@@ -43,6 +43,9 @@ public class Match extends Entity {
     }
 
     public Championship getChampionship() {
+        if (this.championship == null) {
+            this.championship = new Championship();
+        }
         return championship;
     }
 
@@ -51,6 +54,9 @@ public class Match extends Entity {
     }
 
     public Team getHost() {
+        if (this.host == null) {
+            this.host = new Team();
+        }
         return host;
     }
 
@@ -59,6 +65,9 @@ public class Match extends Entity {
     }
 
     public Team getGuest() {
+        if (this.guest == null) {
+            this.guest = new Team();
+        }
         return guest;
     }
 
@@ -119,5 +128,10 @@ public class Match extends Entity {
             }
         }
         return count;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
     }
 }

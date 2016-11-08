@@ -2,7 +2,9 @@ package udesc.br.rakesfoot.core.model.dao;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Build;
+import android.provider.ContactsContract;
 
 import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
@@ -104,14 +106,13 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
             for(String column : getRelationships().getAllNonSequentialsColumnsNames()) {
                 if(!first) {
                     sql.append(", ");
-                    first = false;
                 }
                 sql.append("'" + BeanUtils.callGetter(entity, column) + "'");
+                first = false;
             }
 
             sql.append(");");
-//            sql.append(") RETURNING ")
-//               .append(StringUtils.join(", ", getRelationships().getAllColumnsNames()));
+//            sql.append(") RETURNING ").append(StringUtils.join(", ", getRelationships().getAllColumnsNames()));
 
             connection.getConnection().execSQL(sql.toString());
             connection.commit();
@@ -120,7 +121,7 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
         } catch(Exception exception) {
             exception.printStackTrace();
         } finally {
-//            connection.endTransaction();
+            connection.endTransaction();
         }
         return false;
     }
@@ -198,7 +199,28 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
     @Override
     public boolean persists(DAOEntity entity) {
-        return false;
+
+        String sql = getSqlGetAll();
+        sql += " limit 1";
+
+        Cursor cursor = connection.getConnection().rawQuery(sql, new String[0]);
+        cursor.moveToFirst();
+
+        int colName = cursor.getColumnIndex("name");
+        String teste = cursor.getString(colName);
+
+        if (!cursor.isAfterLast()) {
+            for(ModelToDataBaseRelation relation : getRelationships().getAllRelations()) {
+                try {
+                    BeanUtils.callSetter(entity, relation.getModelName(), getValueFromCursor(cursor, relation));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -214,6 +236,15 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     @Override
     public Iterator<DAOEntity> findAll(DAOEntity entity) {
         return null;
+    }
+
+    private String getSqlGetAll() {
+        StringBuilder query = new StringBuilder("SELECT ");
+        query.append(StringUtils.join(", ", getRelationships().getAllColumnsNames()))
+                .append("\nFROM ")
+                .append(this.getTableNameComplete());
+
+        return query.toString();
     }
 
     @Override
@@ -237,11 +268,10 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
         List<String> columns = new ArrayList<>();
         for(ModelToDataBaseRelation relation : relationships.getAllRelations()) {
-            columns.add(relation.getColumnName() + " " + relation.getDbType());
+            columns.add(relation.getCreateExpression());
         }
 
         sql.append(StringUtils.join(", ", columns));
-        sql.append(", ");
         sql.append(getScriptPk());
 
         String scriptFks = this.getScriptFks();
@@ -252,20 +282,21 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
         sql.append(");");
 
-        int teste = 0;
         try {
             connection.getConnection().execSQL(sql.toString());
-            teste++;
-        } catch (Exception e) {
-            e.printStackTrace();
-            teste++;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw exception;
         }
     }
 
     private String getScriptPk() {
-        StringBuilder sql = new StringBuilder("PRIMARY KEY (");
-        sql.append(StringUtils.join(",", relationships.getAllKeyColumnsNames()))
-           .append(")");
+        StringBuilder sql = new StringBuilder();
+        if (relationships.getAllKeyColumnsNames().size() > 1) {
+            sql.append(", PRIMARY KEY (")
+               .append(StringUtils.join(",", relationships.getAllKeyColumnsNames()))
+               .append(")");
+        }
 
         return sql.toString();
     }
@@ -278,4 +309,34 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
     }
 
+    public Object getValueFromCursor(Cursor cursor, ModelToDataBaseRelation relation) throws SQLException {
+     int columnIndex = cursor.getColumnIndex(relation.getColumnName());
+        switch(relation.getType().getName()) {
+            case "java.lang.Double":
+            case "double":
+                return cursor.getDouble(columnIndex);
+
+            case "java.lang.Float":
+            case "float":
+                return cursor.getFloat(columnIndex);
+
+            case "java.lang.Long":
+            case "long":
+                return cursor.getLong(columnIndex);
+
+            case "java.lang.Integer":
+            case "int":
+                return cursor.getInt(columnIndex);
+
+            case "java.lang.String":
+                return cursor.getString(columnIndex);
+
+            case "java.util.Calendar":
+            case "java.util.Date":
+                return cursor.getString(columnIndex);
+
+            default:
+                throw new RuntimeException("Type not recognized: " + relation.getType().getName());
+        }
+    }
 }

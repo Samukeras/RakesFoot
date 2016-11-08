@@ -19,7 +19,7 @@ public class Formation {
     }
 
     public boolean addFirstTeamPlayer(Player player) {
-        if (isPositionLimitReached(player.getPosition()) || isPlayerLimitReached()) {
+        if (isPositionLimitReached(player.position()) || isPlayerLimitReached()) {
             return false;
         }
 
@@ -89,7 +89,7 @@ public class Formation {
     public int countByPosition(Position position) {
         int count = 0;
         for (Player player : firstTeamPlayers) {
-            if (player.getPosition() == position) {
+            if (player.position() == position) {
                 count++;
             }
         }

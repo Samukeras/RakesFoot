@@ -28,6 +28,9 @@ public class Manager extends Entity {
     }
 
     public Team getTeam() {
+        if (this.team == null) {
+            this.team = new Team();
+        }
         return team;
     }
 

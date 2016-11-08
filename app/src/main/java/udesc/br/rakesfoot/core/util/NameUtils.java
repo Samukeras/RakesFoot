@@ -67,13 +67,13 @@ public class NameUtils {
     public static String generateRandomFirstName(Context context) {
         List<String> names = getFirstNames(context);
 
-        return names.get(IntRandomUtils.getNextIntFromZeroToInterval(names.size()));
+        return names.get(IntRandomUtils.getNextIntFromZeroToInterval(names.size() - 1));
     }
 
     public static String generateRandomLastName(Context context) {
         List<String> names = getLastNames(context);
 
-        return names.get(IntRandomUtils.getNextIntFromZeroToInterval(names.size()));
+        return names.get(IntRandomUtils.getNextIntFromZeroToInterval(names.size() - 1));
     }
 
 }

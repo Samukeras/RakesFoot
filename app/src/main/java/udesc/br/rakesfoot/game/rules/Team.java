@@ -30,7 +30,7 @@ public class Team {
     public static int getAttackOverral(List<Player> players) {
         double overral = 0, playerOverral;
         for (Player player : players) {
-            playerOverral = player.getOverral() * getAttackInfluence(player.getPosition());
+            playerOverral = player.getOverral() * getAttackInfluence(player.position());
             playerOverral *= Math.sqrt(player.getMotivation()) / 10;
             playerOverral *= Math.sqrt(player.getPhysical()) / 10;
             playerOverral *= Math.sqrt(player.getTeam().getChemestry()) / 10;
@@ -43,7 +43,7 @@ public class Team {
     public static int getDefenseOverral(List<Player> players) {
         double overral = 0, playerOverral;
         for (Player player : players) {
-            playerOverral = player.getOverral() * getDefenseInfluence(player.getPosition());
+            playerOverral = player.getOverral() * getDefenseInfluence(player.position());
             playerOverral *= Math.sqrt(player.getMotivation()) / 10;
             playerOverral *= Math.sqrt(player.getPhysical()) / 10;
             playerOverral *= Math.sqrt(player.getTeam().getChemestry()) / 10;

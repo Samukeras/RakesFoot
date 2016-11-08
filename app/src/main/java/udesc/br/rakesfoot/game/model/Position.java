@@ -1,5 +1,7 @@
 package udesc.br.rakesfoot.game.model;
 
+import android.support.annotation.Nullable;
+
 /**
  * Positions enumeration types
  *
@@ -14,22 +16,33 @@ public enum Position {
     ,FORWARD   (4, "Forward");
 
 
-    private int    id;
-    private String description;
+    private final int value;
+    private final String description;
 
 
-    Position(int id, String description) {
-        this.id = id;
+    Position(int value, String description) {
+        this.value = value;
         this.description = description;
     }
 
 
-    public int getId() {
-        return id;
+    public int getValue() {
+        return value;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    @Nullable
+    public static Position getPosition(int id) {
+        for(Position position : Position.values()) {
+            if(position.getValue() == id) {
+                return position;
+            }
+        }
+
+        return null;
     }
 
 }

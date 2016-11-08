@@ -24,6 +24,8 @@ public class TeamActivity extends AppCompatActivity {
 
         tbPlayer = (TableLayout) findViewById(R.id.tbPlayer);
         loadTable();
+
+        setTitle(Game.getInstance().getManager().getTeam().getName());
     }
 
     private void loadTable() {
@@ -39,12 +41,12 @@ public class TeamActivity extends AppCompatActivity {
                 TableRow.LayoutParams.MATCH_PARENT));
 
             // Create a TextView to house the name of the province
-            tr.addView(createText(player.getPosition().getDescription().substring(0,0), 20, Gravity.CENTER));
+            tr.addView(createText(player.position().getDescription().substring(0,1), 50, Gravity.CENTER));
             tr.addView(createText(player.getName(), 200, Gravity.LEFT));
-            tr.addView(createText(player.getOverral(), 30, Gravity.RIGHT));
-            tr.addView(createText(player.getPhysical(), 30, Gravity.RIGHT));
-            tr.addView(createCheckBox(id + 500, 30, Gravity.RIGHT));
-            tr.addView(createCheckBox(id + 550, 30, Gravity.RIGHT));
+            tr.addView(createText(player.getOverral(), 50, Gravity.RIGHT));
+            tr.addView(createText(player.getPhysical(), 50, Gravity.RIGHT));
+            tr.addView(createCheckBox(id + 500, 50, Gravity.RIGHT));
+            tr.addView(createCheckBox(id + 550, 50, Gravity.RIGHT));
 
             // Add the TableRow to the TableLayout
             tbPlayer.addView(tr, new TableLayout.LayoutParams(

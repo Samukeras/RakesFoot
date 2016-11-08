@@ -45,7 +45,7 @@ public enum Color {
     public static Color getRandomColor() {
         Color[] colors = Color.values();
 
-        return colors[IntRandomUtils.getNextIntFromZeroToInterval(colors.length)];
+        return colors[IntRandomUtils.getNextIntFromZeroToInterval(colors.length - 1)];
     }
 
 }
