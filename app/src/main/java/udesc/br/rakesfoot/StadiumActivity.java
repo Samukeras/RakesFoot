@@ -6,11 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import udesc.br.rakesfoot.core.model.dao.DAOGeneric;
 import udesc.br.rakesfoot.game.model.Game;
-import udesc.br.rakesfoot.game.model.Manager;
 import udesc.br.rakesfoot.game.model.Stadium;
-import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoStadium;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 

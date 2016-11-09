@@ -100,8 +100,11 @@ public class TeamActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.menuConsulta:
+            case R.id.menuStadium:
                 startActivity(new Intent(getApplicationContext(), StadiumActivity.class));
+            break;
+            case R.id.menuPhysicalRecovery:
+                startActivity(new Intent(getApplicationContext(), PhysicalRecoveryActivity.class));
             break;
         }
 

@@ -182,9 +182,9 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
             for(int i = 0; i < getRelationships().getAllNonKeyColumnsNames().size(); i++) {
                 query.append(getRelationships().getAllNonKeyColumnsNames().get(i))
-                     .append(" = ")
+                     .append(" = '")
                      .append(BeanUtils.callGetter(entity, getRelationships().getAllNonKeyModelNames().get(i)))
-                     .append(" ");
+                     .append("' ");
             }
 
             query.append(" ")
@@ -194,7 +194,9 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
                 query.append(" AND ")
                      .append(relationships.getAllKeyColumnsNames().get(i))
                      .append(" = ")
-                     .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)));
+                     .append("'")
+                     .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)))
+                     .append("'");
             }
 
             connection.getConnection().execSQL(query.toString());
