@@ -94,6 +94,9 @@ public class Player extends Entity {
     }
 
     public Team getTeam() {
+        if (team == null) {
+            team = new Team();
+        }
         return team;
     }
 

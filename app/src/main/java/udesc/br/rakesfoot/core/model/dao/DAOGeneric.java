@@ -123,6 +123,17 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
             connection.getConnection().execSQL(sql.toString());
             connection.commit();
 
+            for(ModelToDataBaseRelation relation : getRelationships().getAllRelations()) {
+                if (relation.isSequential()) {
+                    String sqlMax = String.format("select max(%1$s) %1$s from %2$s", relation.getColumnName(), getTableNameComplete());
+                    Cursor cursor = getCursorFromSql(sqlMax);
+
+                    if (!cursor.isAfterLast()) {
+                        BeanUtils.callSetter(entity, relation.getModelName(), getValueFromCursor(cursor, relation));
+                    }
+                }
+            }
+
             return true;
         } catch(Exception exception) {
             exception.printStackTrace();
@@ -294,8 +305,8 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     }
 
     public void onCreate() {
-        connection.getConnection().execSQL("DROP TABLE IF EXISTS " + this.getTableNameComplete() + ";");
-        StringBuilder sql = new StringBuilder("CREATE TABLE ");
+//        connection.getConnection().execSQL("DROP TABLE IF EXISTS " + this.getTableNameComplete() + ";");
+        StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
         sql.append(this.getTableNameComplete())
            .append(" (");
 

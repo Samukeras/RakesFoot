@@ -26,6 +26,9 @@ public class ChampionshipTeam extends Entity {
     public ChampionshipTeam() {}
 
     public Team getTeam() {
+        if (team == null) {
+            team = new Team();
+        }
         return team;
     }
 
@@ -38,6 +41,9 @@ public class ChampionshipTeam extends Entity {
     }
 
     public Championship getChampionship() {
+        if (championship == null) {
+            championship = new Championship();
+        }
         return championship;
     }
 

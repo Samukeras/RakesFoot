@@ -8,6 +8,7 @@ import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.game.model.Championship;
 import udesc.br.rakesfoot.game.model.Match;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoChampionship;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoMatch;
 
 /**
  * Created by Ricardo on 03/11/2016.
@@ -17,7 +18,7 @@ public class SeederMatch extends EntitySeeder<Match, Championship> {
 
     @Override
     public Persistible getDao() {
-        return new SqliteDaoChampionship(getConnection().getContext());
+        return new SqliteDaoMatch(getConnection().getContext());
     }
 
     @Override

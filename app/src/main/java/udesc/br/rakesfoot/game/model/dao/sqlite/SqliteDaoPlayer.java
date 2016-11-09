@@ -34,6 +34,7 @@ public class SqliteDaoPlayer extends DAOGeneric<Player> {
             Player entity = getNewEntity();
             beanModel(cursor, entity);
             list.add(entity);
+            cursor.moveToNext();
         }
 
         return list;
