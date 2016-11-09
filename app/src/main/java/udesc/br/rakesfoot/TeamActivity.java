@@ -42,7 +42,7 @@ public class TeamActivity extends AppCompatActivity {
         for (Player player : team.getPlayers()) {
             // Create a TableRow and give it an ID
             TableRow tr = new TableRow(this);
-            tr.setBackgroundColor(Color.YELLOW.getColor());
+//            tr.setBackgroundColor(Color.YELLOW.getColor());
             tr.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
@@ -71,11 +71,11 @@ public class TeamActivity extends AppCompatActivity {
 
         // Create a TextView to house the name of the province
         tr.addView(createHeaderText("POS", 50, Gravity.CENTER));
-        tr.addView(createHeaderText("NOME", 200, Gravity.CENTER));
+        tr.addView(createHeaderText("NOME", 220, Gravity.CENTER));
         tr.addView(createHeaderText("HABIL.", 50, Gravity.CENTER));
-        tr.addView(createHeaderText("CONDIÇÃO", 50, Gravity.CENTER));
-        tr.addView(createHeaderText("TITULAR", 50, Gravity.CENTER));
-        tr.addView(createHeaderText("RESERVA", 50, Gravity.CENTER));
+        tr.addView(createHeaderText("COND.", 50, Gravity.CENTER));
+        tr.addView(createHeaderText("TIT.", 70, Gravity.CENTER));
+        tr.addView(createHeaderText("RES.", 70, Gravity.CENTER));
 
         // Add the TableRow to the TableLayout
         tbPlayer.addView(tr, new TableLayout.LayoutParams(
@@ -90,7 +90,7 @@ public class TeamActivity extends AppCompatActivity {
     private TextView createText(String text, int align) {
         TextView view = new TextView(this);
         view.setText(text);
-        view.setTextSize(20);
+        view.setTextSize(18);
         view.setTextColor(Color.BLACK.getColor());
         view.setGravity(align);
         view.setLayoutParams(new TableRow.LayoutParams(
@@ -103,7 +103,7 @@ public class TeamActivity extends AppCompatActivity {
     private TextView createHeaderText(String text, int width, int align) {
         TextView view = new TextView(this);
         view.setText(text);
-        view.setTextSize(25);
+        view.setTextSize(15);
         view.setMinWidth(width);
         view.setTextColor(Color.BLACK.getColor());
         view.setTypeface(null, Typeface.BOLD);
