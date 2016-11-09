@@ -11,6 +11,7 @@ import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Manager;
 import udesc.br.rakesfoot.game.model.Stadium;
 import udesc.br.rakesfoot.game.model.Team;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoStadium;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
 public class StadiumActivity extends AppCompatActivity {
@@ -19,6 +20,9 @@ public class StadiumActivity extends AppCompatActivity {
 
     private TextView name,
                      capacity;
+
+    Stadium stadium;
+    SqliteDaoStadium dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +39,24 @@ public class StadiumActivity extends AppCompatActivity {
 
     private void startComponents() {
         increaseCapacity = (Button)   findViewById(R.id.buttonIncrease);
-        name             = (TextView)findViewById(R.id.textName);
-        capacity         = (TextView)findViewById(R.id.textCapacity);
+        name             = (TextView) findViewById(R.id.textName);
+        capacity         = (TextView) findViewById(R.id.textCapacity);
+
+        dao              = new SqliteDaoStadium(getBaseContext());
     }
 
     private void fillFields() {
-        DAOGeneric dao = new SqliteDaoTeam(getBaseContext());
-        dao.persists(Game.getInstance().getManager().getTeam());
-        Stadium stadium = Game.getInstance().getManager().getTeam().getStadium();
-        int i = 1;
+        SqliteDaoTeam daoTeam = new SqliteDaoTeam(getBaseContext());
+        daoTeam.persists(Game.getInstance().getManager().getTeam());
+        stadium = dao.getStadiumFromTeam(Game.getInstance().getManager().getTeam());
+
+        name.setText(stadium.getName());
+        capacity.setText(String.valueOf(stadium.getMaxCapacity()));
     }
 
     public void onClickIncreaseCapacity(View v) {
-
+        stadium.setMaxCapacity(stadium.getMaxCapacity() + 10000);
+        dao.update(stadium);
     }
 
 }

@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".ManagerActivity" />
         <activity android:name=".TeamActivity" />
-        <activity android:name=".StadiumActivity"></activity>
+        <activity android:name=".StadiumActivity" />
+        <activity android:name=".PhysicalRecoveryActivity"></activity>
     </application>
 
 </manifest>

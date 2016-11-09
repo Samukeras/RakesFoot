@@ -233,7 +233,7 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     public boolean persists(DAOEntity entity) {
 
         StringBuilder query = new StringBuilder(getSqlGetAll());
-        query.append(" WHERE 1=1");
+        query.append(" WHERE 1 = 1");
 
         for(int i = 0; i < relationships.getAllKeyColumnsNames().size(); i++) {
             query.append(" AND ")
