@@ -1,6 +1,7 @@
 package udesc.br.rakesfoot;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class ManagerActivity extends AppCompatActivity {
             dao.persists(Game.getInstance().getManager());
 
             dao = new SqliteDaoTeam(getBaseContext());
+            System.out.println(Game.getInstance().getManager().getTeam().getId());
             dao.persists(Game.getInstance().getManager().getTeam());
 
             ((TextView) findViewById(R.id.textName)).setText(Game.getInstance().getManager().getName());
@@ -55,6 +57,7 @@ public class ManagerActivity extends AppCompatActivity {
         Game.getInstance().getManager().setName(((TextView) findViewById(R.id.textName)).getText().toString());
         SeederGame seeder = new SeederGame();
         seeder.setConnection(connection);
+
         seeder.start();
 
         startActivity(new Intent(getBaseContext(), TeamActivity.class));

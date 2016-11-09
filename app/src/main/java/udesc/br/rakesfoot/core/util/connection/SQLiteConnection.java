@@ -106,11 +106,11 @@ public class SQLiteConnection implements Connection<SQLiteDatabase> {
     }
 
     public static boolean deleteDataBase(Context context) {
-        getInstance(context).defineVersion();
         getInstance(context).close();
 
         boolean ok = context.deleteDatabase(DATABASE_NAME);
         getInstance(context).open();
+        getInstance(context).defineVersion();
 
         return ok;
     }

@@ -37,4 +37,8 @@ public class Manager extends Entity {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    public int getTeamId() {
+        return getTeam().getId();
+    }
 }

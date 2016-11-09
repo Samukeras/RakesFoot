@@ -101,6 +101,10 @@ public class Player extends Entity {
         this.team = team;
     }
 
+    public int getTeamId() {
+        return getTeam().getId();
+    }
+
     @Override
     public String toString() {
         return String.valueOf(id);

@@ -49,6 +49,10 @@ public class Match extends Entity {
         return championship;
     }
 
+    public int getChampionshipId() {
+        return getChampionship().getId();
+    }
+
     public void setChampionship(Championship championship) {
         this.championship = championship;
     }
@@ -60,6 +64,10 @@ public class Match extends Entity {
         return host;
     }
 
+    public int getHostId() {
+        return getHost().getId();
+    }
+
     public void setHost(Team host) {
         this.host = host;
     }
@@ -69,6 +77,10 @@ public class Match extends Entity {
             this.guest = new Team();
         }
         return guest;
+    }
+
+    public int getGuestId() {
+        return getGuest().getId();
     }
 
     public void setGuest(Team guest) {

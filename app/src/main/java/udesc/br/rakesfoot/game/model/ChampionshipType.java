@@ -30,4 +30,8 @@ public enum ChampionshipType {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(getValue());
+    }
 }

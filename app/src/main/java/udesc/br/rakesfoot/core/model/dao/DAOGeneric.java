@@ -200,14 +200,18 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     @Override
     public boolean persists(DAOEntity entity) {
 
-        String sql = getSqlGetAll();
-        sql += " limit 1";
+        StringBuilder query = new StringBuilder(getSqlGetAll());
+        query.append(" WHERE 1=1");
 
-        Cursor cursor = connection.getConnection().rawQuery(sql, new String[0]);
+        for(int i = 0; i < relationships.getAllKeyColumnsNames().size(); i++) {
+            query.append(" AND ")
+                    .append(relationships.getAllKeyColumnsNames().get(i))
+                    .append(" = ")
+                    .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)));
+        }
+
+        Cursor cursor = connection.getConnection().rawQuery(query.toString(), new String[0]);
         cursor.moveToFirst();
-
-        int colName = cursor.getColumnIndex("name");
-        String teste = cursor.getString(colName);
 
         if (!cursor.isAfterLast()) {
             for(ModelToDataBaseRelation relation : getRelationships().getAllRelations()) {
@@ -241,7 +245,7 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
     private String getSqlGetAll() {
         StringBuilder query = new StringBuilder("SELECT ");
         query.append(StringUtils.join(", ", getRelationships().getAllColumnsNames()))
-                .append("\nFROM ")
+                .append(" FROM ")
                 .append(this.getTableNameComplete());
 
         return query.toString();

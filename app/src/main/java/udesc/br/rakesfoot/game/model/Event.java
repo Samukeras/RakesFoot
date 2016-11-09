@@ -55,6 +55,10 @@ public class Event extends Entity{
         return match;
     }
 
+    public int getMatchId() {
+        return getMatch().getId();
+    }
+
     public void setMatch(Match match) {
         this.match = match;
     }
@@ -66,6 +70,10 @@ public class Event extends Entity{
         return player;
     }
 
+    public int getPlayerId() {
+        return getPlayer().getId();
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
@@ -75,6 +83,10 @@ public class Event extends Entity{
             team = new Team();
         }
         return team;
+    }
+
+    public int getTeamId() {
+        return getTeam().getId();
     }
 
     public void setTeam(Team team) {
