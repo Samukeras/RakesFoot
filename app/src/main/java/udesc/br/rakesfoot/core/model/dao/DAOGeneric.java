@@ -103,11 +103,16 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
                .append(") VALUES (");
 
             boolean first = true;
-            for(String column : getRelationships().getAllNonSequentialsColumnsNames()) {
+
+            for(ModelToDataBaseRelation relation : getRelationships().getAllRelations()) {
+                if(relation.isSequential()) {
+                    continue;
+                }
+
                 if(!first) {
                     sql.append(", ");
                 }
-                sql.append("'" + BeanUtils.callGetter(entity, column) + "'");
+                sql.append("'" + BeanUtils.callGetter(entity, relation.getModelName()) + "'");
                 first = false;
             }
 
@@ -242,7 +247,7 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
         return null;
     }
 
-    private String getSqlGetAll() {
+    protected String getSqlGetAll() {
         StringBuilder query = new StringBuilder("SELECT ");
         query.append(StringUtils.join(", ", getRelationships().getAllColumnsNames()))
                 .append(" FROM ")

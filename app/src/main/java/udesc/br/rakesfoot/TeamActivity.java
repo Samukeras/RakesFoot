@@ -1,8 +1,11 @@
 package udesc.br.rakesfoot;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -37,11 +40,11 @@ public class TeamActivity extends AppCompatActivity {
             TableRow tr = new TableRow(this);
             tr.setBackgroundColor(Color.YELLOW.getColor());
             tr.setLayoutParams(new TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT));
 
             // Create a TextView to house the name of the province
-            tr.addView(createText(player.position().getDescription().substring(0,1), 50, Gravity.CENTER));
+            tr.addView(createText(player.position().getDescription().substring(0, 1), 50, Gravity.CENTER));
             tr.addView(createText(player.getName(), 200, Gravity.LEFT));
             tr.addView(createText(player.getOverral(), 50, Gravity.RIGHT));
             tr.addView(createText(player.getPhysical(), 50, Gravity.RIGHT));
@@ -86,4 +89,20 @@ public class TeamActivity extends AppCompatActivity {
         return check;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.menuConsulta:
+                startActivity(new Intent(getApplicationContext(), StadiumActivity.class));
+            break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

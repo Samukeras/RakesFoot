@@ -21,4 +21,14 @@
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/abc_text_size_display_3_material"
         android:textColor="#ffffffff" />
+
+    <TextView
+        android:text="Pressione para continuar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="82dp"
+        android:id="@+id/textView3"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 </RelativeLayout>
