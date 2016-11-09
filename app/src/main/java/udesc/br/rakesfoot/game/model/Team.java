@@ -42,6 +42,7 @@ public class Team extends Entity {
     @DataBaseInfo(columnName = "secondaryColor", dataType = INT_INTEGER)
     private Color  secondaryColor;
 
+
     private Stadium stadium;
 
     private Formation formation;
