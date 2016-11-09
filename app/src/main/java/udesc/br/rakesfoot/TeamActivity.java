@@ -1,6 +1,7 @@
 package udesc.br.rakesfoot;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -29,13 +30,14 @@ public class TeamActivity extends AppCompatActivity {
         loadTable();
 
         setTitle(Game.getTeam().getName());
-        System.out.println(Game.getTeam().getMainColor());
 
     }
 
     private void loadTable() {
         int id = 0;
         Team team = Game.getInstance().getManager().getTeam();
+
+        createHeader();
 
         for (Player player : team.getPlayers()) {
             // Create a TableRow and give it an ID
@@ -46,12 +48,12 @@ public class TeamActivity extends AppCompatActivity {
                     TableRow.LayoutParams.MATCH_PARENT));
 
             // Create a TextView to house the name of the province
-            tr.addView(createText(player.position().getDescription().substring(0, 1), 50, Gravity.CENTER));
-            tr.addView(createText(player.getName(), 200, Gravity.LEFT));
-            tr.addView(createText(player.getOverral(), 50, Gravity.RIGHT));
-            tr.addView(createText(player.getPhysical(), 50, Gravity.RIGHT));
-            tr.addView(createCheckBox(id + 500, 50, Gravity.RIGHT));
-            tr.addView(createCheckBox(id + 550, 50, Gravity.RIGHT));
+            tr.addView(createText(player.position().getDescription().substring(0, 1), Gravity.CENTER));
+            tr.addView(createText(player.getName(), Gravity.LEFT));
+            tr.addView(createText(player.getOverral(), Gravity.RIGHT));
+            tr.addView(createText(player.getPhysical(), Gravity.RIGHT));
+            tr.addView(createCheckBox(player.getId(), Gravity.CENTER));
+            tr.addView(createCheckBox(10000 + player.getId(), Gravity.CENTER));
 
             // Add the TableRow to the TableLayout
             tbPlayer.addView(tr, new TableLayout.LayoutParams(
@@ -60,15 +62,35 @@ public class TeamActivity extends AppCompatActivity {
         }
     }
 
-    private TextView createText(int text, int width, int align) {
-        return createText(String.valueOf(text), width, align);
+    private void createHeader() {
+        TableRow tr = new TableRow(this);
+        tr.setBackgroundColor(Color.WHITE.getColor());
+        tr.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT));
+
+        // Create a TextView to house the name of the province
+        tr.addView(createHeaderText("POS", 50, Gravity.CENTER));
+        tr.addView(createHeaderText("NOME", 200, Gravity.CENTER));
+        tr.addView(createHeaderText("HABIL.", 50, Gravity.CENTER));
+        tr.addView(createHeaderText("CONDIÇÃO", 50, Gravity.CENTER));
+        tr.addView(createHeaderText("TITULAR", 50, Gravity.CENTER));
+        tr.addView(createHeaderText("RESERVA", 50, Gravity.CENTER));
+
+        // Add the TableRow to the TableLayout
+        tbPlayer.addView(tr, new TableLayout.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT));
     }
 
-    private TextView createText(String text, int width, int align) {
+    private TextView createText(int text, int align) {
+        return createText(String.valueOf(text), align);
+    }
+
+    private TextView createText(String text, int align) {
         TextView view = new TextView(this);
         view.setText(text);
         view.setTextSize(20);
-        view.setMinWidth(width);
         view.setTextColor(Color.BLACK.getColor());
         view.setGravity(align);
         view.setLayoutParams(new TableRow.LayoutParams(
@@ -78,11 +100,24 @@ public class TeamActivity extends AppCompatActivity {
         return view;
     }
 
-    private CheckBox createCheckBox(int id, int width, int align) {
+    private TextView createHeaderText(String text, int width, int align) {
+        TextView view = new TextView(this);
+        view.setText(text);
+        view.setTextSize(25);
+        view.setMinWidth(width);
+        view.setTextColor(Color.BLACK.getColor());
+        view.setTypeface(null, Typeface.BOLD);
+        view.setGravity(align);
+        view.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+
+        return view;
+    }
+
+    private CheckBox createCheckBox(int id, int align) {
         CheckBox check = new CheckBox(this);
         check.setId(id);
-        check.setMinWidth(width);
-        check.setMinHeight(width);
         check.setGravity(align);
         check.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,

@@ -43,7 +43,6 @@ public class ManagerActivity extends AppCompatActivity {
             dao.persists(Game.getInstance().getManager());
 
             dao = new SqliteDaoTeam(getBaseContext());
-            System.out.println(Game.getInstance().getManager().getTeam().getId());
             dao.persists(Game.getInstance().getManager().getTeam());
 
             ((TextView) findViewById(R.id.textName)).setText(Game.getInstance().getManager().getName());

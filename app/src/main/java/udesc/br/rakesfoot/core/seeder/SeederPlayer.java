@@ -63,7 +63,6 @@ public class SeederPlayer extends EntitySeeder<Player, Team> {
         for (Player player : dao.getAllPlayers(parent)) {
             parent.addPlayer(player);
 
-            System.out.println(parent.getId() + " " + parent.getName() + " - " + player.getId() + " " + player.getName());
 
             handle(player);
         }

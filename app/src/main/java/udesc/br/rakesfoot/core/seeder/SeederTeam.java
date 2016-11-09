@@ -124,8 +124,6 @@ public class SeederTeam extends EntitySeeder<Team, Championship> {
             }
             parent.addTeams(team);
 
-            System.out.println(parent.getName() + " - " + team.getId() + " " + team.getName());
-
             handle(team);
         }
     }

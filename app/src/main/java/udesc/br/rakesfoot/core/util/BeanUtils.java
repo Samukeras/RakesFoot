@@ -43,7 +43,7 @@ public class BeanUtils {
             try {
                 String methodName = getSetterName(propertyName);
                 Class c = possibleClassesIterator.next();
-                //System.out.println(bean.getClass().getName() + "." + methodName + ": " + c.getName());
+
                 Method method     = bean.getClass().getMethod(methodName, c);
                 if(MethodUtils.isSetter(method)) {
                     method.invoke(bean, value);
@@ -94,7 +94,7 @@ public class BeanUtils {
 
         try {
             String methodName = getGetterName(propertyName);
-//            System.out.println(bean.getClass().getName() + "." + methodName);
+
             Method method     = bean.getClass().getMethod(methodName);
             if(MethodUtils.isGetter(method)) {
                 return (Return) method.invoke(bean);
