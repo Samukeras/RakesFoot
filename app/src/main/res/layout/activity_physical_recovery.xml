@@ -10,4 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="udesc.br.rakesfoot.PhysicalRecoveryActivity">
 
+    <Button
+        android:text="Recuperar todos jogadores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buttonRecoverAll"
+        android:onClick="onClickRecoverAll" />
 </RelativeLayout>

@@ -1,16 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menuCadastro"
-        android:icon="@android:drawable/ic_input_add"
-        android:title="Cadastro"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menuConsulta"
+        android:id="@+id/menuStadium"
         android:title="Estádio"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/menuOutra"
-        android:title="Outra"
-        app:showAsAction="never" />
+        android:id="@+id/menuPhysicalRecovery"
+        android:title="Recuperação Física"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuMatch"
+        android:title="Jogar"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuSchedule"
+        android:title="Calendário"
+        app:showAsAction="never"/>
 </menu>

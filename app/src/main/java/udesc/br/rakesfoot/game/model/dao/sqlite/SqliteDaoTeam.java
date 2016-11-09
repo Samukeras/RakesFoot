@@ -11,6 +11,7 @@ import udesc.br.rakesfoot.core.model.dao.ModelToDataBaseRelation;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
 import udesc.br.rakesfoot.core.util.BeanUtils;
 import udesc.br.rakesfoot.core.util.StringUtils;
+import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
 
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.DOUBLE_NUMERIC;
