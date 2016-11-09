@@ -1,5 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Jogar"
+        android:showAsAction="always|withText"
+        android:visible="true"
+        android:id="@+id/menuPlay"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_media_play" />
     <item
         android:id="@+id/menuStadium"
         android:title="Estádio"
