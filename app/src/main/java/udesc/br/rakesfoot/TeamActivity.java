@@ -2,6 +2,7 @@ package udesc.br.rakesfoot;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,7 +31,6 @@ public class TeamActivity extends AppCompatActivity {
         loadTable();
 
         setTitle(Game.getTeam().getName());
-
     }
 
     private void loadTable() {
@@ -140,6 +140,9 @@ public class TeamActivity extends AppCompatActivity {
             break;
             case R.id.menuPhysicalRecovery:
                 startActivity(new Intent(getApplicationContext(), PhysicalRecoveryActivity.class));
+            break;
+            case R.id.menuPlay:
+                startActivity(new Intent(getApplicationContext(), PlayActivity.class));
             break;
         }
 
