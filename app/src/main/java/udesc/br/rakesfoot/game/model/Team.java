@@ -96,12 +96,20 @@ public class Team extends Entity {
         this.mainColor = mainColor;
     }
 
+    public void setMainColor(int mainColor) {
+        this.mainColor = Color.getColor(mainColor);
+    }
+
     public Color getSecondaryColor() {
         return secondaryColor;
     }
 
     public void setSecondaryColor(Color secondaryColor) {
         this.secondaryColor = secondaryColor;
+    }
+
+    public void setSecondaryColor(int secondaryColor) {
+        this.mainColor = Color.getColor(secondaryColor);
     }
 
     public Stadium getStadium() {

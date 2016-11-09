@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -194,7 +195,22 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
     @Override
     public Iterable<DAOEntity> getAll() {
-        return null;
+        StringBuilder query = new StringBuilder(getSqlGetAll());
+        query.append(" WHERE 1=1");
+
+        Cursor cursor = connection.getConnection().rawQuery(query.toString(), new String[0]);
+        cursor.moveToFirst();
+
+        List<DAOEntity> entities = new ArrayList<>();
+
+        while (!cursor.isAfterLast()) {
+            DAOEntity entity = getNewEntity();
+            beanModel(cursor, entity);
+            entities.add(entity);
+            cursor.moveToNext();
+        }
+
+        return entities;
     }
 
     @Override
@@ -210,21 +226,29 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
                     .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)));
         }
 
-        Cursor cursor = connection.getConnection().rawQuery(query.toString(), new String[0]);
-        cursor.moveToFirst();
+        Cursor cursor = getCursorFromSql(query.toString());
 
         if (!cursor.isAfterLast()) {
-            for(ModelToDataBaseRelation relation : getRelationships().getAllRelations()) {
-                try {
-                    BeanUtils.callSetter(entity, relation.getModelName(), getValueFromCursor(cursor, relation));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
+            beanModel(cursor, entity);
         }
 
         return true;
+    }
+
+    protected Cursor getCursorFromSql(String sql) {
+        Cursor cursor = connection.getConnection().rawQuery(sql, new String[0]);
+        cursor.moveToFirst();
+        return cursor;
+    }
+
+    protected void beanModel(Cursor cursor, DAOEntity entity) {
+        for(ModelToDataBaseRelation relation : getRelationships().getAllRelations()) {
+            try {
+                BeanUtils.callSetter(entity, relation.getModelName(), getValueFromCursor(cursor, relation));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -242,7 +266,7 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
         return null;
     }
 
-    private String getSqlGetAll() {
+    protected String getSqlGetAll() {
         StringBuilder query = new StringBuilder("SELECT ");
         query.append(StringUtils.join(", ", getRelationships().getAllColumnsNames()))
                 .append(" FROM ")

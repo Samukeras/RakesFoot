@@ -11,6 +11,7 @@ import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Season;
 import udesc.br.rakesfoot.game.model.Stadium;
 import udesc.br.rakesfoot.game.model.Team;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoChampionshipTeam;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
 /**
@@ -113,5 +114,19 @@ public class SeederTeam extends EntitySeeder<Team, Championship> {
     @Override
     public void crop(Championship parent) {
 
+        SqliteDaoChampionshipTeam dao = new SqliteDaoChampionshipTeam(getConnection().getContext());
+
+        for (Team team : dao.getAllTeams(parent)) {
+            if (team.getId() == Game.getTeam().getId()) {
+                team = Game.getTeam();
+            } else {
+                getDao().persists(team);
+            }
+            parent.addTeams(team);
+
+            System.out.println(parent.getName() + " - " + team.getId() + " " + team.getName());
+
+            handle(team);
+        }
     }
 }

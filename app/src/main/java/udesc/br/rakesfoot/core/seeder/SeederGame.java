@@ -15,13 +15,14 @@ public class SeederGame extends EntitySeeder<Game, Object> {
     }
 
     public void start() {
-        EntitySeeder season       = new SeederSeason();
-        EntitySeeder manager      = new SeederManager();
-        EntitySeeder championship = new SeederChampionship();
-        EntitySeeder team         = new SeederTeam();
-        EntitySeeder stadium      = new SeederStadium();
-        EntitySeeder player       = new SeederPlayer();
-        EntitySeeder match        = new SeederMatch();
+        EntitySeeder season           = new SeederSeason();
+        EntitySeeder manager          = new SeederManager();
+        EntitySeeder championship     = new SeederChampionship();
+        EntitySeeder championshipTeam = new SeederChampionshipTeam();
+        EntitySeeder team             = new SeederTeam();
+        EntitySeeder stadium          = new SeederStadium();
+        EntitySeeder player           = new SeederPlayer();
+        EntitySeeder match            = new SeederMatch();
 
         this.addSucessor(season);
         this.addSucessor(manager);
@@ -29,6 +30,7 @@ public class SeederGame extends EntitySeeder<Game, Object> {
         season.addSucessor(championship);
 
         championship.addSucessor(team);
+        championship.addSucessor(championshipTeam);
         championship.addSucessor(match);
 
         team.addSucessor(player);

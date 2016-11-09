@@ -33,9 +33,9 @@ public class SeederPlayer extends EntitySeeder<Player, Team> {
             String name     = NameUtils.generateRandomFirstName(getConnection().getContext()),
                    lastName = NameUtils.generateRandomLastName(getConnection().getContext());
             player.setName(name + " " + lastName);
-            if(i > 18) {
+            if(i > 16) {
                 player.setPosition(Position.FORWARD);
-            } else if(i > 10) {
+            } else if(i > 9) {
                 player.setPosition(Position.MIDFIELDER);
             } else if(i > 2) {
                 player.setPosition(Position.DEFENDER);
@@ -58,6 +58,16 @@ public class SeederPlayer extends EntitySeeder<Player, Team> {
 
     @Override
     public void crop(Team parent) {
+        SqliteDaoPlayer dao = (SqliteDaoPlayer) getDao();
+
+        for (Player player : dao.getAllPlayers(parent)) {
+            parent.addPlayer(player);
+
+            System.out.println(parent.getId() + " " + parent.getName() + " - " + player.getId() + " " + player.getName());
+
+            handle(player);
+        }
+
 
     }
 }

@@ -24,7 +24,7 @@ public class Game {
         this.currentSeason = currentSeason;
     }
 
-    public Manager getManager() {
+    private Manager loadManager() {
         if (manager == null) {
             manager = new Manager();
         }
@@ -33,5 +33,13 @@ public class Game {
 
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    public static Team getTeam() {
+        return getManager().getTeam();
+    }
+
+    public static Manager getManager() {
+        return getInstance().loadManager();
     }
 }

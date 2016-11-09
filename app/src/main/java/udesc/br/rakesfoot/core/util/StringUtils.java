@@ -58,7 +58,7 @@ public final class StringUtils {
             if(currentChar == delimiter) {
                 lower = false;
             } else if(lower) {
-                formatted.append(Character.toLowerCase(currentChar));
+                formatted.append(currentChar);
             } else {
                 formatted.append(Character.toUpperCase(currentChar));
                 lower = true;

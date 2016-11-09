@@ -30,6 +30,9 @@ public class SeederSeason extends EntitySeeder<Season, Game> {
 
     @Override
     public void crop(Game parent) {
-
+        for (Season season : (Iterable<Season>) getDao().getAll()) {
+            parent.setCurrentSeason(season);
+            handle(season);
+        }
     }
 }

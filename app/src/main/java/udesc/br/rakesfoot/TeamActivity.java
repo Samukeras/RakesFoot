@@ -1,5 +1,7 @@
 package udesc.br.rakesfoot;
 
+import android.graphics.drawable.ColorDrawable;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -25,7 +27,9 @@ public class TeamActivity extends AppCompatActivity {
         tbPlayer = (TableLayout) findViewById(R.id.tbPlayer);
         loadTable();
 
-        setTitle(Game.getInstance().getManager().getTeam().getName());
+        setTitle(Game.getTeam().getName());
+        System.out.println(Game.getTeam().getMainColor());
+
     }
 
     private void loadTable() {

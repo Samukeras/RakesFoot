@@ -42,10 +42,24 @@ public enum Color {
         return color;
     }
 
+    public static Color getColor(int color) {
+        for(Color item : Color.values()) {
+            if(item.getColor() == color) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     public static Color getRandomColor() {
         Color[] colors = Color.values();
 
         return colors[IntRandomUtils.getNextIntFromZeroToInterval(colors.length - 1)];
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(getColor());
+    }
 }

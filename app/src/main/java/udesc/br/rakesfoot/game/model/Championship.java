@@ -29,6 +29,9 @@ public class Championship extends Entity {
     @DataBaseInfo(columnName = "type", dataType = INT_INTEGER)
     private ChampionshipType type;
 
+    @DataBaseInfo(columnName = "round", dataType = INT_INTEGER)
+    private int round;
+
     private List<Team> teams = new ArrayList<>();
 
     public int getId() {
@@ -84,6 +87,14 @@ public class Championship extends Entity {
 
     public void setType(int type) {
         this.type = ChampionshipType.getChampionshipType(type);
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 
     @Override
