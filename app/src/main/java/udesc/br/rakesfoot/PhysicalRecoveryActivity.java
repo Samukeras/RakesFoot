@@ -1,8 +1,10 @@
 package udesc.br.rakesfoot;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Player;
@@ -25,6 +27,9 @@ public class PhysicalRecoveryActivity extends AppCompatActivity {
             player.setPhysical(rule.getRehabilitationCost(player.getOverral(), player.getPhysical()));
             dao.update(player);
         }
+
+        Toast.makeText(getApplicationContext(), "Físico recuperado com sucesso!", Toast.LENGTH_LONG);
+        startActivity(new Intent(getApplicationContext(), TeamActivity.class));
     }
 
 }
