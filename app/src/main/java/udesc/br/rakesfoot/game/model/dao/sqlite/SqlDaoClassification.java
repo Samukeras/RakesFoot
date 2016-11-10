@@ -28,7 +28,7 @@ public class SqlDaoClassification extends DAOGeneric<TeamClassification> {
     }
 
     public TeamClassification[] getClassification(int season) {
-
+        return null;
     }
 
 }
