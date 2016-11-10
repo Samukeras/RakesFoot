@@ -55,7 +55,7 @@ public class Formation {
     }
 
     public boolean isPlayerLimitReached() {
-        return firstTeamPlayers.size() == FIRST_TEAM_COUNT;
+        return firstTeamPlayers.size() == FIRST_TEAM_COUNT && substitutes.size() <= SUBSTITUTE_LIMIT;
     }
 
     public boolean isPositionLimitReached(Position position) {

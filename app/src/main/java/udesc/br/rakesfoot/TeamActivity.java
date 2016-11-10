@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -59,8 +60,8 @@ public class TeamActivity extends GameActivity {
             // Create a TextView to house the name of the province
             tr.addView(createText(player.position().getDescription().substring(0, 1), Gravity.CENTER));
             tr.addView(createText(player.getName(), Gravity.LEFT));
-            tr.addView(createText(player.getOverral(), Gravity.RIGHT));
-            tr.addView(createText(player.getPhysical(), Gravity.RIGHT));
+            tr.addView(createText(player.getOverral(), Gravity.CENTER));
+            tr.addView(createText(player.getPhysical(), Gravity.CENTER));
             tr.addView(createCheckBox(player.getId(), Gravity.CENTER));
             tr.addView(createCheckBox(10000 + player.getId(), Gravity.CENTER));
 
@@ -128,11 +129,38 @@ public class TeamActivity extends GameActivity {
         CheckBox check = new CheckBox(this);
         check.setId(id);
         check.setGravity(align);
+        check.setOnCheckedChangeListener(getCheckListener());
         check.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
 
         return check;
+    }
+
+    private CompoundButton.OnCheckedChangeListener getCheckListener() {
+        return (new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int id = buttonView.getId();
+                if (id > 10000) {
+                    id -= 10000;
+                }
+
+                if (isChecked) {
+                    if (buttonView.getId() > 10000) {
+                        Game.getTeam().getFormation().addSubstitute(Game.getTeam().getPlayer(id));
+                    } else {
+                        Game.getTeam().getFormation().addFirstTeamPlayer(Game.getTeam().getPlayer(id));
+                    }
+                } else {
+                    if (buttonView.getId() > 10000) {
+                        Game.getTeam().getFormation().removeSubstitute(Game.getTeam().getPlayer(id));
+                    } else {
+                        Game.getTeam().getFormation().removeFirstTeamPlayer(Game.getTeam().getPlayer(id));
+                    }
+                }
+            }
+        });
     }
 
     @Override

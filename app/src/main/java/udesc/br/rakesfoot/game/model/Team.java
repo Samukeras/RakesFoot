@@ -132,6 +132,16 @@ public class Team extends Entity {
         return players;
     }
 
+    public Player getPlayer(int id) {
+        for (Player player : players) {
+            if (player.getId() == id) {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
     public void addPlayer(Player player) {
         players.add(player);
     }
