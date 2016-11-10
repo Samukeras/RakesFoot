@@ -1,11 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:title="Jogar"
-        android:showAsAction="always|withText"
-        android:visible="true"
+    <item
         android:id="@+id/menuPlay"
-        android:enabled="true"
-        android:icon="@android:drawable/ic_media_play" />
+        android:title="Jogar"
+        android:icon="@android:drawable/ic_media_play"
+        app:showAsAction="always" />
     <item
         android:id="@+id/menuStadium"
         android:title="Estádio"
@@ -17,5 +16,9 @@
     <item
         android:id="@+id/menuSchedule"
         android:title="Calendário"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuClassification"
+        android:title="Classificação"
         app:showAsAction="never"/>
 </menu>
