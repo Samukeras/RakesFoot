@@ -1,6 +1,7 @@
 package udesc.br.rakesfoot;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,9 +12,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import udesc.br.rakesfoot.core.model.Color;
+import udesc.br.rakesfoot.core.util.DialogUtils;
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
+import udesc.br.rakesfoot.game.rules.Formation;
 
 public class TeamActivity extends TableActivity {
 
@@ -112,7 +115,11 @@ public class TeamActivity extends TableActivity {
                 startActivity(new Intent(getApplicationContext(), PhysicalRecoveryActivity.class));
             break;
             case R.id.menuPlay:
-                startActivity(new Intent(getApplicationContext(), PlayActivity.class));
+                if (Game.getTeam().getFormation().isReady()) {
+                    startActivity(new Intent(getApplicationContext(), PlayActivity.class));
+                } else {
+                    DialogUtils.alert(TeamActivity.this, "Atenção!", "Para que o jogo possa iniciar, o time deve possuir 11 titulares sendo um deles goleiro. Também há um limite de " + Formation.SUBSTITUTE_LIMIT + " reservas.");
+                }
             break;
             case R.id.menuClassification:
                 startActivity(new Intent(getApplicationContext(), ClassificationActivity.class));

@@ -105,4 +105,7 @@ public class Event extends Entity{
         this.type = EventType.getEventType(type);
     }
 
+    public String getDescription() {
+        return String.format("%s, %s do %s", getType().getDescription(), getPlayer().getName(), getTeam().getName());
+    }
 }

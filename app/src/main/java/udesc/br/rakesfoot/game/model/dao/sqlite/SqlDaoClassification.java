@@ -1,13 +1,12 @@
 package udesc.br.rakesfoot.game.model.dao.sqlite;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import udesc.br.rakesfoot.core.model.dao.DAOGeneric;
 import udesc.br.rakesfoot.game.model.TeamClassification;
 
-import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.DOUBLE_NUMERIC;
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
-import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STRING_VARCHAR;
 
 public class SqlDaoClassification extends DAOGeneric<TeamClassification> {
 
@@ -27,8 +26,9 @@ public class SqlDaoClassification extends DAOGeneric<TeamClassification> {
         this.relationships.addRelation(false, false, "points"   , "points"   , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
     }
 
+    @Nullable
     public TeamClassification[] getClassification(int season) {
-
+        return null;
     }
 
 }

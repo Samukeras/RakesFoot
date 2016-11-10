@@ -10,9 +10,9 @@ import static udesc.br.rakesfoot.game.rules.Formation.*;
 
 public class Formation {
 
-    private ArrayList<Player> firstTeamPlayers;
+    private ArrayList<Player> firstTeamPlayers = new ArrayList<>();
 
-    private ArrayList<Player> substitutes;
+    private ArrayList<Player> substitutes = new ArrayList<>();
 
     public ArrayList<Player> getFirstTeamPlayers() {
         return firstTeamPlayers;
