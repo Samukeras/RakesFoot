@@ -30,7 +30,7 @@ public abstract class GameActivity extends AppCompatActivity {
 
     protected void alterColorActionBar() {
         android.support.v7.app.ActionBar bar = getSupportActionBar();
-        if(bar != null) {
+        if(bar != null && Game.getTeam().getMainColor() != null) {
             bar.setBackgroundDrawable(new ColorDrawable(Game.getTeam().getMainColor().getColor()));
         }
     }
