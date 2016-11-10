@@ -120,6 +120,10 @@ public class Team extends Entity {
         return stadium;
     }
 
+    public int getStadiumId() {
+        return getStadium().getId();
+    }
+
     public void setStadium(Stadium stadium) {
         this.stadium = stadium;
     }
