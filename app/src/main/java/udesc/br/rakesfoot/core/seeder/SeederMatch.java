@@ -7,6 +7,7 @@ import udesc.br.rakesfoot.core.util.RoundRobinUtils;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.game.model.Championship;
 import udesc.br.rakesfoot.game.model.Match;
+import udesc.br.rakesfoot.game.model.Result;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoChampionship;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoMatch;
 
@@ -33,6 +34,7 @@ public class SeederMatch extends EntitySeeder<Match, Championship> {
                 match.setRound(round);
                 match.setHost(parent.getTeams().get(map.getKey() - 1));
                 match.setGuest(parent.getTeams().get(map.getValue() - 1));
+                match.setWinner(Result.NONE);
 
                 getDao().insert(match);
 

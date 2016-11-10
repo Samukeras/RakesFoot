@@ -32,6 +32,9 @@ public class Match extends Entity {
     @DataBaseInfo(columnName = "round", dataType = INT_INTEGER)
     private int round; // rodada
 
+    @DataBaseInfo(columnName = "winner", dataType = INT_INTEGER)
+    private Result winner;
+
     private List<Event> events;
 
     public int getId() {
@@ -140,6 +143,22 @@ public class Match extends Entity {
             }
         }
         return count;
+    }
+
+    public Result getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Result winner) {
+        this.winner = winner;
+    }
+
+    public void setWinner(int winner) {
+        this.winner = Result.getResultById(winner);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
