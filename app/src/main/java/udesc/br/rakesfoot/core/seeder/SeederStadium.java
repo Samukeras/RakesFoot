@@ -1,7 +1,6 @@
 package udesc.br.rakesfoot.core.seeder;
 
 import udesc.br.rakesfoot.core.persistence.Persistible;
-import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.game.model.Stadium;
 import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoStadium;
@@ -22,7 +21,7 @@ public class SeederStadium extends EntitySeeder<Stadium, Team> {
         Stadium stadium = new Stadium();
         stadium.setName("Estádio do " + parent.getName());
         stadium.setId(parent.getId());
-        stadium.setMaxCapacity(20000);
+        stadium.setCapacity(20000);
 
         getDao().insert(stadium);
 

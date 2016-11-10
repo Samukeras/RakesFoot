@@ -17,7 +17,7 @@ public class SqliteDaoStadium extends DAOGeneric<Stadium> {
     }
 
     public Stadium getStadiumFromTeam(Team team) {
-        String sql = "SELECT stadium_id FROM team";
+        String sql = "SELECT stadium_id FROM team WHERE id = " + team.getId();
         Cursor cursor = getCursorFromSql(sql);
 
         int stadiumId = 0;

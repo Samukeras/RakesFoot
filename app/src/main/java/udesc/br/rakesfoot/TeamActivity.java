@@ -2,6 +2,8 @@ package udesc.br.rakesfoot;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,7 +32,14 @@ public class TeamActivity extends AppCompatActivity {
         loadTable();
 
         setTitle(Game.getTeam().getName());
+        alterColorActionBar();
+    }
 
+    private void alterColorActionBar() {
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        if(bar != null) {
+            bar.setBackgroundDrawable(new ColorDrawable(Game.getTeam().getMainColor().getColor()));
+        }
     }
 
     private void loadTable() {

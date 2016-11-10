@@ -48,11 +48,11 @@ public class StadiumActivity extends AppCompatActivity {
         stadium = dao.getStadiumFromTeam(Game.getInstance().getManager().getTeam());
 
         name.setText(stadium.getName());
-        capacity.setText(String.valueOf(stadium.getMaxCapacity()));
+        capacity.setText(String.valueOf(stadium.getCapacity()));
     }
 
     public void onClickIncreaseCapacity(View v) {
-        stadium.setMaxCapacity(stadium.getMaxCapacity() + 10000);
+        stadium.setCapacity(stadium.getCapacity() + 10000);
         dao.update(stadium);
     }
 

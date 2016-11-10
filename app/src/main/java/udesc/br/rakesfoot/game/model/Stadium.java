@@ -17,7 +17,7 @@ public class Stadium extends Entity {
     private int id;
 
     @DataBaseInfo(columnName = "capacity", dataType = INT_INTEGER)
-    private int maxCapacity;
+    private int capacity;
 
     @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
     private String name;
@@ -26,9 +26,9 @@ public class Stadium extends Entity {
         this(0, 0, null);
     }
 
-    public Stadium(int id, int maxCapacity, String name) {
+    public Stadium(int id, int capacity, String name) {
         this.id = id;
-        this.maxCapacity = maxCapacity;
+        this.capacity = capacity;
         this.name = name;
     }
 
@@ -41,12 +41,12 @@ public class Stadium extends Entity {
         this.id = id;
     }
 
-    public int getMaxCapacity() {
-        return maxCapacity;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setMaxCapacity(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getName() {
