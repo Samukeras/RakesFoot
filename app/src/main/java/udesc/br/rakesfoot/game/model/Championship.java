@@ -69,6 +69,15 @@ public class Championship extends Entity {
         return teams.add(team);
     }
 
+    public Team getTeam(int id) {
+        for (Team team : teams) {
+            if (team.getId() == id) {
+                return team;
+            }
+        }
+        return null;
+    }
+
     public boolean hasTeam(Team team) {
         return teams.contains(team);
     }

@@ -3,15 +3,14 @@ package udesc.br.rakesfoot.game.model.dao.sqlite;
 import android.content.Context;
 
 import udesc.br.rakesfoot.core.model.dao.DAOGeneric;
-import udesc.br.rakesfoot.game.model.Budget;
 
 /**
  * Created by Ricardo on 06/11/2016.
  */
 
-public class SqliteBudget extends DAOGeneric<Budget> {
+public class SqliteDaoBudgetEntry extends DAOGeneric<udesc.br.rakesfoot.game.model.BudgetEntry> {
 
-    public SqliteBudget(Context context) {
+    public SqliteDaoBudgetEntry(Context context) {
         super(context);
     }
 }
