@@ -11,13 +11,15 @@ import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoPlayer;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
-public class PhysicalRecoveryActivity extends AppCompatActivity {
+public class PhysicalRecoveryActivity extends GameActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setLayout() {
         setContentView(R.layout.activity_physical_recovery);
     }
+
+    @Override
+    protected void startComponents() {}
 
     public void onClickRecoverAll(View view) {
         SqliteDaoPlayer dao = new SqliteDaoPlayer(getApplicationContext());

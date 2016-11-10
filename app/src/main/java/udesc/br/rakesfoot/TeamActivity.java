@@ -1,9 +1,8 @@
 package udesc.br.rakesfoot;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -18,27 +17,26 @@ import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
 
-public class TeamActivity extends AppCompatActivity {
+public class TeamActivity extends GameActivity {
 
     TableLayout tbPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team);
-
-        tbPlayer = (TableLayout) findViewById(R.id.tbPlayer);
-        loadTable();
-
-        setTitle(Game.getTeam().getName());
-        alterColorActionBar();
+        finishAll();
     }
 
-    private void alterColorActionBar() {
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        if(bar != null) {
-            bar.setBackgroundDrawable(new ColorDrawable(Game.getTeam().getMainColor().getColor()));
-        }
+    @Override
+    protected void setLayout() {
+        setContentView(R.layout.activity_team);
+    }
+
+    @Override
+    protected void startComponents() {
+        tbPlayer = (TableLayout) findViewById(R.id.tbPlayer);
+
+        loadTable();
     }
 
     private void loadTable() {
@@ -156,4 +154,13 @@ public class TeamActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public static void finishAll() {
+        for(Activity activity : activities) {
+            if(!(activity instanceof TeamActivity)){
+                activity.finish();
+            }
+        }
+    }
+
 }

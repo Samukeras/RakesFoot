@@ -1,5 +1,6 @@
 package udesc.br.rakesfoot;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,38 +9,33 @@ import android.widget.TextView;
 
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Stadium;
+import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoStadium;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
-public class StadiumActivity extends AppCompatActivity {
+public class StadiumActivity extends GameActivity {
 
     private Button increaseCapacity;
 
     private TextView name,
                      capacity;
 
-    Stadium stadium;
-    SqliteDaoStadium dao;
+    private Stadium          stadium;
+    private SqliteDaoStadium dao;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setLayout() {
         setContentView(R.layout.activity_stadium);
-
-        onCreate();
     }
 
-    private void onCreate() {
-        startComponents();
-        fillFields();
-    }
-
-    private void startComponents() {
+    protected void startComponents() {
         increaseCapacity = (Button)   findViewById(R.id.buttonIncrease);
         name             = (TextView) findViewById(R.id.textName);
         capacity         = (TextView) findViewById(R.id.textCapacity);
 
         dao              = new SqliteDaoStadium(getBaseContext());
+        fillFields();
     }
 
     private void fillFields() {
@@ -54,6 +50,8 @@ public class StadiumActivity extends AppCompatActivity {
     public void onClickIncreaseCapacity(View v) {
         stadium.setCapacity(stadium.getCapacity() + 10000);
         dao.update(stadium);
+
+        startActivity(new Intent(getApplicationContext(), TeamActivity.class));
     }
 
 }
