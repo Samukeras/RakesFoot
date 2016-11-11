@@ -36,7 +36,7 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "    FROM (\n" +
                 "          SELECT *,\n" +
                 "                 victories * 3 + draws      AS points,\n" +
-                "                 goals_pro - goals_agastain AS goals_balance\n" +
+                "                 goals_pro - goals_against AS goals_balance\n" +
                 "            FROM (\n" +
                 "                  SELECT team.name AS team_name,\n" +
                 "                         COUNT((SELECT 1\n" +
@@ -77,7 +77,7 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "                                   AND event.team_id <> team.id)) AS goals_against\n" +
                 "                    FROM team) data) classification\n" +
                 "ORDER BY points,\n" +
-                "         goal_balance,\n" +
+                "         goals_balance,\n" +
                 "         goals_pro,\n" +
                 "         victories";
 
@@ -93,7 +93,7 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
 
             List<TeamClassification> entities = new ArrayList<>();
 
-            while (!cursor.isAfterLast()) {
+            while(!cursor.isAfterLast()) {
                 TeamClassification entity = getNewEntity();
                 beanModel(cursor, entity);
                 entities.add(entity);
@@ -108,6 +108,11 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
 
             return null;
         }
+    }
+
+    @Override
+    public TeamClassification getNewEntity() {
+        return new TeamClassification();
     }
 
 }
