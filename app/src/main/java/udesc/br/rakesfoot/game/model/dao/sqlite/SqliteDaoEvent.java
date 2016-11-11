@@ -18,7 +18,7 @@ public class SqliteDaoEvent extends DAOGeneric<Event> {
     }
 
     protected void setRelations() {
-        this.relationships.addRelation(false, false, "team_id"      , "team.id"   , STRING_VARCHAR.getSqlite(), STRING_VARCHAR.getType());
+        this.relationships.addRelation(false, false, "team_id"      , "team.id"     , INT_INTEGER.getSqlite()   , INT_INTEGER.getType());
         this.relationships.addRelation(false, false, "position"     , "position"    , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
         this.relationships.addRelation(false, false, "victories"    , "victories"   , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
         this.relationships.addRelation(false, false, "losses"       , "losses"      , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
@@ -28,6 +28,7 @@ public class SqliteDaoEvent extends DAOGeneric<Event> {
         this.relationships.addRelation(false, false, "goals_balance", "goalsBalance", INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
         this.relationships.addRelation(false, false, "points"       , "points"      , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
         this.relationships.addRelation(false, false, "type"         , "type"        , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "match_id"     , "match.id"        , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
     }
 
 }
