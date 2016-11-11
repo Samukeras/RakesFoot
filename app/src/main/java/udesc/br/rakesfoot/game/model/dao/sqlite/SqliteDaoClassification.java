@@ -82,7 +82,11 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "                    FROM team" +
                 "                   WHERE id IN (SELECT team_id" +
                 "                                  FROM championshipteam" +
-                "                                 WHERE championship_id = " + Game.getInstance().getCurrentSeason().getChampionship(DIVISION_2).getId() + ")) data) classification\n";
+                "                                 WHERE championship_id = " + Game.getInstance().getCurrentSeason().getChampionship(DIVISION_2).getId() + ")) data) classification\n" +
+                "                    ORDER BY points,\n" +
+                "         goal_balance,\n" +
+                "         goals_pro,\n" +
+                "         victories) data) classification\n";
 
         return sql;
     }
