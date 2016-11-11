@@ -61,4 +61,21 @@
         android:layout_marginBottom="115dp"
         android:id="@+id/buttonIncrease"
         android:onClick="onClickIncreaseCapacity" />
+
+    <TextView
+        android:text="Orçamento Atual:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="26dp"
+        android:id="@+id/textView6"
+        android:layout_toStartOf="@+id/textCapacity"
+        android:layout_alignEnd="@+id/textName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6"
+        android:id="@+id/textBudgetStadium" />
 </RelativeLayout>

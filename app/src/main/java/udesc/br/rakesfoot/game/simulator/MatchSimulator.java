@@ -43,11 +43,6 @@ public class MatchSimulator extends Simulator<Match> {
 
             super.run();
             currentMinute++;
-            try {
-                Thread.sleep(150);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         currentMinute = 0;
     }

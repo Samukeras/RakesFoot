@@ -54,6 +54,18 @@ public class Relationships {
         return columns;
     }
 
+    public List<String> getAllKeyModelNames() {
+        List<String> columns = new ArrayList<>();
+
+        for(ModelToDataBaseRelation relation : relations) {
+            if(relation.isKey()) {
+                columns.add(relation.getModelName());
+            }
+        }
+
+        return columns;
+    }
+
     public List<String> getAllNonKeyColumnsNames() {
         List<String> columns = new ArrayList<>();
 
