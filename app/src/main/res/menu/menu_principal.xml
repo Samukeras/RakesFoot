@@ -14,10 +14,6 @@
         android:title="Recuperação Física"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/menuSchedule"
-        android:title="Calendário"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/menuClassification"
         android:title="Classificação"
         app:showAsAction="never"/>
