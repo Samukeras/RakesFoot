@@ -1,5 +1,6 @@
 package udesc.br.rakesfoot.game.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import udesc.br.rakesfoot.core.model.Entity;
@@ -35,7 +36,7 @@ public class Match extends Entity {
     @DataBaseInfo(columnName = "winner", dataType = INT_INTEGER)
     private Result winner;
 
-    private List<Event> events;
+    private List<Event> events = new ArrayList<>();
 
     public int getId() {
         return id;

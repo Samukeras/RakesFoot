@@ -105,7 +105,12 @@ public class Event extends Entity{
         this.type = EventType.getEventType(type);
     }
 
+    @Override
+    public String toString() {
+        return getDescription();
+    }
+
     public String getDescription() {
-        return String.format("%s, %s do %s", getType().getDescription(), getPlayer().getName(), getTeam().getName());
+        return String.format("%s: %s, %s do %s", getTeam().getName(), getType().getDescription(), getPlayer().getName(), getTeam().getName());
     }
 }

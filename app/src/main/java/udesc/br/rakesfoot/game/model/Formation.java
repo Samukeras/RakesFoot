@@ -2,6 +2,8 @@ package udesc.br.rakesfoot.game.model;
 
 import java.util.ArrayList;
 
+import udesc.br.rakesfoot.core.util.IntRandomUtils;
+
 import static udesc.br.rakesfoot.game.rules.Formation.*;
 
 /**
@@ -10,9 +12,22 @@ import static udesc.br.rakesfoot.game.rules.Formation.*;
 
 public class Formation {
 
+    private FormationType formationType;
+
     private ArrayList<Player> firstTeamPlayers = new ArrayList<>();
 
     private ArrayList<Player> substitutes = new ArrayList<>();
+
+    public FormationType getFormationType() {
+        if (formationType == null) {
+            formationType = FormationType.values()[IntRandomUtils.getNextIntFromZeroToInterval(FormationType.values().length - 1)];
+        }
+        return formationType;
+    }
+
+    public void setFormationType(FormationType formationType) {
+        this.formationType = formationType;
+    }
 
     public ArrayList<Player> getFirstTeamPlayers() {
         return firstTeamPlayers;

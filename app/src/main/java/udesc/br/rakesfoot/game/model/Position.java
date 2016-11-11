@@ -10,10 +10,10 @@ import android.support.annotation.Nullable;
  */
 public enum Position {
 
-     GOALKEEPER(1, "Goalkeeper")
+     GOALKEEPER(1, "Goleiro")
     ,DEFENDER  (2, "Defensor")
-    ,MIDFIELDER(3, "Midfielder")
-    ,FORWARD   (4, "Forward");
+    ,MIDFIELDER(3, "Meia")
+    ,FORWARD   (4, "Atacante");
 
 
     private final int value;

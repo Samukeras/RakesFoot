@@ -62,7 +62,7 @@ public class SeederPlayer extends EntitySeeder<Player, Team> {
 
         for (Player player : dao.getAllPlayers(parent)) {
             parent.addPlayer(player);
-
+            player.setTeam(parent);
 
             handle(player);
         }

@@ -43,17 +43,20 @@ public class TeamActivity extends TableActivity {
         textTotals = (TextView) findViewById(R.id.textTotals);
 
         loadTable();
+        checkFormation();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void checkFormation() {
+        Player[] players = new Player[Game.getTeam().getFormation().getFirstTeamPlayers().size()];
+        players = Game.getTeam().getFormation().getFirstTeamPlayers().toArray(players);
 
-        for (Player player : Game.getTeam().getFormation().getFirstTeamPlayers()) {
+        for (Player player : players) {
             ((CompoundButton) findViewById(player.getId())).setChecked(true);
         }
 
-        for (Player player : Game.getTeam().getFormation().getSubstitutes()) {
+        players = new Player[Game.getTeam().getFormation().getSubstitutes().size()];
+        players = Game.getTeam().getFormation().getSubstitutes().toArray(players);
+        for (Player player : players) {
             ((CompoundButton) findViewById(player.getId() + 10000)).setChecked(true);
         }
     }
@@ -125,68 +128,73 @@ public class TeamActivity extends TableActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int id = buttonView.getId();
-                boolean firsTeam  = buttonView.getId() < 10000;
+                boolean firstTeam  = buttonView.getId() < 10000;
                 udesc.br.rakesfoot.game.model.Formation formation = Game.getTeam().getFormation();
 
-                if (!firsTeam) {
+                if (!firstTeam) {
                     id -= 10000;
                 }
 
                 Player player = Game.getTeam().getPlayer(id);
                 boolean hasPlayer = formation.hasPlayer(player);
 
-                if (isChecked) {
-                    if (!firsTeam) {
+                if (isChecked && hasPlayer) {
+                    if (!firstTeam) {
                         ((CompoundButton) findViewById(id)).setChecked(false);
-                        formation.removeSubstitute(player);
+                        formation.removeFirstTeamPlayer(player);
                     } else {
                         ((CompoundButton) findViewById(id + 10000)).setChecked(false);
-                        formation.removeFirstTeamPlayer(player);
+                        formation.removeSubstitute(player);
                     }
                 }
 
                 String type, baseText = "Falha";
 
                 type = "reservas";
-                if (firsTeam) {
+                if (firstTeam) {
                     type = "titulares";
                 }
 
                 if (isChecked && !hasPlayer) {
                     baseText = "%s adicionado aos %s";
-                    if (!firsTeam) {
+                    if (!firstTeam) {
                         formation.addSubstitute(player);
                     } else {
                         formation.addFirstTeamPlayer(player);
                     }
                     Toast.makeText(getBaseContext(), String.format(baseText, player.getName(), type), Toast.LENGTH_SHORT).show();
-                } else if (hasPlayer){
+                } else if (hasPlayer && !isChecked){
                     baseText = "%s removido dos %s";
-                    if (!firsTeam) {
+                    if (!firstTeam) {
                         formation.removeSubstitute(player);
                     } else {
                         formation.removeFirstTeamPlayer(player);
                     }
                 }
 
-                hasPlayer = firsTeam && formation.hasFirstTeamPlayer(player);
-                hasPlayer = hasPlayer || (!firsTeam && formation.hasSubstitutePlayer(player));
+                hasPlayer = firstTeam && formation.hasFirstTeamPlayer(player);
+                hasPlayer = hasPlayer || (!firstTeam && formation.hasSubstitutePlayer(player));
 
                 if ((isChecked && hasPlayer) || (!hasPlayer && !isChecked)) {
 //                    Toast.makeText(getBaseContext(), String.format(baseText, player.getName(), type), Toast.LENGTH_SHORT).show();
                 }
 
-                String totalsText = "Titulares: %s/%s Reservas %s/%s";
-
-                textTotals.setText(String.format(
-                        totalsText,
-                        formation.getFirstTeamPlayers().size(),
-                        Formation.FIRST_TEAM_COUNT,
-                        formation.getSubstitutes().size(),
-                        Formation.SUBSTITUTE_LIMIT
-                ));
+                textTotals.setText(getFormationTotalsMessage());
             }
         });
+    }
+
+    private String getFormationTotalsMessage() {
+        String totalsText = "Titulares: %s/%s Reservas %s/%s";
+        udesc.br.rakesfoot.game.model.Formation formation = Game.getTeam().getFormation();
+
+        return String.format(
+                totalsText,
+                formation.getFirstTeamPlayers().size(),
+                Formation.FIRST_TEAM_COUNT,
+                formation.getSubstitutes().size(),
+                Formation.SUBSTITUTE_LIMIT
+        );
     }
 
     @Override
@@ -208,6 +216,7 @@ public class TeamActivity extends TableActivity {
                 if (Game.getTeam().getFormation().isReady()) {
                     startActivity(new Intent(getApplicationContext(), PlayActivity.class));
                 } else {
+                    Toast.makeText(getBaseContext(), getFormationTotalsMessage(), Toast.LENGTH_LONG).show();
                     DialogUtils.alert(TeamActivity.this, "Atenção!", "Para que o jogo possa iniciar, o time deve possuir 11 titulares sendo um deles goleiro. Também há um limite de " + Formation.SUBSTITUTE_LIMIT + " reservas.");
                 }
             break;

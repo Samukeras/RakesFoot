@@ -1,5 +1,7 @@
 package udesc.br.rakesfoot.game.model;
 
+import java.util.Comparator;
+
 import udesc.br.rakesfoot.core.model.Entity;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
 import udesc.br.rakesfoot.core.persistence.annotation.Table;
@@ -14,7 +16,7 @@ import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STR
  * @since  29/10/2016
  */
 @Table(name = "player")
-public class Player extends Entity {
+public class Player extends Entity implements Comparable<Player> {
 
     @DataBaseInfo(key = true, columnName = "id", dataType = INT_INTEGER, sequential = true)
     private int      id;
@@ -106,6 +108,14 @@ public class Player extends Entity {
 
     public int getTeamId() {
         return getTeam().getId();
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if (this.getPosition() == o.getPosition()) {
+            return this.getPosition() - o.getPosition();
+        }
+        return this.getOverral() - o.getOverral();
     }
 
     @Override

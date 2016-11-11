@@ -64,12 +64,12 @@ public class PlayActivity extends GameActivity implements SimulatorEventListener
 
     @Override
     public void onTrigger(Event event) {
-        if (event.getTeam().getId() == Game.getTeam().getId()) {
+        if (event.getMatch().getHostId() == Game.getTeam().getId() || event.getMatch().getGuestId() == Game.getTeam().getId()) {
             if (event.getType() == GOAL) {
                 updateGoal(event);
             }
-             updateList(event);
         }
+         updateList(event);
     }
 
     private void updateGoal(Event event) {
@@ -81,6 +81,8 @@ public class PlayActivity extends GameActivity implements SimulatorEventListener
     }
 
     private void updateList(Event event) {
-        events.addHeaderView(new TextView(getBaseContext()), event.getDescription(), false);
+        TextView tv = new TextView(getBaseContext());
+        tv.setText(event.getDescription());
+        events.addHeaderView(tv, event.getDescription(), false);
     }
 }
