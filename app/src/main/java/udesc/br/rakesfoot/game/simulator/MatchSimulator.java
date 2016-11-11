@@ -7,6 +7,7 @@ import java.util.Map;
 import udesc.br.rakesfoot.core.util.IntRandomUtils;
 import udesc.br.rakesfoot.game.model.Event;
 import udesc.br.rakesfoot.game.model.EventType;
+import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Match;
 import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
@@ -30,12 +31,13 @@ public class MatchSimulator extends Simulator<Match> {
     public void run() {
         while (currentMinute <= END_TIME) {
             if (currentMinute == HALF_TIME) {
-                break;
+//                break;
             }
 
             super.run();
             currentMinute++;
         }
+        currentMinute = 0;
     }
 
     private void updateEndGameVariables() {
@@ -52,6 +54,8 @@ public class MatchSimulator extends Simulator<Match> {
 
         getCurrent().getHost().setChemestry(getCurrent().getHost().getChemestry() + CHEMESTRY_INCREASE_STEP);
         getCurrent().getGuest().setChemestry(getCurrent().getGuest().getChemestry() + CHEMESTRY_INCREASE_STEP);
+
+
     }
 
     private void increaseMotivation(Team team, int step) {
@@ -83,6 +87,7 @@ public class MatchSimulator extends Simulator<Match> {
     private void executeEvent(EventType event) {
         switch (event) {
             case ASSISTANCE:
+//                registerEvent(event, getRandonPlayer());
                 tryGoal();
                 break;
             default:
@@ -92,15 +97,20 @@ public class MatchSimulator extends Simulator<Match> {
 
     private void tryGoal() {
         Team attacker = getTeamForRound();
+        Team defender = getTeamAdversary(attacker);
 
         double bonus = isHost(attacker) ? udesc.br.rakesfoot.game.rules.Match.HOST_TEAM_BONUS_RATE : 1;
 
         int attackerOverral = (int) (getAttackOverral(getPlayersForRound(attacker)) * bonus);
-        int defenderOverral = getDefenseOverral(getPlayersForRound(getTeamAdversary(attacker)));
+        int defenderOverral = getDefenseOverral(getPlayersForRound(defender));
 
         int attackChance = IntRandomUtils.getNextIntFromZeroToInterval(attackerOverral + defenderOverral);
 
-        if (attackChance > defenderOverral) {
+        if (defender.getId() == Game.getTeam().getId() || attacker.getId() == Game.getTeam().getId()) {
+            attackChance *= 1;
+        }
+
+        if (attackChance * udesc.br.rakesfoot.game.rules.Event.GOAL_CHANCE > defenderOverral) {
             registerEvent(EventType.GOAL, getRandonPlayer());
         }
     }

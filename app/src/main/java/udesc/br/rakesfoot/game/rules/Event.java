@@ -14,11 +14,11 @@ import udesc.br.rakesfoot.game.model.EventType;
 
 public class Event {
 
-    public final static double GOAL_CHANCE        = 0.5;
-    public final static double ASSISTANCE_CHANCE  = 0.9;
-    public final static double INJURY_CHANCE      = 0.02;
+    public final static double GOAL_CHANCE        = 0.8;
+    public final static double ASSISTANCE_CHANCE  = 0.10;
+    public final static double INJURY_CHANCE      = 0.005;
     public final static double YELLOW_CARD_CHANCE = 0.04;
-    public final static double RED_CARD_CHANCE    = 0.01;
+    public final static double RED_CARD_CHANCE    = 0.005;
 
     public static Map<EventType, Double> getEventsForSimulator() {
         Map<EventType, Double> events = new HashMap<>();

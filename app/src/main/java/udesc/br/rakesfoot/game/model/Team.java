@@ -25,10 +25,10 @@ public class Team extends Entity {
     private int    id;
 
     @DataBaseInfo(columnName = "chemestry", dataType = DOUBLE_NUMERIC)
-    private int    chemestry;
+    private double chemestry;
 
     @DataBaseInfo(columnName = "motivation", dataType = DOUBLE_NUMERIC)
-    private int    motivation;
+    private double motivation;
 
     @DataBaseInfo(columnName = "name", dataType = STRING_VARCHAR)
     private String name;
@@ -57,19 +57,19 @@ public class Team extends Entity {
         this.id = id;
     }
 
-    public int getChemestry() {
+    public double getChemestry() {
         return chemestry;
     }
 
-    public void setChemestry(int chemestry) {
+    public void setChemestry(double chemestry) {
         this.chemestry = chemestry;
     }
 
-    public int getMotivation() {
+    public double getMotivation() {
         return motivation;
     }
 
-    public void setMotivation(int motivation) {
+    public void setMotivation(double motivation) {
         this.motivation = motivation;
     }
 

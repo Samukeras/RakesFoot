@@ -14,6 +14,7 @@ import udesc.br.rakesfoot.core.util.StringUtils;
 import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.core.util.connection.SQLiteConnection;
 import udesc.br.rakesfoot.game.model.Season;
+import udesc.br.rakesfoot.game.model.Team;
 
 import java.lang.annotation.Annotation;
 import java.sql.Date;
@@ -391,4 +392,6 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
                 throw new RuntimeException("Type not recognized: " + relation.getType().getName());
         }
     }
+
+
 }
