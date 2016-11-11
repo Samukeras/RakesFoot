@@ -146,7 +146,11 @@ public class Match extends Entity {
         return count;
     }
 
-    public Result getWinner() {
+    public int getWinner() {
+        return winner.getId();
+    }
+
+    public Result winner() {
         return winner;
     }
 

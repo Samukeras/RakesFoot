@@ -12,6 +12,7 @@ import udesc.br.rakesfoot.game.model.EventType;
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Match;
 import udesc.br.rakesfoot.game.model.Player;
+import udesc.br.rakesfoot.game.model.Result;
 import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoFactory;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoMatch;
@@ -42,8 +43,19 @@ public class MatchSimulator extends Simulator<Match> {
 
             super.run();
             currentMinute++;
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         currentMinute = 0;
+    }
+
+    @Override
+    public boolean register(Match object) {
+        object.setWinner(Result.DRAW);
+        return super.register(object);
     }
 
     private void updateEndGameVariables() {
@@ -125,6 +137,20 @@ public class MatchSimulator extends Simulator<Match> {
 
         if (attackChance * udesc.br.rakesfoot.game.rules.Event.GOAL_CHANCE > defenderOverral) {
             registerEvent(EventType.GOAL, getRandonPlayer());
+            updateResult();
+        }
+    }
+
+    private void updateResult() {
+        int  goalsHost = getCurrent().getEventCount(EventType.GOAL, getCurrent().getHost());
+        int goalsGuest = getCurrent().getEventCount(EventType.GOAL, getCurrent().getGuest());
+
+        if (goalsGuest > goalsHost) {
+            getCurrent().setWinner(Result.GUEST);
+        } else if (goalsGuest < goalsHost) {
+            getCurrent().setWinner(Result.HOST);
+        } else {
+            getCurrent().setWinner(Result.DRAW);
         }
     }
 
