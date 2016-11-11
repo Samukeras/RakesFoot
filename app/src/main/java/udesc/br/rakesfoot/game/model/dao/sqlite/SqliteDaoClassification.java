@@ -86,26 +86,33 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "                    ORDER BY points,\n" +
                 "         goal_balance,\n" +
                 "         goals_pro,\n" +
-                "         victories) data) classification\n";
+                "         victories\n";
 
         return sql;
     }
 
     @Override
     public Iterable<TeamClassification> getAll() {
-        Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
-        cursor.moveToFirst();
+        try {
+            Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
+            cursor.moveToFirst();
 
-        List<TeamClassification> entities = new ArrayList<>();
+            List<TeamClassification> entities = new ArrayList<>();
 
-        while(!cursor.isAfterLast()) {
-            TeamClassification entity = getNewEntity();
-            beanModel(cursor, entity);
-            entities.add(entity);
-            cursor.moveToNext();
+            while (!cursor.isAfterLast()) {
+                TeamClassification entity = getNewEntity();
+                beanModel(cursor, entity);
+                entities.add(entity);
+                cursor.moveToNext();
+            }
+
+            return entities;
+        } catch (Exception e) {
+            e.printStackTrace();
+            int a = 1;
+            int b = a;
+            return null;
         }
-
-        return entities;
     }
 
     @Override
