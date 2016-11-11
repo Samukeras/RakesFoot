@@ -27,6 +27,7 @@ public class SqliteDaoEvent extends DAOGeneric<Event> {
         this.relationships.addRelation(false, false, "goals_against", "goalsAgainst", INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
         this.relationships.addRelation(false, false, "goals_balance", "goalsBalance", INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
         this.relationships.addRelation(false, false, "points"       , "points"      , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "type"         , "type"        , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
     }
 
 }
