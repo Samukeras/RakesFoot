@@ -1,19 +1,19 @@
 package udesc.br.rakesfoot;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import udesc.br.rakesfoot.game.model.Budget;
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Stadium;
-import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoBudget;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoStadium;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
+
+import static udesc.br.rakesfoot.game.rules.Budget.STADIUM_IMPROVEMENT;
 
 public class StadiumActivity extends GameActivity {
 
@@ -24,7 +24,9 @@ public class StadiumActivity extends GameActivity {
                      budget;
 
     private Stadium          stadium;
+    private Budget           currentBudget;
     private SqliteDaoStadium dao;
+    private SqliteDaoBudget  daoBudget;
 
 
     @Override
@@ -54,18 +56,26 @@ public class StadiumActivity extends GameActivity {
     }
 
     private void fillFieldsBudget() {
-        SqliteDaoBudget daoBudget = new SqliteDaoBudget(getApplicationContext());
-        Budget          budget    = daoBudget.getNewEntity();
+        daoBudget     = new SqliteDaoBudget(getApplicationContext());
+        currentBudget = daoBudget.getNewEntity();
 
-        budget.setTeam(Game.getTeam());
-        daoBudget.persists(budget);
+        currentBudget.setTeam(Game.getTeam());
+        daoBudget.persists(currentBudget);
 
-        this.budget.setText(String.valueOf(budget.getCurrentCash()));
+        this.budget.setText(String.valueOf(currentBudget.getCurrentCash()));
     }
 
     public void onClickIncreaseCapacity(View v) {
+        if(!(currentBudget.getCurrentCash() >= STADIUM_IMPROVEMENT)) {
+            Toast.makeText(getBaseContext(), "Orçamento insuficiente!", Toast.LENGTH_SHORT);
+            return;
+        }
+
         stadium.setCapacity(stadium.getCapacity() + 10000);
         dao.update(stadium);
+
+        currentBudget.setCurrentCash(currentBudget.getCurrentCash() - STADIUM_IMPROVEMENT);
+        daoBudget.update(currentBudget);
 
         startActivity(new Intent(getApplicationContext(), TeamActivity.class));
     }

@@ -7,4 +7,6 @@ public class Budget {
 
     public static final int START_CASH = 200000;
 
+    public static final int STADIUM_IMPROVEMENT = 1000000000;
+
 }

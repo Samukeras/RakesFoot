@@ -195,7 +195,7 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
                      .append(relationships.getAllKeyColumnsNames().get(i))
                      .append(" = ")
                      .append("'")
-                     .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)))
+                     .append(BeanUtils.callGetter(entity, relationships.getAllKeyModelNames().get(i)))
                      .append("'");
             }
 

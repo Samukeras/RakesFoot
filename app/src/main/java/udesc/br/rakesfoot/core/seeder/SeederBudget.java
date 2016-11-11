@@ -19,7 +19,7 @@ public class SeederBudget extends EntitySeeder<Budget, Team> {
         Budget budget = new Budget();
         budget.setTeam(parent);
         budget.setStartCash(START_CASH);
-        budget.setStartCash(START_CASH);
+        budget.setCurrentCash(START_CASH);
 
         getDao().insert(budget);
         handle(budget);
