@@ -6,24 +6,90 @@ public class TeamClassification extends Entity{
 
     private Team team;
 
-    private int  position,  // Position on the table
-                 victories, // Number ofvictories
-                 defeats,   // Number of defeats
-                 draws,     // Number of draws
-                 gp,        // Goals Pro
-                 ga,        // Goals Against
-                 gb,        // Goals Balance
-                 points;
+    private int  position,     // Position on the table
+                 victories,    // Number of victories
+                 losses,       // Number of losses
+                 draws,        // Number of draws
+                 goalsPro,     // Goals Pro
+                 goalsAgainst, // Goals Against
+                 goalsBalance, // Goals Balance
+                 points;       // Points
 
-    public TeamClassification(Team team, int position, int victories, int defeats, int draws, int gp, int ga, int gb, int points) {
+    public TeamClassification() {
+    }
+
+    public Team getTeam() {
+        if(team == null) {
+            team = new Team();
+        }
+        return team;
+    }
+
+    public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
         this.position = position;
+    }
+
+    public int getVictories() {
+        return victories;
+    }
+
+    public void setVictories(int victories) {
         this.victories = victories;
-        this.defeats = defeats;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getDraws() {
+        return draws;
+    }
+
+    public void setDraws(int draws) {
         this.draws = draws;
-        this.gp = gp;
-        this.ga = ga;
-        this.gb = gb;
+    }
+
+    public int getGoalsPro() {
+        return goalsPro;
+    }
+
+    public void setGoalsPro(int goalsPro) {
+        this.goalsPro = goalsPro;
+    }
+
+    public int getGoalsAgainst() {
+        return goalsAgainst;
+    }
+
+    public void setGoalsAgainst(int goalsAgainst) {
+        this.goalsAgainst = goalsAgainst;
+    }
+
+    public int getGoalsBalance() {
+        return goalsBalance;
+    }
+
+    public void setGoalsBalance(int goalsBalance) {
+        this.goalsBalance = goalsBalance;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
         this.points = points;
     }
 
