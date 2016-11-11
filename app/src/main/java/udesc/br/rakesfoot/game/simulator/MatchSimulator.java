@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import udesc.br.rakesfoot.core.util.IntRandomUtils;
+import udesc.br.rakesfoot.core.util.connection.Connection;
+import udesc.br.rakesfoot.core.util.connection.SQLiteConnection;
 import udesc.br.rakesfoot.game.model.Event;
 import udesc.br.rakesfoot.game.model.EventType;
 import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.Match;
 import udesc.br.rakesfoot.game.model.Player;
 import udesc.br.rakesfoot.game.model.Team;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoFactory;
+import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoMatch;
 
 import static udesc.br.rakesfoot.game.rules.Match.*;
+import static udesc.br.rakesfoot.game.rules.Player.PHYSICAL_INCREASE_STEP;
 import static udesc.br.rakesfoot.game.rules.Team.CHEMESTRY_INCREASE_STEP;
 import static udesc.br.rakesfoot.game.rules.Team.MOTIVATION_DECREASE_STEP;
 import static udesc.br.rakesfoot.game.rules.Team.MOTIVATION_INCREASE_STEP;
@@ -55,7 +60,14 @@ public class MatchSimulator extends Simulator<Match> {
         getCurrent().getHost().setChemestry(getCurrent().getHost().getChemestry() + CHEMESTRY_INCREASE_STEP);
         getCurrent().getGuest().setChemestry(getCurrent().getGuest().getChemestry() + CHEMESTRY_INCREASE_STEP);
 
+        updatePlayers(getCurrent().getHost());
+        updatePlayers(getCurrent().getGuest());
+    }
 
+    private void updatePlayers(Team team) {
+        for (Player player : team.getPlayers()) {
+            player.setPhysical(player.getPhysical() + (int) PHYSICAL_INCREASE_STEP);
+        }
     }
 
     private void increaseMotivation(Team team, int step) {

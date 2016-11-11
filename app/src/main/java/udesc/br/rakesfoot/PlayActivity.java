@@ -46,14 +46,19 @@ public class PlayActivity extends GameActivity implements SimulatorEventListener
         guestName  = (TextView) findViewById(R.id.textGuest);
         guestGoals = (TextView) findViewById(R.id.textGuestGoals);
 
+        ArrayAdapter<String> eventListAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1);
+        events.setAdapter(eventListAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         SqliteDaoMatch dao = (SqliteDaoMatch) SqliteDaoFactory.getDaoMatch(getBaseContext());
         Match match = dao.getMatch(Game.getTeam(), Game.getInstance().getCurrentSeason());
 
         hostName.setText(match.getHost().getName());
         guestName.setText(match.getGuest().getName());
-
-        ArrayAdapter<String> eventListAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1);
-        events.setAdapter(eventListAdapter);
     }
 
     @Override
@@ -79,7 +84,7 @@ public class PlayActivity extends GameActivity implements SimulatorEventListener
     @Override
     public void onTrigger(Event event) {
         if (event.getMatch().getHostId() == Game.getTeam().getId() || event.getMatch().getGuestId() == Game.getTeam().getId()) {
-            if (event.getType() == GOAL) {
+            if (event.type() == GOAL) {
                 updateGoal(event);
             }
              updateList(event);

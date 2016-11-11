@@ -93,7 +93,11 @@ public class Event extends Entity{
         this.team = team;
     }
 
-    public EventType getType() {
+    public int getType() {
+        return type.getId();
+    }
+
+    public EventType type() {
         return type;
     }
 
@@ -111,6 +115,6 @@ public class Event extends Entity{
     }
 
     public String getDescription() {
-        return String.format("%s\" %s: %s, %s", getMinute(), getTeam().getName(), getType().getDescription(), getPlayer().getName());
+        return String.format("%s\" %s: %s, %s", getMinute(), getTeam().getName(), type().getDescription(), getPlayer().getName());
     }
 }

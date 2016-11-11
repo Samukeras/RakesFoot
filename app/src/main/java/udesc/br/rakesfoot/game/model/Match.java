@@ -118,7 +118,7 @@ public class Match extends Entity {
     public int getEventCount(EventType type) {
         int count = 0;
         for (Event event : events) {
-            if (event.getType() == type) {
+            if (event.type() == type) {
                 count++;
             }
         }
@@ -128,7 +128,7 @@ public class Match extends Entity {
     public int getEventCount(EventType type, Player player) {
         int count = 0;
         for (Event event : events) {
-            if (event.getType() == type && player.getId() == event.getPlayer().getId()) {
+            if (event.type() == type && player.getId() == event.getPlayer().getId()) {
                 count++;
             }
         }
@@ -139,7 +139,7 @@ public class Match extends Entity {
         int count = 0;
         for (Event event : events) {
 
-            if (event.getType() == type && team.getId() == event.getTeam().getId()) {
+            if (event.type() == type && team.getId() == event.getTeam().getId()) {
                 count++;
             }
         }

@@ -42,6 +42,7 @@ public class SeederChampionship extends EntitySeeder<Championship, Season> {
     public void crop(Season parent) {
         for (Championship championship : (Iterable<Championship>) getDao().getAll()) {
             parent.addCaChampionship(championship);
+            championship.setSeason(parent);
             handle(championship);
         }
     }
