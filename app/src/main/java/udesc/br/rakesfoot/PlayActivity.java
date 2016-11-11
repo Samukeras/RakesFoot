@@ -1,8 +1,7 @@
 package udesc.br.rakesfoot;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +38,9 @@ public class PlayActivity extends GameActivity implements SimulatorEventListener
         hostGoals  = (TextView) findViewById(R.id.textHostGoals);
         guestName  = (TextView) findViewById(R.id.textGuest);
         guestGoals = (TextView) findViewById(R.id.textGuestGoals);
+
+        ArrayAdapter<String> eventListAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1);
+        events.setAdapter(eventListAdapter);
     }
 
     @Override
@@ -81,8 +83,6 @@ public class PlayActivity extends GameActivity implements SimulatorEventListener
     }
 
     private void updateList(Event event) {
-        TextView tv = new TextView(getBaseContext());
-        tv.setText(event.getDescription());
-        events.addHeaderView(tv, event.getDescription(), false);
+        ((ArrayAdapter<String>) events.getAdapter()).add(event.getDescription());
     }
 }

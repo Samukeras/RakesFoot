@@ -40,33 +40,33 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "                 0                         AS position\n" +
                 "            FROM (\n" +
                 "                  SELECT team.name AS team_name,\n" +
-                "                         COUNT((SELECT 1\n" +
+                "                               (SELECT COUNT(1)\n" +
                 "                                  FROM match\n" +
                 "                                 WHERE (host_id  = team.id\n" +
                 "                                        AND\n" +
                 "                                        winner   = 2)\n" +
                 "                                    OR (guest_id = team.id\n" +
                 "                                        AND\n" +
-                "                                        winner   = 3))) AS victories,\n" +
-                "                         COUNT((SELECT 1\n" +
+                "                                        winner   = 3)) AS victories,\n" +
+                "                               (SELECT COUNT(1)\n" +
                 "                                  FROM match\n" +
                 "                                 WHERE winner = 1\n" +
                 "                                   AND (team.id  = guest_id\n" +
                 "                                        OR\n" +
-                "                                        winner   = 3))) AS draws,\n" +
-                "                         COUNT((SELECT 1\n" +
+                "                                        winner   = 3)) AS draws,\n" +
+                "                               (SELECT COUNT(1)\n" +
                 "                                  FROM match\n" +
                 "                                 WHERE (team.id  = host_id\n" +
                 "                                        AND\n" +
                 "                                        winner   = 3)\n" +
                 "                                    OR (team.id  = guest_id\n" +
                 "                                        AND\n" +
-                "                                        winner   = 2))) AS losses,\n" +
-                "                         COUNT((SELECT 1\n" +
+                "                                        winner   = 2)) AS losses,\n" +
+                "                               (SELECT COUNT(1)\n" +
                 "                                  FROM event\n" +
                 "                                 WHERE type = 1\n" +
-                "                                   AND event.team_id = team.id)) AS goals_pro,\n" +
-                "                         COUNT((SELECT 1\n" +
+                "                                   AND event.team_id = team.id) AS goals_pro,\n" +
+                "                               (SELECT COUNT(1)\n" +
                 "                                  FROM event\n" +
                 "                                  JOIN match\n" +
                 "                                    ON match.id = event.match_id\n" +
@@ -75,12 +75,8 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "                                        match.guest_id = team.id)\n" +
                 "                                   AND winner <> 0\n" +
                 "                                 WHERE type = 1\n" +
-                "                                   AND event.team_id <> team.id)) AS goals_against\n" +
-                "                    FROM team) data) classification\n" +
-                "ORDER BY points,\n" +
-                "         goals_balance,\n" +
-                "         goals_pro,\n" +
-                "         victories";
+                "                                   AND event.team_id <> team.id) AS goals_against\n" +
+                "                    FROM team) data) classification\n";
 
         return sql;
     }
@@ -114,6 +110,8 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
             count++;
             cursor.moveToNext();
         }
+
+        System.out.println(count);
     }
 
     @Override

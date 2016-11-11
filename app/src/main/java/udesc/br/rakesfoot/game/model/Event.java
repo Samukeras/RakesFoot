@@ -111,6 +111,6 @@ public class Event extends Entity{
     }
 
     public String getDescription() {
-        return String.format("%s: %s, %s do %s", getTeam().getName(), getType().getDescription(), getPlayer().getName(), getTeam().getName());
+        return String.format("%s: %s, %s", getTeam().getName(), getType().getDescription(), getPlayer().getName());
     }
 }
