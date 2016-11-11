@@ -42,4 +42,5 @@ public class Game {
     public static Manager getManager() {
         return getInstance().loadManager();
     }
+
 }

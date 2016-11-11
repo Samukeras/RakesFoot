@@ -4,27 +4,20 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Build;
-import android.provider.ContactsContract;
 
 import udesc.br.rakesfoot.core.persistence.Persistible;
 import udesc.br.rakesfoot.core.persistence.annotation.DataBaseInfo;
 import udesc.br.rakesfoot.core.persistence.annotation.Table;
 import udesc.br.rakesfoot.core.util.BeanUtils;
 import udesc.br.rakesfoot.core.util.StringUtils;
-import udesc.br.rakesfoot.core.util.connection.Connection;
 import udesc.br.rakesfoot.core.util.connection.SQLiteConnection;
-import udesc.br.rakesfoot.game.model.Season;
-import udesc.br.rakesfoot.game.model.Team;
+import udesc.br.rakesfoot.game.model.TeamClassification;
 
 import java.lang.annotation.Annotation;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -240,7 +233,6 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
 
     @Override
     public boolean persists(DAOEntity entity) {
-
         StringBuilder query = new StringBuilder(getSqlGetAll());
         query.append(" WHERE 1 = 1");
 
@@ -248,7 +240,8 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
             query.append(" AND ")
                     .append(relationships.getAllKeyColumnsNames().get(i))
                     .append(" = ")
-                    .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)));
+//                    .append(BeanUtils.callGetter(entity, relationships.getAllKeyColumnsNames().get(i)));
+                    .append(BeanUtils.callGetter(entity, relationships.getAllKeyModelNames().get(i)));
         }
 
         Cursor cursor = getCursorFromSql(query.toString());
@@ -392,6 +385,5 @@ public abstract class DAOGeneric<DAOEntity extends udesc.br.rakesfoot.core.model
                 throw new RuntimeException("Type not recognized: " + relation.getType().getName());
         }
     }
-
 
 }

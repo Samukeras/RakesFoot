@@ -49,10 +49,6 @@ public class ClassificationActivity extends TableActivity {
             table.addView(tr, new TableLayout.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                                                            TableRow.LayoutParams.MATCH_PARENT));
         }
-
-        boolean teste = true;
-        boolean falso = false;
-        falso = true;
     }
 
     protected void createHeader() {
