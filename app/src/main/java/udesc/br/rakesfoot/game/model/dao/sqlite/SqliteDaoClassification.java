@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import udesc.br.rakesfoot.core.model.dao.DAOGeneric;
+import udesc.br.rakesfoot.game.model.Game;
 import udesc.br.rakesfoot.game.model.TeamClassification;
 
 import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.INT_INTEGER;
+import static udesc.br.rakesfoot.core.persistence.EntityDataBaseTypeRelation.STRING_VARCHAR;
+import static udesc.br.rakesfoot.game.model.ChampionshipType.DIVISION_2;
 
 public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
 
@@ -18,15 +21,15 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
     }
 
     protected void setRelations() {
-        this.relationships.addRelation(false, false, "team_name"    , "team.name"   , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "position"     , "position"    , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "victories"    , "victories"   , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "losses"       , "losses"      , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "draws"        , "draws"       , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "goals_pro"    , "goalsPro"    , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "goals_against", "goalsAgainst", INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "goals_balance", "goalsBalance", INT_INTEGER.getSqlite(), INT_INTEGER.getType());
-        this.relationships.addRelation(false, false, "points"       , "points"      , INT_INTEGER.getSqlite(), INT_INTEGER.getType());
+        this.relationships.addRelation(false, false, "team_name"    , "team.name"   , STRING_VARCHAR.getSqlite(), STRING_VARCHAR.getType());
+        this.relationships.addRelation(false, false, "position"     , "position"    , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "victories"    , "victories"   , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "losses"       , "losses"      , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "draws"        , "draws"       , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "goals_pro"    , "goalsPro"    , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "goals_against", "goalsAgainst", INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "goals_balance", "goalsBalance", INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
+        this.relationships.addRelation(false, false, "points"       , "points"      , INT_INTEGER.getSqlite()   , INT_INTEGER.getType()   );
     }
 
     @Override
@@ -76,14 +79,16 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "                                   AND winner <> 0\n" +
                 "                                 WHERE type = 1\n" +
                 "                                   AND event.team_id <> team.id) AS goals_against\n" +
-                "                    FROM team) data) classification\n";
+                "                    FROM team" +
+                "                   WHERE id IN (SELECT team_id" +
+                "                                  FROM championshipteam" +
+                "                                 WHERE championship_id = " + Game.getInstance().getCurrentSeason().getChampionship(DIVISION_2).getId() + ")) data) classification\n";
 
         return sql;
     }
 
     @Override
     public Iterable<TeamClassification> getAll() {
-        teste();
         Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
         cursor.moveToFirst();
 
@@ -97,21 +102,6 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
         }
 
         return entities;
-    }
-
-    private void teste() {
-        String sql = "SELECT * FROM team";
-
-        Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
-        cursor.moveToFirst();
-
-        int count = 0;
-        while(!cursor.isAfterLast()) {
-            count++;
-            cursor.moveToNext();
-        }
-
-        System.out.println(count);
     }
 
     @Override

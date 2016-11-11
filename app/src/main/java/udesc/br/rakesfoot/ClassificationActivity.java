@@ -44,7 +44,15 @@ public class ClassificationActivity extends TableActivity {
             tr.addView(createText(classification.getGoalsAgainst()  , Gravity.CENTER));
             tr.addView(createText(classification.getGoalsBalance()  , Gravity.CENTER));
             tr.addView(createText(classification.getPoints()        , Gravity.CENTER));
+
+            // Add the TableRow to the TableLayout
+            table.addView(tr, new TableLayout.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                                                           TableRow.LayoutParams.MATCH_PARENT));
         }
+
+        boolean teste = true;
+        boolean falso = false;
+        falso = true;
     }
 
     protected void createHeader() {
@@ -54,20 +62,24 @@ public class ClassificationActivity extends TableActivity {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
 
-        tr.addView(createHeaderText("POS" ,  50, Gravity.CENTER));
+        tr.addView(createHeaderText("POS" ,  80, Gravity.CENTER));
         tr.addView(createHeaderText("Time", 220, Gravity.CENTER));
-        tr.addView(createHeaderText("V"   ,  50, Gravity.CENTER));
-        tr.addView(createHeaderText("D"   ,  50, Gravity.CENTER));
-        tr.addView(createHeaderText("E"   ,  50, Gravity.CENTER));
-        tr.addView(createHeaderText("GP"  ,  50, Gravity.CENTER));
-        tr.addView(createHeaderText("GC"  ,  50, Gravity.CENTER));
-        tr.addView(createHeaderText("SG"  ,  70, Gravity.CENTER));
-        tr.addView(createHeaderText("PTS" ,  70, Gravity.CENTER));
+        tr.addView(createHeaderText("V"   ,  80, Gravity.CENTER));
+        tr.addView(createHeaderText("D"   ,  80, Gravity.CENTER));
+        tr.addView(createHeaderText("E"   ,  80, Gravity.CENTER));
+        tr.addView(createHeaderText("GP"  ,  80, Gravity.CENTER));
+        tr.addView(createHeaderText("GC"  ,  80, Gravity.CENTER));
+        tr.addView(createHeaderText("SG"  ,  80, Gravity.CENTER));
+        tr.addView(createHeaderText("PTS" ,  80, Gravity.CENTER));
 
         // Add the TableRow to the TableLayout
         table.addView(tr, new TableLayout.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
+    }
+
+    protected int getDefaultTextSize() {
+        return 20;
     }
 
 }

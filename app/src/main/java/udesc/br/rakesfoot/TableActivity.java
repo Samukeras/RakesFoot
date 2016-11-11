@@ -46,7 +46,7 @@ public abstract class TableActivity extends GameActivity {
     protected TextView createText(String text, int align) {
         TextView view = new TextView(this);
         view.setText(text);
-        view.setTextSize(18);
+        view.setTextSize(getDefaultTextSize());
         view.setTextColor(Color.BLACK.getColor());
         view.setGravity(align);
         view.setLayoutParams(new TableRow.LayoutParams(
@@ -54,6 +54,10 @@ public abstract class TableActivity extends GameActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         return view;
+    }
+
+    protected int getDefaultTextSize() {
+        return 18;
     }
 
 }
