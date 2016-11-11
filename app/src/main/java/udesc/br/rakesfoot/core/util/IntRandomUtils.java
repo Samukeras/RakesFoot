@@ -44,7 +44,7 @@ public class IntRandomUtils {
      * @return double
      */
     public static double getNetxPercentage() {
-        return getNextIntFromZeroToInterval(10000) / 100.0;
+        return getNextIntFromZeroToInterval(10000) / 10000.0;
     }
 
 }

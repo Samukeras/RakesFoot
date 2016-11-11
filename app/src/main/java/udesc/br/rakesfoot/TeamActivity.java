@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telecom.TelecomManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import udesc.br.rakesfoot.core.model.Color;
 import udesc.br.rakesfoot.core.util.DialogUtils;
@@ -20,6 +23,8 @@ import udesc.br.rakesfoot.game.model.Team;
 import udesc.br.rakesfoot.game.rules.Formation;
 
 public class TeamActivity extends TableActivity {
+
+    private TextView textTotals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,23 @@ public class TeamActivity extends TableActivity {
 
     @Override
     protected void startComponents() {
-        table = (TableLayout) findViewById(R.id.tbPlayer);
+        table      = (TableLayout) findViewById(R.id.tbPlayer);
+        textTotals = (TextView) findViewById(R.id.textTotals);
 
         loadTable();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        for (Player player : Game.getTeam().getFormation().getFirstTeamPlayers()) {
+            ((CompoundButton) findViewById(player.getId())).setChecked(true);
+        }
+
+        for (Player player : Game.getTeam().getFormation().getSubstitutes()) {
+            ((CompoundButton) findViewById(player.getId() + 10000)).setChecked(true);
+        }
     }
 
     protected void loadTable() {
@@ -106,23 +125,66 @@ public class TeamActivity extends TableActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int id = buttonView.getId();
-                if (id > 10000) {
+                boolean firsTeam  = buttonView.getId() < 10000;
+                udesc.br.rakesfoot.game.model.Formation formation = Game.getTeam().getFormation();
+
+                if (!firsTeam) {
                     id -= 10000;
                 }
 
+                Player player = Game.getTeam().getPlayer(id);
+                boolean hasPlayer = formation.hasPlayer(player);
+
                 if (isChecked) {
-                    if (buttonView.getId() > 10000) {
-                        Game.getTeam().getFormation().addSubstitute(Game.getTeam().getPlayer(id));
+                    if (!firsTeam) {
+                        ((CompoundButton) findViewById(id)).setChecked(false);
+                        formation.removeSubstitute(player);
                     } else {
-                        Game.getTeam().getFormation().addFirstTeamPlayer(Game.getTeam().getPlayer(id));
-                    }
-                } else {
-                    if (buttonView.getId() > 10000) {
-                        Game.getTeam().getFormation().removeSubstitute(Game.getTeam().getPlayer(id));
-                    } else {
-                        Game.getTeam().getFormation().removeFirstTeamPlayer(Game.getTeam().getPlayer(id));
+                        ((CompoundButton) findViewById(id + 10000)).setChecked(false);
+                        formation.removeFirstTeamPlayer(player);
                     }
                 }
+
+                String type, baseText = "Falha";
+
+                type = "reservas";
+                if (firsTeam) {
+                    type = "titulares";
+                }
+
+                if (isChecked && !hasPlayer) {
+                    baseText = "%s adicionado aos %s";
+                    if (!firsTeam) {
+                        formation.addSubstitute(player);
+                    } else {
+                        formation.addFirstTeamPlayer(player);
+                    }
+                    Toast.makeText(getBaseContext(), String.format(baseText, player.getName(), type), Toast.LENGTH_SHORT).show();
+                } else if (hasPlayer){
+                    baseText = "%s removido dos %s";
+                    if (!firsTeam) {
+                        formation.removeSubstitute(player);
+                    } else {
+                        formation.removeFirstTeamPlayer(player);
+                    }
+                }
+
+                hasPlayer = firsTeam && formation.hasFirstTeamPlayer(player);
+                hasPlayer = hasPlayer || (!firsTeam && formation.hasSubstitutePlayer(player));
+
+                if ((isChecked && hasPlayer) || (!hasPlayer && !isChecked)) {
+//                    Toast.makeText(getBaseContext(), String.format(baseText, player.getName(), type), Toast.LENGTH_SHORT).show();
+                }
+
+                String totalsText = "Titulares: %s/%s Reservas %s/%s";
+
+                textTotals.setText(String.format(
+                        totalsText,
+                        formation.getFirstTeamPlayers().size(),
+                        Formation.FIRST_TEAM_COUNT,
+                        formation.getSubstitutes().size(),
+                        Formation.SUBSTITUTE_LIMIT
+                ));
             }
         });
     }

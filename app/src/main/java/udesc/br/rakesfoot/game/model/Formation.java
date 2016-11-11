@@ -26,6 +26,10 @@ public class Formation {
         return firstTeamPlayers.add(player);
     }
 
+    public boolean hasFirstTeamPlayer(Player player) {
+        return firstTeamPlayers.contains(player);
+    }
+
     public boolean removeFirstTeamPlayer(Player player) {
         return firstTeamPlayers.remove(player);
     }
@@ -41,8 +45,16 @@ public class Formation {
         return substitutes.add(player);
     }
 
+    public boolean hasSubstitutePlayer(Player player) {
+        return substitutes.contains(player);
+    }
+
     public boolean removeSubstitute(Player player) {
         return substitutes.remove(player);
+    }
+
+    public boolean hasPlayer(Player player) {
+        return firstTeamPlayers.contains(player) || substitutes.contains(player);
     }
 
     public boolean isReady() {
