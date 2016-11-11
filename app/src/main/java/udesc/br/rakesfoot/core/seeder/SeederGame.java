@@ -24,9 +24,11 @@ public class SeederGame extends EntitySeeder<Game, Object> {
         EntitySeeder player           = new SeederPlayer();
         EntitySeeder match            = new SeederMatch();
         EntitySeeder formation        = new SeederFormation();
+        EntitySeeder event            = new SeederEvent();
 
         this.addSucessor(season);
         this.addSucessor(manager);
+        this.addSucessor(event);
 
         season.addSucessor(championship);
 
