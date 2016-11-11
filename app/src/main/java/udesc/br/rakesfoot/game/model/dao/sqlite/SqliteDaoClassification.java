@@ -87,27 +87,32 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
 
     @Override
     public Iterable<TeamClassification> getAll() {
-        try {
+        teste();
+        Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
+        cursor.moveToFirst();
 
-            Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
-            cursor.moveToFirst();
+        List<TeamClassification> entities = new ArrayList<>();
 
-            List<TeamClassification> entities = new ArrayList<>();
+        while(!cursor.isAfterLast()) {
+            TeamClassification entity = getNewEntity();
+            beanModel(cursor, entity);
+            entities.add(entity);
+            cursor.moveToNext();
+        }
 
-            while(!cursor.isAfterLast()) {
-                TeamClassification entity = getNewEntity();
-                beanModel(cursor, entity);
-                entities.add(entity);
-                cursor.moveToNext();
-            }
+        return entities;
+    }
 
-            return entities;
-        } catch (Exception e) {
-            e.printStackTrace();
-            int i = 0;
-            int b = i;
+    private void teste() {
+        String sql = "SELECT * FROM team";
 
-            return null;
+        Cursor cursor = connection.getConnection().rawQuery(getSqlGetAll(), new String[0]);
+        cursor.moveToFirst();
+
+        int count = 0;
+        while(!cursor.isAfterLast()) {
+            count++;
+            cursor.moveToNext();
         }
     }
 
