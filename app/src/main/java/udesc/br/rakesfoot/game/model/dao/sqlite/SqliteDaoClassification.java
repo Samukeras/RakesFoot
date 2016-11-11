@@ -35,8 +35,9 @@ public class SqliteDaoClassification extends DAOGeneric<TeamClassification> {
                 "  SELECT *\n" +
                 "    FROM (\n" +
                 "          SELECT *,\n" +
-                "                 victories * 3 + draws      AS points,\n" +
-                "                 goals_pro - goals_against AS goals_balance\n" +
+                "                 victories * 3 + draws     AS points,\n" +
+                "                 goals_pro - goals_against AS goals_balance,\n" +
+                "                 0                         AS position\n" +
                 "            FROM (\n" +
                 "                  SELECT team.name AS team_name,\n" +
                 "                         COUNT((SELECT 1\n" +
