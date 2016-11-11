@@ -26,7 +26,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/textHost"
                 android:layout_weight="1"
-                android:gravity="left|center_vertical" />
+                android:gravity="left|center_vertical"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:text="0"
@@ -34,7 +35,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/textHostGoals"
                 android:layout_weight="1"
-                android:gravity="right|center_vertical" />
+                android:gravity="right|center_vertical"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:text="X"
@@ -43,7 +45,8 @@
                 android:id="@+id/textView9"
                 android:layout_weight="1"
                 android:textSize="20sp"
-                android:gravity="center_vertical|center" />
+                android:gravity="center_vertical|center"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:text="0"
@@ -51,7 +54,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/textGuestGoals"
                 android:layout_weight="1"
-                android:gravity="left|center_vertical" />
+                android:gravity="left|center_vertical"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:text="guest"
@@ -59,7 +63,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/textGuest"
                 android:layout_weight="1"
-                android:gravity="right|center_vertical" />
+                android:gravity="right|center_vertical"
+                android:textColor="@android:color/black" />
         </LinearLayout>
 
         <ListView

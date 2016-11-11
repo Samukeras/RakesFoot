@@ -9,7 +9,7 @@ import udesc.br.rakesfoot.game.model.Event;
 /**
  * Created by Ricardo on 02/11/2016.
  */
-public abstract class Simulator<Transient extends Object> {
+public abstract class Simulator<Transient extends Object> implements Runnable {
 
     private List<Transient> transients = new ArrayList<>();
 
@@ -39,6 +39,7 @@ public abstract class Simulator<Transient extends Object> {
         }
     }
 
+    @Override
     public void run() {
         iterate();
     }

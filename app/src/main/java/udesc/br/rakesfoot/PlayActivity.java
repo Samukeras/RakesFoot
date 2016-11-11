@@ -15,7 +15,7 @@ import udesc.br.rakesfoot.game.simulator.SimulatorEventListener;
 
 import static udesc.br.rakesfoot.game.model.EventType.GOAL;
 
-public class PlayActivity extends AppCompatActivity implements SimulatorEventListener {
+public class PlayActivity extends GameActivity implements SimulatorEventListener {
 
     private ListView events;
 
@@ -26,10 +26,12 @@ public class PlayActivity extends AppCompatActivity implements SimulatorEventLis
     private TextView guestGoals;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setLayout() {
         setContentView(R.layout.activity_play);
+    }
 
+    @Override
+    protected void startComponents() {
         setTitle(Game.getTeam().getName());
 
         events     = (ListView) findViewById(R.id.listEvents);
@@ -37,16 +39,27 @@ public class PlayActivity extends AppCompatActivity implements SimulatorEventLis
         hostGoals  = (TextView) findViewById(R.id.textHostGoals);
         guestName  = (TextView) findViewById(R.id.textGuest);
         guestGoals = (TextView) findViewById(R.id.textGuestGoals);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         startSimulation();
     }
 
     private void startSimulation() {
+        System.out.println("ok");
         Simulator simulator = new ChampionshipSimulator(getBaseContext());
         simulator.addListener(this);
         simulator.register(Game.getInstance().getCurrentSeason().getChampionship(ChampionshipType.DIVISION_1));
         simulator.register(Game.getInstance().getCurrentSeason().getChampionship(ChampionshipType.DIVISION_2));
-        simulator.run();
+        System.out.println("ok1");
+
+        Thread thread = new Thread(simulator);
+        thread.start();
+
+        System.out.println("ok3");
     }
 
     @Override
