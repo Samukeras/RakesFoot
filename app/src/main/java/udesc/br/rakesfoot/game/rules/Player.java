@@ -5,9 +5,10 @@ package udesc.br.rakesfoot.game.rules;
  */
 
 public class Player {
-    public final static double PHYSICAL_DECREASE_STEP = 0.7; // per minute/round
-    public final static double PHYSICAL_INCREASE_STEP =  20; // per day
-    public final static int    MAX_PHYSICAL           = 100; // PLAYER
+    public final static double PHYSICAL_DECREASE_STEP =  0.7; // per minute/round
+    public final static double PHYSICAL_INCREASE_STEP =   20; // per day
+    public final static int    MAX_PHYSICAL           =  100; // PLAYER
+    public final static int    PHYSICAL_RECOVERY_COST = 1000; // TEAM
 
     public final static double MOTIVATION_DECREASE_ON_DEFEAT      = 2; // ALL
     public final static double MOTIVATION_DECREASE_ON_INJURY      = 5; // PLAYER

@@ -14,6 +14,7 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoStadium;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoTeam;
 
 import static udesc.br.rakesfoot.game.rules.Budget.STADIUM_IMPROVEMENT;
+import static udesc.br.rakesfoot.game.rules.Player.PHYSICAL_RECOVERY_COST;
 
 public class StadiumActivity extends GameActivity {
 
@@ -66,18 +67,17 @@ public class StadiumActivity extends GameActivity {
     }
 
     public void onClickIncreaseCapacity(View v) {
-        if(!(currentBudget.getCurrentCash() >= STADIUM_IMPROVEMENT)) {
+        if(!(currentBudget.getCurrentCash() >= PHYSICAL_RECOVERY_COST)) {
             Toast.makeText(getBaseContext(), "Orçamento insuficiente!", Toast.LENGTH_SHORT);
-            return;
+        } else {
+            stadium.setCapacity(stadium.getCapacity() + 10000);
+            dao.update(stadium);
+
+            currentBudget.setCurrentCash(currentBudget.getCurrentCash() - STADIUM_IMPROVEMENT);
+            daoBudget.update(currentBudget);
+
+            startActivity(new Intent(getApplicationContext(), TeamActivity.class));
         }
-
-        stadium.setCapacity(stadium.getCapacity() + 10000);
-        dao.update(stadium);
-
-        currentBudget.setCurrentCash(currentBudget.getCurrentCash() - STADIUM_IMPROVEMENT);
-        daoBudget.update(currentBudget);
-
-        startActivity(new Intent(getApplicationContext(), TeamActivity.class));
     }
 
 }
