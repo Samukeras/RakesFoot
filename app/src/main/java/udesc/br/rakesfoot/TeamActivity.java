@@ -41,6 +41,11 @@ public class TeamActivity extends TableActivity {
     protected void startComponents() {
         table      = (TableLayout) findViewById(R.id.tbPlayer);
         textTotals = (TextView) findViewById(R.id.textTotals);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         loadTable();
         checkFormation();
@@ -65,6 +70,7 @@ public class TeamActivity extends TableActivity {
         int id = 0;
         Team team = Game.getInstance().getManager().getTeam();
 
+        table.removeAllViews();
         createHeader();
 
         for (Player player : team.getPlayers()) {

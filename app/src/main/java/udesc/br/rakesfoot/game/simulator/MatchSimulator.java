@@ -17,6 +17,7 @@ import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoFactory;
 import udesc.br.rakesfoot.game.model.dao.sqlite.SqliteDaoMatch;
 
 import static udesc.br.rakesfoot.game.rules.Match.*;
+import static udesc.br.rakesfoot.game.rules.Player.MAX_PHYSICAL;
 import static udesc.br.rakesfoot.game.rules.Player.PHYSICAL_INCREASE_STEP;
 import static udesc.br.rakesfoot.game.rules.Team.CHEMESTRY_INCREASE_STEP;
 import static udesc.br.rakesfoot.game.rules.Team.MOTIVATION_DECREASE_STEP;
@@ -66,7 +67,7 @@ public class MatchSimulator extends Simulator<Match> {
 
     private void updatePlayers(Team team) {
         for (Player player : team.getPlayers()) {
-            player.setPhysical(player.getPhysical() + (int) PHYSICAL_INCREASE_STEP);
+            player.setPhysical(Math.min(MAX_PHYSICAL, player.getPhysical() + (int) PHYSICAL_INCREASE_STEP));
         }
     }
 
